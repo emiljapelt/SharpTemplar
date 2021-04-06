@@ -143,5 +143,18 @@ namespace Elements
             Contains.Add(div);
             return div;
         }
+
+        /// <summary>
+        /// Adds Form into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The added Form.
+        /// </returns>
+        public Form AddForm()
+        {
+            var form = new Form(this);
+            Contains.Add(form);
+            return form;
+        }
     }
 }
