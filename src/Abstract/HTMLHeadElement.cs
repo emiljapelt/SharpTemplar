@@ -30,6 +30,12 @@ namespace Elements
             sb.Append($"</{tagType}>");
         }
 
+        /// <summary>
+        /// Adds attribute of any kind to the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>        
         public HTMLHeadElement WithAttribute(string key, string value)
         {
             if (Attributes.ContainsKey(key)) Attributes[key] = value;
@@ -37,6 +43,12 @@ namespace Elements
             return this;
         }
 
+        /// <summary>
+        /// Adds Style into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The added Style.
+        /// </returns>
         public HTMLHeadElement AddStyle(string path)
         {
             var style = new Style(path);
@@ -44,6 +56,12 @@ namespace Elements
             return style;
         }
 
+        /// <summary>
+        /// Adds Meta into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The added Meta.
+        /// </returns>
         public HTMLHeadElement AddMeta()
         {
             var meta = new Meta();

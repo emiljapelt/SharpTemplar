@@ -37,11 +37,23 @@ namespace Elements
             Parent = parent;
         }
 
+        /// <summary>
+        /// Navigates to the ParentElement.
+        /// </summary>
+        /// <returns>
+        /// Parent of Element it is called on.
+        /// </returns>
         public HTMLBodyElement ToParent()
         {
             return Parent;
         }
 
+        /// <summary>
+        /// Adds attribute of any kind to the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
         public HTMLBodyElement WithAttribute(string key, string value)
         {
             if (Attributes.ContainsKey(key)) Attributes[key] = $"{Attributes[key]} {value}";
@@ -49,6 +61,12 @@ namespace Elements
             return this;
         }
 
+        /// <summary>
+        /// Adds many attributes of any kind to the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
         public HTMLBodyElement WithAttributes(params (string key, string value)[] list)
         {
             foreach(var a in list)
@@ -58,16 +76,34 @@ namespace Elements
             return this;
         }
         
+        /// <summary>
+        /// Adds class attribute to the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
         public HTMLBodyElement WithClass(string value)
         {
             return WithAttribute("class", value);
         }
 
+        /// <summary>
+        /// Adds style attribute to the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
         public HTMLBodyElement WithStyle(string value)
         {
             return WithAttribute("style", value);
         }
 
+        /// <summary>
+        /// Adds Paragraph into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The added Paragraph.
+        /// </returns>
         public Paragraph AddParagraph(string content)
         {
             var p = new Paragraph(content, this);
@@ -75,6 +111,12 @@ namespace Elements
             return p;
         }
 
+        /// <summary>
+        /// Adds Anchor into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The added Anchor.
+        /// </returns>
         public Anchor AddAnchor(string href)
         {
             var a = new Anchor(href, this);
@@ -82,12 +124,24 @@ namespace Elements
             return a;
         }
 
+        /// <summary>
+        /// Adds text into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
         public HTMLBodyElement AddHTMLString(string content)
         {
             Contains.Add(new HTMLBodyString(content));
             return this;
         }
 
+        /// <summary>
+        /// Adds Div into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The added Div.
+        /// </returns>
         public Div AddDiv()
         {
             var div = new Div(this);
