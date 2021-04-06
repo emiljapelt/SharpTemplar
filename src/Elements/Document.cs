@@ -1,4 +1,6 @@
 using System.Text;
+using Elements.BodyElements;
+using Elements.HeadElements;
 
 namespace Elements
 {
@@ -9,17 +11,17 @@ namespace Elements
 
         public Document()
         {
-            Head = new Head();
+            Head = new Head("integrationTest");
             Body = new Body();
         }
 
         public string GeneratePage()
         {
             StringBuilder sb = new StringBuilder();
-            foreach(HTMLElement e in Body.Container)
-            {
-                sb.Append(e.ElementTag);
-            }
+            sb.Append("<html>");
+            Head.ConstructElement(sb);
+            Body.ConstructElement(sb);
+            sb.Append("</html>");
             return sb.ToString();
         }
     }
