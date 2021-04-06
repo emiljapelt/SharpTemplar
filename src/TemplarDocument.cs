@@ -18,7 +18,9 @@ namespace Elements
         public string GeneratePage()
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append("<!DOCTYPE html>");
             sb.Append("<html>");
+            sb.Append("<meta charset=\"UTF-8\">");
             Head.ConstructElement(sb);
             Body.ConstructElement(sb);
             sb.Append("</html>");

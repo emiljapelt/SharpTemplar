@@ -33,8 +33,19 @@ namespace Elements
 
         public HTMLBodyElement WithAttribute(string key, string value)
         {
+            if (Attributes.ContainsKey(key)) Attributes[key] = $"{Attributes[key]} {value}";
             Attributes.Add(key, value);
             return this;
+        }
+        
+        public HTMLBodyElement WithClass(string value)
+        {
+            return WithAttribute("class", value);
+        }
+
+        public HTMLBodyElement WithStyle(string value)
+        {
+            return WithAttribute("style", value);
         }
 
         public Paragraph AddParagraph(string content)
