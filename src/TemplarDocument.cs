@@ -4,12 +4,12 @@ using Elements.HeadElements;
 
 namespace Elements
 {
-    public class Document
+    public class TemplarDocument
     {
         public Head Head { get; }
         public Body Body { get; }
 
-        public Document()
+        public TemplarDocument()
         {
             Head = new Head("integrationTest");
             Body = new Body();
