@@ -9,8 +9,6 @@ namespace Elements.HeadElements
         internal Style(string path)
         {
             tagType = "style";
-            Attributes.Add("type", "text/css");
-            Attributes.Add("rel", "stylesheet");
             Contains.Add(new HTMLHeadString(File.ReadAllText(path)));
         }
     }
