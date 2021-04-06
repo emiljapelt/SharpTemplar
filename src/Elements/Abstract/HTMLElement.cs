@@ -1,12 +1,10 @@
 using System.Text;
+using System.Collections.Generic;
 
 namespace Elements
 {
     public abstract class HTMLElement
     {
-        public string ElementTag { get; set; }
-        public string ElementClass { get; set; }
-
-        internal abstract void ConstructElement(StringBuilder sb);
+        internal string tagType;
     }
 }

@@ -2,19 +2,12 @@ using System.Text;
 
 namespace Elements.HeadElements
 {
-    public class Head : HTMLElement
+    public class Head : HTMLHeadElement
     {
-        private Title Title;
         internal Head(string title) 
         {
-            Title = new Title(title);
-        }
-
-        internal override void ConstructElement(StringBuilder sb)
-        {
-            sb.Append("<head>");
-            Title.ConstructElement(sb);
-            sb.Append("</head>");
+            tagType = "head";
+            Contains.Add(new Title(title));
         }
     }
 }

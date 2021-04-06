@@ -1,19 +1,14 @@
 using System.Text;
+using Elements.Shared;
 
 namespace Elements.HeadElements
 {
     public class Title : HTMLHeadElement
     {
-        private string Content;
-
         internal Title(string content)
         {
-            Content = content;
-        }
-
-        internal override void ConstructElement(StringBuilder sb)
-        {
-            sb.Append($"<title>{Content}</title>");
+            tagType = "title";
+            Contains.Add(new HTMLHeadString(content));
         }
     }
 }
