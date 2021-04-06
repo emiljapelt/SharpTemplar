@@ -30,18 +30,18 @@ namespace Elements
             sb.Append($"</{tagType}>");
         }
 
-        public HTMLHeadElement AddStyle(string path)
-        {
-            var style = new Style(path);
-            Contains.Add(style);
-            return style;
-        }
-
         public HTMLHeadElement WithAttribute(string key, string value)
         {
             if (Attributes.ContainsKey(key)) Attributes[key] = value;
             else Attributes.Add(key, value);
             return this;
+        }
+
+        public HTMLHeadElement AddStyle(string path)
+        {
+            var style = new Style(path);
+            Contains.Add(style);
+            return style;
         }
 
         public HTMLHeadElement AddMeta()
