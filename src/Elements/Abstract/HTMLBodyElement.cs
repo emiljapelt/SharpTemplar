@@ -51,9 +51,17 @@ namespace Elements
             return a;
         }
 
-        public void AddHTMLString(string content)
+        public HTMLBodyElement AddHTMLString(string content)
         {
             Contains.Add(new HTMLBodyString(content));
+            return this;
+        }
+
+        public Div AddDiv()
+        {
+            var div = new Div();
+            Contains.Add(div);
+            return div;
         }
     }
 }
