@@ -7,8 +7,9 @@ namespace integrationTest
     {
         static void Main(string[] args)
         {
-            var page = new Paragraph("hello");
-            page.AddParagraph("");
+            var doc = new Document();
+            doc.Body.AddParagraph("Hello World!");
+            System.Console.WriteLine(doc.GeneratePage());
         }
     }
 }
