@@ -1,4 +1,5 @@
 ﻿using System;
+using Elements;
 
 namespace integrationTest
 {
@@ -6,7 +7,8 @@ namespace integrationTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var page = new Paragraph("hello");
+            page.AddParagraph("");
         }
     }
 }
