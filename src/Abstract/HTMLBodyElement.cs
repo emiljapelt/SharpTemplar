@@ -37,6 +37,15 @@ namespace Elements
             Attributes.Add(key, value);
             return this;
         }
+
+        public HTMLBodyElement WithAttributes(params (string key, string value)[] list)
+        {
+            foreach(var a in list)
+            {
+                WithAttribute(a.key, a.value);
+            }
+            return this;
+        }
         
         public HTMLBodyElement WithClass(string value)
         {
