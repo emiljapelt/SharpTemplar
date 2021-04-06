@@ -32,11 +32,6 @@ namespace Elements
             sb.Append($"</{tagType}>");
         }
 
-        internal void SetParent(HTMLBodyElement parent)
-        {
-            Parent = parent;
-        }
-
         /// <summary>
         /// Navigates to the ParentElement.
         /// </summary>
