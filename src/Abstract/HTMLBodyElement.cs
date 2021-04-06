@@ -41,7 +41,7 @@ namespace Elements
         /// Navigates to the ParentElement.
         /// </summary>
         /// <returns>
-        /// Parent of Element it is called on.
+        /// Parent of the Element it is called on.
         /// </returns>
         public HTMLBodyElement ToParent()
         {
