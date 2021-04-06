@@ -4,9 +4,10 @@ namespace Elements.BodyElements
 {
     public class Div : HTMLBodyElement
     {
-        internal Div() 
+        internal Div(HTMLBodyElement parent) 
         {
             tagType = "div";
+            Parent = parent;
         }
     }
 }

@@ -6,9 +6,10 @@ namespace Elements.BodyElements
     public class Paragraph : HTMLBodyElement
     {
 
-        internal Paragraph(string content)
+        internal Paragraph(string content, HTMLBodyElement parent)
         {
             tagType = "p";
+            Parent = parent;
             Contains.Add(new HTMLBodyString(content));
         }
     }

@@ -9,6 +9,7 @@ namespace Elements
     {
         internal List<HTMLBodyElement> Contains;
         internal Dictionary<string, string> Attributes;
+        internal HTMLBodyElement Parent;
 
         protected HTMLBodyElement()
         {
@@ -29,6 +30,16 @@ namespace Elements
                 e.ConstructElement(sb);
             }
             sb.Append($"</{tagType}>");
+        }
+
+        internal void SetParent(HTMLBodyElement parent)
+        {
+            Parent = parent;
+        }
+
+        public HTMLBodyElement ToParent()
+        {
+            return Parent;
         }
 
         public HTMLBodyElement WithAttribute(string key, string value)
@@ -59,14 +70,14 @@ namespace Elements
 
         public Paragraph AddParagraph(string content)
         {
-            var p = new Paragraph(content);
+            var p = new Paragraph(content, this);
             Contains.Add(p);
             return p;
         }
 
         public Anchor AddAnchor(string href)
         {
-            var a = new Anchor(href);
+            var a = new Anchor(href, this);
             Contains.Add(a);
             return a;
         }
@@ -79,7 +90,7 @@ namespace Elements
 
         public Div AddDiv()
         {
-            var div = new Div();
+            var div = new Div(this);
             Contains.Add(div);
             return div;
         }

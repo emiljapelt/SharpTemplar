@@ -7,6 +7,7 @@ namespace Elements.BodyElements
         internal Body() 
         {
             tagType = "body";
+            Parent = this;
         }
     }
 }
