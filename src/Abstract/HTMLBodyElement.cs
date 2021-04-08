@@ -155,6 +155,12 @@ namespace Elements
             Contains.Add(div);
             return div;
         }
+        public Div AddDiv(out HTMLBodyElement self)
+        {
+            var div = AddDiv();
+            self = div;
+            return div;
+        }
 
         /// <summary>
         /// Adds Form into the Element it is called on.

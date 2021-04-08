@@ -8,8 +8,12 @@ namespace integrationTest
         static void Main(string[] args)
         {
             var doc = new TemplarDocument();
-            doc.Head.AddScript("./test.js");
-            doc.Body.AddForm().AddInput("text").WithAttribute("class", "meme").AddLabel("MEMES").AddBreak().AddButton("submit", "Do").ExitForm().AddAnchor("www.google.com").AddHTMLString("Google");
+            
+            HTMLBodyElement d;
+            doc.Body.AddDiv(out d);
+            d.AddDiv().AddDiv();
+            d.AddDiv();
+            d.AddDiv();
 
             System.Console.WriteLine(doc.GeneratePage());
         }
