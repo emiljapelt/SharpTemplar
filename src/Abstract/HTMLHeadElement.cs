@@ -68,5 +68,18 @@ namespace Elements
             Contains.Add(meta);
             return meta;
         }
+
+        /// <summary>
+        /// Adds Link into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The added Link.
+        /// </returns>
+        public HTMLHeadElement AddLink(string rel, string href)
+        {
+            var link = new Link(rel, href);
+            Contains.Add(link);
+            return link;
+        }
     }
 }
