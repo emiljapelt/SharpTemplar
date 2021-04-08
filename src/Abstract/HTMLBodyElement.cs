@@ -131,6 +131,12 @@ namespace Elements
             return this;
         }
 
+        /// <summary>
+        /// Adds break into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
         public virtual HTMLBodyElement AddBreak()
         {
             Contains.Add(new Break(this));
