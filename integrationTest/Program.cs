@@ -8,7 +8,7 @@ namespace integrationTest
         static void Main(string[] args)
         {
             var doc = new TemplarDocument();
-            doc.Body.AddForm().AddLabel("First name:").AddInput().WithAttribute("type","text");
+            doc.Body.AddForm().AddInput("text").WithAttribute("class", "meme").AddLabel("MEMES").AddAnchor("www.google.com").AddHTMLString("Google");
 
             System.Console.WriteLine(doc.GeneratePage());
         }

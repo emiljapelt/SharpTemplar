@@ -4,9 +4,10 @@ namespace Elements.BodyElements
 {
     public class Input : HTMLBodyElement
     {
-        internal Input(HTMLBodyElement parent) 
+        internal Input(string type, HTMLBodyElement parent) 
         {
             tagType = "input";
+            Attributes.Add("type", type);
             Parent = parent;
         }
     }

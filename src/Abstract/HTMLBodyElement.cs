@@ -49,7 +49,7 @@ namespace Elements
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement WithAttribute(string key, string value)
+        public virtual HTMLBodyElement WithAttribute(string key, string value)
         {
             if (Attributes.ContainsKey(key)) Attributes[key] = $"{Attributes[key]} {value}";
             Attributes.Add(key, value);
@@ -62,7 +62,7 @@ namespace Elements
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement WithAttributes(params (string key, string value)[] list)
+        public virtual  HTMLBodyElement WithAttributes(params (string key, string value)[] list)
         {
             foreach(var a in list)
             {
