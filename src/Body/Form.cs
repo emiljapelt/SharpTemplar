@@ -38,5 +38,11 @@ namespace Elements.BodyElements
             Contains.Add(new Input(type, this));
             return this;
         }
+
+        public Form AddButton(string type, string text)
+        {
+            Contains.Add(new Button(type, text, this));
+            return this;
+        }
     }
 }
