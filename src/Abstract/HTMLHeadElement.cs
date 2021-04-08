@@ -81,5 +81,18 @@ namespace Elements
             Contains.Add(link);
             return link;
         }
+
+        /// <summary>
+        /// Adds Link into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The added Link.
+        /// </returns>
+        public HTMLHeadElement AddScript(string path)
+        {
+            var script = new Script(path);
+            Contains.Add(script);
+            return script;
+        }
     }
 }
