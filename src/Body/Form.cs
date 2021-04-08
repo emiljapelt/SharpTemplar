@@ -44,5 +44,11 @@ namespace Elements.BodyElements
             Contains.Add(new Button(type, text, this));
             return this;
         }
+
+        public override Form AddBreak()
+        {
+            base.AddBreak();
+            return this;
+        }
     }
 }
