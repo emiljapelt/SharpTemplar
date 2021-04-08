@@ -83,10 +83,10 @@ namespace Elements
         }
 
         /// <summary>
-        /// Adds Link into the Element it is called on.
+        /// Adds Script into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Link.
+        /// The added Script.
         /// </returns>
         public HTMLHeadElement AddScript(string path)
         {
