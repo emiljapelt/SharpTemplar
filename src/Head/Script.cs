@@ -11,5 +11,10 @@ namespace Elements.HeadElements
             tagType = "script";
             Contains.Add(new HTMLHeadString(File.ReadAllText(path)));
         }
+
+        internal Script()
+        {
+            tagType = "script";
+        }
     }
 }
