@@ -11,19 +11,19 @@ namespace Elements
         internal Dictionary<string, string> Attributes;
         internal HTMLBodyElement Parent;
         internal HTMLBodyElement Newest;
-        internal HTMLBodyElement Building;
+        internal HTMLBodyElement UnderConstruction;
 
         protected HTMLBodyElement()
         {
             Contains = new List<HTMLBodyElement>();
             Attributes = new Dictionary<string, string>();
             Newest = this;
-            Building = null;
+            UnderConstruction = null;
         }
 
         internal virtual void ConstructElement(StringBuilder sb)
         {
-            if (Building is not null) AddBuilding();
+            FinishConstruction();
             sb.Append($"<{tagType}");
             foreach(var a in Attributes)
             {
@@ -39,23 +39,18 @@ namespace Elements
 
         private HTMLBodyElement AddElement(HTMLBodyElement e)
         {
-            if (Building is not null) AddBuilding();
-            StartBuilding(e);
+            FinishConstruction();
+            UnderConstruction = e;
             return this;
         }
 
-        private HTMLBodyElement AddBuilding()
+        private void FinishConstruction()
         {
-            var build = Building;
-            Building = null;
-            Contains.Add(build);
-            Newest = build;
-            return build;
-        }
-
-        private void StartBuilding(HTMLBodyElement e)
-        {
-            Building = e;
+            if (UnderConstruction is null) return;
+            var element = UnderConstruction;
+            UnderConstruction = null;
+            Contains.Add(element);
+            Newest = element;
         }
 
         /// <summary>
@@ -66,6 +61,7 @@ namespace Elements
         /// </returns>
         public HTMLBodyElement ToParent()
         {
+            FinishConstruction();
             return Parent;
         }
 
@@ -77,7 +73,7 @@ namespace Elements
         /// </returns>
         public HTMLBodyElement EnterIt()
         {
-            if (Building is not null) AddBuilding();
+            FinishConstruction();
             return Newest;
         }
 
@@ -89,8 +85,8 @@ namespace Elements
         /// </returns>
         public virtual HTMLBodyElement WithAttribute(string key, string value)
         {
-            if (Building.Attributes.ContainsKey(key)) Building.Attributes[key] = $"{Attributes[key]} {value}";
-            Building.Attributes.Add(key, value);
+            if (UnderConstruction.Attributes.ContainsKey(key)) UnderConstruction.Attributes[key] = $"{Attributes[key]} {value}";
+            UnderConstruction.Attributes.Add(key, value);
             return this;
         }
 
@@ -175,7 +171,7 @@ namespace Elements
         /// </returns>
         public HTMLBodyElement InsertHTMLString(string content)
         {
-            if (Building is not null) AddBuilding();
+            FinishConstruction();
             Contains.Add(new HTMLBodyString(content));
             return this;
         }
@@ -188,7 +184,7 @@ namespace Elements
         /// </returns>
         public virtual HTMLBodyElement AddBreak()
         {
-            if (Building is not null) AddBuilding();
+            FinishConstruction();
             Contains.Add(new Break(this));
             return this;
         }
