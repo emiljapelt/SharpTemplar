@@ -11,16 +11,19 @@ namespace Elements
         internal Dictionary<string, string> Attributes;
         internal HTMLBodyElement Parent;
         internal HTMLBodyElement Newest;
+        internal HTMLBodyElement Building;
 
         protected HTMLBodyElement()
         {
             Contains = new List<HTMLBodyElement>();
             Attributes = new Dictionary<string, string>();
             Newest = this;
+            Building = null;
         }
 
         internal virtual void ConstructElement(StringBuilder sb)
         {
+            if (Building is not null) AddBuilding();
             sb.Append($"<{tagType}");
             foreach(var a in Attributes)
             {
@@ -36,9 +39,23 @@ namespace Elements
 
         private HTMLBodyElement AddElement(HTMLBodyElement e)
         {
-            Contains.Add(e);
-            Newest = e;
+            if (Building is not null) AddBuilding();
+            StartBuilding(e);
             return this;
+        }
+
+        private HTMLBodyElement AddBuilding()
+        {
+            var build = Building;
+            Building = null;
+            Contains.Add(build);
+            Newest = build;
+            return build;
+        }
+
+        private void StartBuilding(HTMLBodyElement e)
+        {
+            Building = e;
         }
 
         /// <summary>
@@ -60,6 +77,7 @@ namespace Elements
         /// </returns>
         public HTMLBodyElement EnterIt()
         {
+            if (Building is not null) AddBuilding();
             return Newest;
         }
 
@@ -71,8 +89,8 @@ namespace Elements
         /// </returns>
         public virtual HTMLBodyElement WithAttribute(string key, string value)
         {
-            if (Attributes.ContainsKey(key)) Attributes[key] = $"{Attributes[key]} {value}";
-            Attributes.Add(key, value);
+            if (Building.Attributes.ContainsKey(key)) Building.Attributes[key] = $"{Attributes[key]} {value}";
+            Building.Attributes.Add(key, value);
             return this;
         }
 
@@ -122,9 +140,13 @@ namespace Elements
         public HTMLBodyElement AddParagraph(string content)
         {
             var p = new Paragraph(content, this);
-            Contains.Add(p);
-            Newest = p;
-            return this;
+            return AddElement(p);
+        }
+        public HTMLBodyElement AddParagraph(string content, out HTMLBodyElement saveIn)
+        {
+            var p = new Paragraph(content, this);
+            saveIn = p;
+            return AddElement(p);
         }
 
         /// <summary>
@@ -134,11 +156,15 @@ namespace Elements
         /// The added Anchor.
         /// </returns>
         public HTMLBodyElement AddAnchor(string href)
-        {
+        {           
             var a = new Anchor(href, this);
-            Contains.Add(a);
-            Newest = a;
-            return this;
+            return AddElement(a);
+        }
+        public HTMLBodyElement AddAnchor(string href, out HTMLBodyElement saveIn)
+        {           
+            var a = new Anchor(href, this);
+            saveIn = a;
+            return AddElement(a);
         }
 
         /// <summary>
@@ -149,6 +175,7 @@ namespace Elements
         /// </returns>
         public HTMLBodyElement InsertHTMLString(string content)
         {
+            if (Building is not null) AddBuilding();
             Contains.Add(new HTMLBodyString(content));
             return this;
         }
@@ -161,6 +188,7 @@ namespace Elements
         /// </returns>
         public virtual HTMLBodyElement AddBreak()
         {
+            if (Building is not null) AddBuilding();
             Contains.Add(new Break(this));
             return this;
         }
@@ -176,10 +204,10 @@ namespace Elements
             var div = new Div(this);
             return AddElement(div);
         }
-        public HTMLBodyElement AddDiv(out HTMLBodyElement self)
+        public HTMLBodyElement AddDiv(out HTMLBodyElement saveIn)
         {
             var div = new Div(this);
-            self = div;
+            saveIn = div;
             return AddElement(div);
         }
 
@@ -194,10 +222,10 @@ namespace Elements
             var form = new Form(this);
             return AddElement(form);
         }
-        public HTMLBodyElement AddForm(out HTMLBodyElement self)
+        public HTMLBodyElement AddForm(out HTMLBodyElement saveIn)
         {
             var form = new Form(this);
-            self = form;
+            saveIn = form;
             return AddElement(form);
         }
     }

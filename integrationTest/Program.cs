@@ -9,10 +9,10 @@ namespace integrationTest
         {
             var doc = new TemplarDocument();
 
-            doc.Head.AddStyle("./test.css");
-            doc.Head.AddScript("./test.js");
-            doc.Head.AddScript().InsertHTMLString("console.error(\"OMG cool script\")");
-            doc.Body.AddDiv().WithAttribute("class","meme").AddDiv().EnterIt().AddDiv();
+            HTMLBodyElement a;
+            doc.Body.AddDiv().WithAttribute("class", "outer").AddDiv().WithAttribute("class", "outer").EnterIt().AddAnchor("www.google.com", out a);
+
+            a.InsertHTMLString("GOOGLE");
 
             System.Console.WriteLine(doc.GeneratePage());
         }
