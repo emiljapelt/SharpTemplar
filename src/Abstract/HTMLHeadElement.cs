@@ -50,7 +50,7 @@ namespace Elements
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLHeadElement AddHTMLString(string content)
+        public HTMLHeadElement InsertHTMLString(string content)
         {
             Contains.Add(new HTMLHeadString(content));
             return this;

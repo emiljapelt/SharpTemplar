@@ -147,7 +147,7 @@ namespace Elements
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement AddHTMLString(string content)
+        public HTMLBodyElement InsertHTMLString(string content)
         {
             Contains.Add(new HTMLBodyString(content));
             return this;
