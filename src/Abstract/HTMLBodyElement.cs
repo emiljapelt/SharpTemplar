@@ -10,11 +10,13 @@ namespace Elements
         internal List<HTMLBodyElement> Contains;
         internal Dictionary<string, string> Attributes;
         internal HTMLBodyElement Parent;
+        internal HTMLBodyElement Newest;
 
         protected HTMLBodyElement()
         {
             Contains = new List<HTMLBodyElement>();
             Attributes = new Dictionary<string, string>();
+            Newest = this;
         }
 
         internal virtual void ConstructElement(StringBuilder sb)
@@ -32,6 +34,13 @@ namespace Elements
             sb.Append($"</{tagType}>");
         }
 
+        private HTMLBodyElement AddElement(HTMLBodyElement e)
+        {
+            Contains.Add(e);
+            Newest = e;
+            return this;
+        }
+
         /// <summary>
         /// Navigates to the ParentElement.
         /// </summary>
@@ -41,6 +50,17 @@ namespace Elements
         public HTMLBodyElement ToParent()
         {
             return Parent;
+        }
+
+        /// <summary>
+        /// Navigates to the newest added element.
+        /// </summary>
+        /// <returns>
+        /// Most recently added Element.
+        /// </returns>
+        public HTMLBodyElement EnterIt()
+        {
+            return Newest;
         }
 
         /// <summary>
@@ -99,11 +119,12 @@ namespace Elements
         /// <returns>
         /// The added Paragraph.
         /// </returns>
-        public Paragraph AddParagraph(string content)
+        public HTMLBodyElement AddParagraph(string content)
         {
             var p = new Paragraph(content, this);
             Contains.Add(p);
-            return p;
+            Newest = p;
+            return this;
         }
 
         /// <summary>
@@ -112,11 +133,12 @@ namespace Elements
         /// <returns>
         /// The added Anchor.
         /// </returns>
-        public Anchor AddAnchor(string href)
+        public HTMLBodyElement AddAnchor(string href)
         {
             var a = new Anchor(href, this);
             Contains.Add(a);
-            return a;
+            Newest = a;
+            return this;
         }
 
         /// <summary>
@@ -149,17 +171,16 @@ namespace Elements
         /// <returns>
         /// The added Div.
         /// </returns>
-        public Div AddDiv()
+        public HTMLBodyElement AddDiv()
         {
             var div = new Div(this);
-            Contains.Add(div);
-            return div;
+            return AddElement(div);
         }
-        public Div AddDiv(out HTMLBodyElement self)
+        public HTMLBodyElement AddDiv(out HTMLBodyElement self)
         {
-            var div = AddDiv();
+            var div = new Div(this);
             self = div;
-            return div;
+            return AddElement(div);
         }
 
         /// <summary>
@@ -168,11 +189,16 @@ namespace Elements
         /// <returns>
         /// The added Form.
         /// </returns>
-        public Form AddForm()
+        public HTMLBodyElement AddForm()
         {
             var form = new Form(this);
-            Contains.Add(form);
-            return form;
+            return AddElement(form);
+        }
+        public HTMLBodyElement AddForm(out HTMLBodyElement self)
+        {
+            var form = new Form(this);
+            self = form;
+            return AddElement(form);
         }
     }
 }

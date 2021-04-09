@@ -8,12 +8,8 @@ namespace integrationTest
         static void Main(string[] args)
         {
             var doc = new TemplarDocument();
-            
-            HTMLBodyElement d;
-            doc.Body.AddDiv(out d);
-            d.AddDiv().AddDiv();
-            d.AddDiv();
-            d.AddDiv();
+
+            doc.Body.AddDiv().EnterIt().AddDiv();
 
             System.Console.WriteLine(doc.GeneratePage());
         }
