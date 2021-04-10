@@ -26,7 +26,7 @@ namespace Elements
 
 
         /// <summary>
-        /// Adds attribute of any kind to the Element it is called on.
+        /// Adds attribute of any kind to the Element it is called on. If the Element already has the attribute, the old attribute is replaced.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
@@ -55,7 +55,7 @@ namespace Elements
         /// Adds Style into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Style.
+        /// The Element it is called on.
         /// </returns>
         public HTMLHeadElement AddStyle(string path)
         {
@@ -68,7 +68,7 @@ namespace Elements
         /// Adds Meta into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Meta.
+        /// The Element it is called on.
         /// </returns>
         public HTMLHeadElement AddMeta()
         {
@@ -81,7 +81,7 @@ namespace Elements
         /// Adds Link into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Link.
+        /// The Element it is called on.
         /// </returns>
         public HTMLHeadElement AddLink(string rel, string href)
         {
@@ -94,7 +94,7 @@ namespace Elements
         /// Adds Script into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Script.
+        /// The Element it is called on.
         /// </returns>
         public HTMLHeadElement AddScript(string path)
         {
@@ -107,7 +107,7 @@ namespace Elements
         /// Adds Script into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Script.
+        /// The Element it is called on.
         /// </returns>
         public HTMLHeadElement AddScript()
         {

@@ -50,7 +50,7 @@ namespace Elements
         }
 
         /// <summary>
-        /// Adds attribute of any kind to the Element it is called on.
+        /// Adds attribute of any kind to the Element it is called on. If the Element already has the attribute, the new attribute is appended to the old attribute with a single space.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
