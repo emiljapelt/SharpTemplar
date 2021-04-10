@@ -5,10 +5,9 @@ namespace Elements.BodyElements
 {
     public class Label : HTMLBodyElement
     {
-        internal Label(string content, HTMLBodyElement parent) 
+        internal Label(string content, HTMLBodyElement parent)
+            : base("label", parent)
         {
-            tagType = "label";
-            Parent = parent;
             Contains.Add(new HTMLBodyString(content));
         }
     }

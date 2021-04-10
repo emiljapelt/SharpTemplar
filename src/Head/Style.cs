@@ -7,8 +7,8 @@ namespace Elements.HeadElements
     public class Style : HTMLHeadElement
     {
         internal Style(string path)
+            : base("style")
         {
-            tagType = "style";
             Contains.Add(new HTMLHeadString(File.ReadAllText(path)));
         }
     }

@@ -7,29 +7,23 @@ namespace Elements
 {
     public abstract class HTMLHeadElement : HTMLElement
     {
-        internal List<HTMLHeadElement> Contains;
-        internal Dictionary<string, string> Attributes;
-
-        protected HTMLHeadElement()
-        {
-            Contains = new List<HTMLHeadElement>();
-            Attributes = new Dictionary<string, string>();
+        private HTMLHeadElement _Parent;
+        internal override HTMLElement Parent 
+        { 
+            get { return _Parent; }
+            set { _Parent = (HTMLHeadElement) value; }
+        }
+        private HTMLHeadElement _Newest;
+        internal override HTMLElement Newest 
+        { 
+            get { return _Newest; }
+            set { _Newest = (HTMLHeadElement) value; }
         }
 
-        internal virtual void ConstructElement(StringBuilder sb)
-        {
-            sb.Append($"<{tagType}");
-            foreach(var a in Attributes)
-            {
-                sb.Append($" {a.Key}=\"{a.Value}\"");
-            }
-            sb.Append(">");
-            foreach(HTMLHeadElement e in Contains)
-            {
-                e.ConstructElement(sb);
-            }
-            sb.Append($"</{tagType}>");
-        }
+
+        protected HTMLHeadElement(string tagType)
+            : base(tagType, null) { }
+
 
         /// <summary>
         /// Adds attribute of any kind to the Element it is called on.
@@ -39,8 +33,8 @@ namespace Elements
         /// </returns>        
         public HTMLHeadElement WithAttribute(string key, string value)
         {
-            if (Attributes.ContainsKey(key)) Attributes[key] = value;
-            else Attributes.Add(key, value);
+            if (UnderConstruction.Attributes.ContainsKey(key)) UnderConstruction.Attributes[key] = value;
+            else UnderConstruction.Attributes.Add(key, value);
             return this;
         }
 
@@ -52,6 +46,7 @@ namespace Elements
         /// </returns>
         public HTMLHeadElement InsertHTMLString(string content)
         {
+            FinishConstruction();
             Contains.Add(new HTMLHeadString(content));
             return this;
         }
@@ -65,8 +60,8 @@ namespace Elements
         public HTMLHeadElement AddStyle(string path)
         {
             var style = new Style(path);
-            Contains.Add(style);
-            return style;
+            AddElement(style);
+            return this;
         }
 
         /// <summary>
@@ -78,8 +73,8 @@ namespace Elements
         public HTMLHeadElement AddMeta()
         {
             var meta = new Meta();
-            Contains.Add(meta);
-            return meta;
+            AddElement(meta);
+            return this;
         }
 
         /// <summary>
@@ -91,8 +86,8 @@ namespace Elements
         public HTMLHeadElement AddLink(string rel, string href)
         {
             var link = new Link(rel, href);
-            Contains.Add(link);
-            return link;
+            AddElement(link);
+            return this;
         }
 
         /// <summary>
@@ -104,8 +99,8 @@ namespace Elements
         public HTMLHeadElement AddScript(string path)
         {
             var script = new Script(path);
-            Contains.Add(script);
-            return script;
+            AddElement(script);
+            return this;
         }
 
         /// <summary>
@@ -117,8 +112,8 @@ namespace Elements
         public HTMLHeadElement AddScript()
         {
             var script = new Script();
-            Contains.Add(script);
-            return script;
+            AddElement(script);
+            return this;
         }
     }
 }

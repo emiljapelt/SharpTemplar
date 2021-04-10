@@ -7,6 +7,7 @@ namespace Elements.Shared
         public string Content;
 
         internal HTMLHeadString(string content)
+            : base(null)
         {
             Content = content;
         }
@@ -22,6 +23,7 @@ namespace Elements.Shared
         public string Content;
 
         internal HTMLBodyString(string content)
+            : base(null, null)
         {
             Content = content;
         }

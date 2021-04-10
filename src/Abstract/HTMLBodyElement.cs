@@ -7,54 +7,26 @@ namespace Elements
 {
     public abstract class HTMLBodyElement : HTMLElement
     {
-        internal List<HTMLBodyElement> Contains;
-        internal Dictionary<string, string> Attributes;
-        internal HTMLBodyElement Parent;
-        internal HTMLBodyElement Newest;
-        internal HTMLBodyElement UnderConstruction;
-
-        protected HTMLBodyElement()
-        {
-            Contains = new List<HTMLBodyElement>();
-            Attributes = new Dictionary<string, string>();
-            Newest = this;
-            UnderConstruction = null;
+        private HTMLBodyElement _Parent;
+        internal override HTMLElement Parent 
+        { 
+            get { return _Parent; }
+            set { _Parent = (HTMLBodyElement) value; }
+        }
+        private HTMLBodyElement _Newest;
+        internal override HTMLElement Newest 
+        { 
+            get { return _Newest; }
+            set { _Newest = (HTMLBodyElement) value; }
         }
 
-        internal virtual void ConstructElement(StringBuilder sb)
-        {
-            FinishConstruction();
-            sb.Append($"<{tagType}");
-            foreach(var a in Attributes)
-            {
-                sb.Append($" {a.Key}=\"{a.Value}\"");
-            }
-            sb.Append(">");
-            foreach(HTMLBodyElement e in Contains)
-            {
-                e.ConstructElement(sb);
-            }
-            sb.Append($"</{tagType}>");
-        }
 
-        private HTMLBodyElement AddElement(HTMLBodyElement e)
-        {
-            FinishConstruction();
-            UnderConstruction = e;
-            return this;
-        }
+        protected HTMLBodyElement(string tagType, HTMLBodyElement parent)
+            : base(tagType, parent) { }
 
-        private void FinishConstruction()
-        {
-            if (UnderConstruction is null) return;
-            var element = UnderConstruction;
-            UnderConstruction = null;
-            Contains.Add(element);
-            Newest = element;
-        }
 
         /// <summary>
-        /// Navigates to the ParentElement.
+        /// Navigates to the Parent Element.
         /// </summary>
         /// <returns>
         /// Parent of the Element it is called on.
@@ -62,7 +34,7 @@ namespace Elements
         public HTMLBodyElement ToParent()
         {
             FinishConstruction();
-            return Parent;
+            return _Parent;
         }
 
         /// <summary>
@@ -74,7 +46,7 @@ namespace Elements
         public HTMLBodyElement EnterIt()
         {
             FinishConstruction();
-            return Newest;
+            return _Newest;
         }
 
         /// <summary>
@@ -131,36 +103,40 @@ namespace Elements
         /// Adds Paragraph into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Paragraph.
+        /// The Element it is called on.
         /// </returns>
         public HTMLBodyElement AddParagraph(string content)
         {
             var p = new Paragraph(content, this);
-            return AddElement(p);
+            AddElement(p);
+            return this;
         }
         public HTMLBodyElement AddParagraph(string content, out HTMLBodyElement saveIn)
         {
             var p = new Paragraph(content, this);
             saveIn = p;
-            return AddElement(p);
+            AddElement(p);
+            return this;
         }
 
         /// <summary>
         /// Adds Anchor into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Anchor.
+        /// The Element it is called on.
         /// </returns>
         public HTMLBodyElement AddAnchor(string href)
         {           
             var a = new Anchor(href, this);
-            return AddElement(a);
+            AddElement(a);
+            return this;
         }
         public HTMLBodyElement AddAnchor(string href, out HTMLBodyElement saveIn)
         {           
             var a = new Anchor(href, this);
             saveIn = a;
-            return AddElement(a);
+            AddElement(a);
+            return this;
         }
 
         /// <summary>
@@ -193,36 +169,100 @@ namespace Elements
         /// Adds Div into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Div.
+        /// The Element it is called on.
         /// </returns>
         public HTMLBodyElement AddDiv()
         {
             var div = new Div(this);
-            return AddElement(div);
+            AddElement(div);
+            return this;
         }
         public HTMLBodyElement AddDiv(out HTMLBodyElement saveIn)
         {
             var div = new Div(this);
             saveIn = div;
-            return AddElement(div);
+            AddElement(div);
+            return this;
         }
 
         /// <summary>
         /// Adds Form into the Element it is called on.
         /// </summary>
         /// <returns>
-        /// The added Form.
+        /// The Element it is called on.
         /// </returns>
         public HTMLBodyElement AddForm()
         {
             var form = new Form(this);
-            return AddElement(form);
+            AddElement(form);
+            return this;
         }
         public HTMLBodyElement AddForm(out HTMLBodyElement saveIn)
         {
             var form = new Form(this);
             saveIn = form;
-            return AddElement(form);
+            AddElement(form);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds Lable into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddLabel(string content)
+        {
+            var label = new Label(content, this);
+            AddElement(label);
+            return this;
+        }
+        public HTMLBodyElement AddLabel(string content, out HTMLBodyElement saveIn)
+        {
+            var label = new Label(content, this);
+            saveIn = label;
+            AddElement(label);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds Input into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddInput(string type)
+        {
+            var input = new Input(type, this);
+            AddElement(input);
+            return this;
+        }
+        public HTMLBodyElement AddInput(string type, out HTMLBodyElement saveIn)
+        {
+            var input = new Input(type, this);
+            saveIn = input;
+            AddElement(input);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds Button into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddButton(string type, string text)
+        {
+            var button = new Button(type, text, this);
+            AddElement(button);
+            return this;
+        }
+        public HTMLBodyElement AddInput(string type, string text, out HTMLBodyElement saveIn)
+        {
+            var button = new Button(type, text, this);
+            saveIn = button;
+            AddElement(button);
+            return this;
         }
     }
 }

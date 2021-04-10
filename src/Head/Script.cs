@@ -7,14 +7,12 @@ namespace Elements.HeadElements
     public class Script : HTMLHeadElement
     {
         internal Script(string path)
+            : base("scritp")
         {
-            tagType = "script";
             Contains.Add(new HTMLHeadString(File.ReadAllText(path)));
         }
 
         internal Script()
-        {
-            tagType = "script";
-        }
+            : base("script") { }
     }
 }

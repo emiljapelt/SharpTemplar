@@ -6,8 +6,8 @@ namespace Elements.HeadElements
     public class Title : HTMLHeadElement
     {
         internal Title(string content)
+            : base("title")
         {
-            tagType = "title";
             Contains.Add(new HTMLHeadString(content));
         }
     }

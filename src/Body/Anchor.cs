@@ -4,10 +4,9 @@ namespace Elements.BodyElements
 {
     public class Anchor : HTMLBodyElement
     {
-        internal Anchor(string href, HTMLBodyElement parent) 
+        internal Anchor(string href, HTMLBodyElement parent)
+            : base("a", parent)
         {
-            tagType = "a";
-            Parent = parent;
             Attributes.Add("href", href);
         }
     }

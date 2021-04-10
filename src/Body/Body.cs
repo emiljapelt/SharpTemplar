@@ -4,9 +4,9 @@ namespace Elements.BodyElements
 {
     public class Body : HTMLBodyElement
     {
-        internal Body() 
+        internal Body()
+            : base ("body", null)
         {
-            tagType = "body";
             Parent = this;
         }
     }
