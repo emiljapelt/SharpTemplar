@@ -1,7 +1,5 @@
 using Elements.HeadElements;
 using Elements.Shared;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Elements
 {

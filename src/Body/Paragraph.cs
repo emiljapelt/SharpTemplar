@@ -1,4 +1,3 @@
-using System.Text;
 using Elements.Shared;
 
 namespace Elements.BodyElements

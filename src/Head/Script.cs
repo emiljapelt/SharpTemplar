@@ -1,4 +1,3 @@
-using System.Text;
 using System.IO;
 using Elements.Shared;
 
