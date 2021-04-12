@@ -8,7 +8,7 @@ namespace Elements.HeadElements
         internal Title(string content)
             : base("title")
         {
-            Contains.Add(new HTMLHeadString(content));
+            Contains.Add(new HTMLString(content));
         }
     }
 }

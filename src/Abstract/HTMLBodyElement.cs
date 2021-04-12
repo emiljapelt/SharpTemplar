@@ -143,7 +143,7 @@ namespace Elements
         public HTMLBodyElement InsertHTMLString(string content)
         {
             FinishConstruction();
-            Contains.Add(new HTMLBodyString(content));
+            Contains.Add(new HTMLString(content));
             return this;
         }
 
@@ -269,6 +269,20 @@ namespace Elements
         public HTMLTableElement BeginTable(out HTMLTableElement saveIn, params string[] columns)
         {
             var table = new Table(this, columns);
+            saveIn = table;
+            AddElement(table);
+            return table;
+        }
+
+        public HTMLTableElement BeginTable()
+        {
+            var table = new Table(this);
+            AddElement(table);
+            return table;
+        }
+        public HTMLTableElement BeginTable(out HTMLTableElement saveIn)
+        {
+            var table = new Table(this);
             saveIn = table;
             AddElement(table);
             return table;

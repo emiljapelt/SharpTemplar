@@ -46,7 +46,7 @@ namespace Elements
         public HTMLHeadElement InsertHTMLString(string content)
         {
             FinishConstruction();
-            Contains.Add(new HTMLHeadString(content));
+            Contains.Add(new HTMLString(content));
             return this;
         }
 

@@ -10,11 +10,11 @@ namespace Elements
             get { return _Parent; }
             set { _Parent = value; }
         }
-        private HTMLTableElement _Newest;
+        private HTMLElement _Newest;
         internal override HTMLElement Newest 
         { 
             get { return _Newest; }
-            set { _Newest = (HTMLTableElement) value; }
+            set { _Newest = (HTMLElement) value; }
         }
 
 
@@ -35,11 +35,11 @@ namespace Elements
             return this;
         }
 
-        public HTMLTableElement AddTableRow(params string[] columns)
+        public HTMLTableRowElement BeginRow()
         {
-            var data = new TableData(this, columns);
-            AddElement(data);
-            return this;
+            var row = new TableRow(this);
+            AddElement(row);
+            return row;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Elements.HeadElements
         internal Style(string path)
             : base("style")
         {
-            Contains.Add(new HTMLHeadString(File.ReadAllText(path)));
+            Contains.Add(new HTMLString(File.ReadAllText(path)));
         }
     }
 }

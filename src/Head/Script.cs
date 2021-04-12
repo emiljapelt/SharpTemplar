@@ -9,7 +9,7 @@ namespace Elements.HeadElements
         internal Script(string path)
             : base("scritp")
         {
-            Contains.Add(new HTMLHeadString(File.ReadAllText(path)));
+            Contains.Add(new HTMLString(File.ReadAllText(path)));
         }
 
         internal Script()

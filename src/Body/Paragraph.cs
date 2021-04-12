@@ -9,7 +9,7 @@ namespace Elements.BodyElements
         internal Paragraph(string content, HTMLBodyElement parent)
             : base("p", parent)
         {
-            Contains.Add(new HTMLBodyString(content));
+            Contains.Add(new HTMLString(content));
         }
     }
 }

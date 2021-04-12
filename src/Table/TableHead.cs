@@ -3,10 +3,10 @@ using Elements.Shared;
 
 namespace Elements.TableElements
 {
-    public class TableData : HTMLTableDataElement
+    public class TableHead : HTMLTableDataElement
     {
-        internal TableData(HTMLElement parent, string _data)
-            : base("td", parent) 
+        internal TableHead(HTMLElement parent, string _data)
+            : base("th", parent) 
         {
             Contains.Add(new HTMLString(_data));
         }

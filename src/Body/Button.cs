@@ -9,7 +9,7 @@ namespace Elements.BodyElements
             : base("button", parent)
         {
             Attributes.Add("type", type);
-            Contains.Add(new HTMLBodyString(text));
+            Contains.Add(new HTMLString(text));
         }
     }
 }

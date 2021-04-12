@@ -8,7 +8,7 @@ namespace Elements.BodyElements
         internal Label(string content, HTMLBodyElement parent)
             : base("label", parent)
         {
-            Contains.Add(new HTMLBodyString(content));
+            Contains.Add(new HTMLString(content));
         }
     }
 }
