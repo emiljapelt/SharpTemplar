@@ -2,12 +2,12 @@ using System.Text;
 
 namespace Elements.Shared
 {
-    internal class HTMLString : HTMLHeadElement
+    internal class HTMLString : HTMLElement
     {
         public string Content;
 
         internal HTMLString(string content)
-            : base(null)
+            : base(null, null)
         {
             Content = content;
         }

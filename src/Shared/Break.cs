@@ -1,11 +1,11 @@
 using System.Text;
 
-namespace Elements.BodyElements
+namespace Elements.Shared
 {
     public class Break : HTMLBodyElement
     {
-        internal Break(HTMLBodyElement parent)
-            : base("br", parent) { }
+        internal Break()
+            : base("br", null) { }
 
         internal override void ConstructElement(StringBuilder sb)
         {

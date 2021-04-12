@@ -1,11 +1,11 @@
 using System.Text;
 using Elements.Shared;
 
-namespace Elements.BodyElements
+namespace Elements.FormElements
 {
-    public class Button : HTMLBodyElement
+    public class Button : HTMLFormElement
     {
-        internal Button(string type, string text, HTMLBodyElement parent)
+        internal Button(string type, string text, HTMLElement parent)
             : base("button", parent)
         {
             Attributes.Add("type", type);

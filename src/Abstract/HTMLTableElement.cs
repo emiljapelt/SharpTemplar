@@ -29,7 +29,7 @@ namespace Elements
             return (HTMLBodyElement) _Parent;
         }
 
-        public virtual HTMLTableElement WithAttribute(string key, string value)
+        public HTMLTableElement WithAttribute(string key, string value)
         {
             AddAttribute(key, value);
             return this;

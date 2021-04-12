@@ -1,5 +1,6 @@
 using Elements.BodyElements;
 using Elements.TableElements;
+using Elements.FormElements;
 using Elements.Shared;
 
 namespace Elements
@@ -156,7 +157,7 @@ namespace Elements
         public virtual HTMLBodyElement AddBreak()
         {
             FinishConstruction();
-            Contains.Add(new Break(this));
+            Contains.Add(new Break());
             return this;
         }
 
@@ -181,45 +182,19 @@ namespace Elements
         }
 
         /// <summary>
-        /// Adds Form into the Element it is called on.
-        /// </summary>
-        /// <returns>
-        /// The Element it is called on.
-        /// </returns>
-        public HTMLBodyElement AddForm()
-        {
-            var form = new Form(this);
-            AddElement(form);
-            return this;
-        }
-        public HTMLBodyElement AddForm(out HTMLBodyElement saveIn)
-        {
-            var form = new Form(this);
-            saveIn = form;
-            AddElement(form);
-            return this;
-        }
-
-        /// <summary>
         /// Adds Lable into the Element it is called on.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement AddLabel(string content)
+        public HTMLBodyElement AddLabel(string form, string refTo, string content)
         {
-            var label = new Label(content, this);
+            var label = new Label(refTo, content, this);
+            label.WithAttribute("form", form);
             AddElement(label);
             return this;
         }
-        public HTMLBodyElement AddLabel(out HTMLBodyElement saveIn, string content)
-        {
-            var label = new Label(content, this);
-            saveIn = label;
-            AddElement(label);
-            return this;
-        }
-
+/*
         /// <summary>
         /// Adds Input into the Element it is called on.
         /// </summary>
@@ -229,13 +204,6 @@ namespace Elements
         public HTMLBodyElement AddInput(string type)
         {
             var input = new Input(type, this);
-            AddElement(input);
-            return this;
-        }
-        public HTMLBodyElement AddInput(out HTMLBodyElement saveIn, string type)
-        {
-            var input = new Input(type, this);
-            saveIn = input;
             AddElement(input);
             return this;
         }
@@ -252,14 +220,7 @@ namespace Elements
             AddElement(button);
             return this;
         }
-        public HTMLBodyElement AddInput(out HTMLBodyElement saveIn, string type, string text)
-        {
-            var button = new Button(type, text, this);
-            saveIn = button;
-            AddElement(button);
-            return this;
-        }
-
+*/
         public HTMLTableElement BeginTable(params string[] columns)
         {
             var table = new Table(this, columns);
@@ -286,6 +247,20 @@ namespace Elements
             saveIn = table;
             AddElement(table);
             return table;
+        }
+
+        public HTMLFormElement BeginForm(string id)
+        {
+            var form = new Form(this, id);
+            AddElement(form);
+            return form;
+        }
+        public HTMLFormElement BeginForm(out HTMLFormElement saveIn, string id)
+        {
+            var form = new Form(this, id);
+            AddElement(form);
+            saveIn = form;
+            return form;
         }
     }
 }

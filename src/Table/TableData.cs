@@ -3,7 +3,7 @@ using Elements.Shared;
 
 namespace Elements.TableElements
 {
-    public class TableData : HTMLTableDataElement
+    public class TableData : HTMLTableRowElement
     {
         internal TableData(HTMLElement parent, string _data)
             : base("td", parent) 

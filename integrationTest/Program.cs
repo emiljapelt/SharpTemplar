@@ -10,14 +10,13 @@ namespace integrationTest
             var doc = new TemplarDocument();
 
             
-            doc.Body.BeginTable().WithAttribute("is","table")
-                .BeginRow().WithAttribute("is","row")
-                    .AddHead("Id").WithAttribute("is","head")
-                    .AddHead("Name").WithAttribute("is","head").ExitRow()
-                .BeginRow()
-                    .AddData("553")
-                    .AddData("Emil").WithAttribute("is","cool").ExitRow()
-                .ExitTable();
+            doc.Body.BeginForm("myform")
+                .AddLabel("fname","First name").AddInput("fname","text")
+                .AddBreak()
+                .AddLabel("lname","Last name").AddInput("lname","text")
+                .AddButton("button","Submit").WithAttribute("onclick","console.log('Submitted!')").ExitForm().AddAnchor("yay").EnterIt().InsertHTMLString("s");
+            
+            doc.Body.AddLabel("myform", "lname", "im not in a form!!");
 
             System.Console.WriteLine(doc.GeneratePage());
         }
