@@ -33,8 +33,7 @@ namespace Elements
         /// </returns>        
         public HTMLHeadElement WithAttribute(string key, string value)
         {
-            if (UnderConstruction.Attributes.ContainsKey(key)) UnderConstruction.Attributes[key] = value;
-            else UnderConstruction.Attributes.Add(key, value);
+            AddAttribute(key, value);
             return this;
         }
 

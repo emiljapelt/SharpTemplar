@@ -35,7 +35,7 @@ namespace Elements
             return this;
         }
 
-        public HTMLTableElement AddTableData(params string[] columns)
+        public HTMLTableElement AddTableRow(params string[] columns)
         {
             var data = new TableData(this, columns);
             AddElement(data);

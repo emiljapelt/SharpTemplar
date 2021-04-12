@@ -20,7 +20,7 @@ namespace Elements.TableElements
             foreach (string s in columns) sb.Append($"<th>{s}</th>");
             sb.Append("</tr>");
             foreach (var td in Contains) td.ConstructElement(sb);
-            sb.Append($"<{TagType}>");
+            sb.Append($"</{TagType}>");
         }
     }
 }
