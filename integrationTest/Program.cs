@@ -10,7 +10,14 @@ namespace integrationTest
             var doc = new TemplarDocument();
 
             
-            doc.Body.BeginTable().WithAttribute("is","table").BeginRow().WithAttribute("is","row").AddHead("Id").WithAttribute("is","head").AddData("2").WithAttribute("is","data").ExitRow().ExitTable();
+            doc.Body.BeginTable().WithAttribute("is","table")
+                .BeginRow().WithAttribute("is","row")
+                    .AddHead("Id").WithAttribute("is","head")
+                    .AddHead("Name").WithAttribute("is","head").ExitRow()
+                .BeginRow()
+                    .AddData("553")
+                    .AddData("Emil").WithAttribute("is","cool").ExitRow()
+                .ExitTable();
 
             System.Console.WriteLine(doc.GeneratePage());
         }
