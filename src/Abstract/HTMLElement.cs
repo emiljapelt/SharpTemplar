@@ -52,5 +52,31 @@ namespace Elements
             Contains.Add(element);
             Newest = element;
         }
+
+        internal virtual void AddAttribute(string key, string value)
+        {
+            if (UnderConstruction is null) AddAttributeToSelf(key, value);
+            else AddAttributeToUnderConstruction(key, value);
+        }
+
+        internal virtual void AddAttributes(params (string key, string value)[] list)
+        {
+            foreach(var a in list)
+            {
+                AddAttribute(a.key, a.value);
+            }
+        }
+
+        private void AddAttributeToSelf(string key, string value)
+        {
+            if (Attributes.ContainsKey(key)) Attributes[key] = $"{Attributes[key]} {value}";
+            Attributes.Add(key, value);
+        }
+
+        private void AddAttributeToUnderConstruction(string key, string value)
+        {
+            if (UnderConstruction.Attributes.ContainsKey(key)) UnderConstruction.Attributes[key] = $"{UnderConstruction.Attributes[key]} {value}";
+            UnderConstruction.Attributes.Add(key, value);
+        }
     }
 }

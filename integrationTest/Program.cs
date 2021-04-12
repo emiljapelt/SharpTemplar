@@ -9,8 +9,8 @@ namespace integrationTest
         {
             var doc = new TemplarDocument();
 
-            doc.Head.AddStyle("./test.css").AddMeta().WithAttribute("class","headers").AddScript();
-            doc.Body.EnterIt().WithAttribute("a", "b");
+            
+            doc.Body.BeginTable("Id", "Name").WithAttribute("meme","great").AddTableData("1", "Emil").WithAttribute("very", "cool").ExitTable().WithAttribute("uhm","hi").AddButton("submit", "HEJ");
 
             System.Console.WriteLine(doc.GeneratePage());
         }

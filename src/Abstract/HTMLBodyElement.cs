@@ -1,7 +1,6 @@
 using Elements.BodyElements;
+using Elements.TableElements;
 using Elements.Shared;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Elements
 {
@@ -13,11 +12,11 @@ namespace Elements
             get { return _Parent; }
             set { _Parent = (HTMLBodyElement) value; }
         }
-        private HTMLBodyElement _Newest;
+        private HTMLElement _Newest;
         internal override HTMLElement Newest 
         { 
             get { return _Newest; }
-            set { _Newest = (HTMLBodyElement) value; }
+            set { _Newest = value; }
         }
 
 
@@ -46,7 +45,7 @@ namespace Elements
         public HTMLBodyElement EnterIt()
         {
             FinishConstruction();
-            return _Newest;
+            return (HTMLBodyElement) _Newest;
         }
 
         /// <summary>
@@ -57,8 +56,7 @@ namespace Elements
         /// </returns>
         public virtual HTMLBodyElement WithAttribute(string key, string value)
         {
-            if (UnderConstruction.Attributes.ContainsKey(key)) UnderConstruction.Attributes[key] = $"{Attributes[key]} {value}";
-            UnderConstruction.Attributes.Add(key, value);
+            AddAttribute(key, value);
             return this;
         }
 
@@ -70,10 +68,7 @@ namespace Elements
         /// </returns>
         public virtual  HTMLBodyElement WithAttributes(params (string key, string value)[] list)
         {
-            foreach(var a in list)
-            {
-                WithAttribute(a.key, a.value);
-            }
+            AddAttributes(list);
             return this;
         }
         
@@ -111,7 +106,7 @@ namespace Elements
             AddElement(p);
             return this;
         }
-        public HTMLBodyElement AddParagraph(string content, out HTMLBodyElement saveIn)
+        public HTMLBodyElement AddParagraph(out HTMLBodyElement saveIn, string content)
         {
             var p = new Paragraph(content, this);
             saveIn = p;
@@ -131,7 +126,7 @@ namespace Elements
             AddElement(a);
             return this;
         }
-        public HTMLBodyElement AddAnchor(string href, out HTMLBodyElement saveIn)
+        public HTMLBodyElement AddAnchor(out HTMLBodyElement saveIn, string href)
         {           
             var a = new Anchor(href, this);
             saveIn = a;
@@ -217,7 +212,7 @@ namespace Elements
             AddElement(label);
             return this;
         }
-        public HTMLBodyElement AddLabel(string content, out HTMLBodyElement saveIn)
+        public HTMLBodyElement AddLabel(out HTMLBodyElement saveIn, string content)
         {
             var label = new Label(content, this);
             saveIn = label;
@@ -237,7 +232,7 @@ namespace Elements
             AddElement(input);
             return this;
         }
-        public HTMLBodyElement AddInput(string type, out HTMLBodyElement saveIn)
+        public HTMLBodyElement AddInput(out HTMLBodyElement saveIn, string type)
         {
             var input = new Input(type, this);
             saveIn = input;
@@ -257,12 +252,26 @@ namespace Elements
             AddElement(button);
             return this;
         }
-        public HTMLBodyElement AddInput(string type, string text, out HTMLBodyElement saveIn)
+        public HTMLBodyElement AddInput(out HTMLBodyElement saveIn, string type, string text)
         {
             var button = new Button(type, text, this);
             saveIn = button;
             AddElement(button);
             return this;
+        }
+
+        public HTMLTableElement BeginTable(params string[] columns)
+        {
+            var table = new Table(this, columns);
+            AddElement(table);
+            return table;
+        }
+        public HTMLTableElement BeginTable(out HTMLTableElement saveIn, params string[] columns)
+        {
+            var table = new Table(this, columns);
+            saveIn = table;
+            AddElement(table);
+            return table;
         }
     }
 }
