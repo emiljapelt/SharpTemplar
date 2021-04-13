@@ -1,17 +1,18 @@
 using SharpTemplar.BodyElements;
 using SharpTemplar.TableElements;
 using SharpTemplar.FormElements;
+using SharpTemplar.ListElements;
 using SharpTemplar.Shared;
 
 namespace SharpTemplar
 {
     public abstract class HTMLBodyElement : HTMLElement
     {
-        private HTMLBodyElement _Parent;
+        private HTMLElement _Parent;
         internal override HTMLElement Parent 
         { 
             get { return _Parent; }
-            set { _Parent = (HTMLBodyElement) value; }
+            set { _Parent = value; }
         }
         private HTMLElement _Newest;
         internal override HTMLElement Newest 
@@ -21,7 +22,7 @@ namespace SharpTemplar
         }
 
 
-        protected HTMLBodyElement(string tagType, HTMLBodyElement parent)
+        protected HTMLBodyElement(string tagType, HTMLElement parent)
             : base(tagType, parent) { }
 
 
@@ -31,10 +32,10 @@ namespace SharpTemplar
         /// <returns>
         /// Parent of the Element it is called on.
         /// </returns>
-        public HTMLBodyElement ToParent()
+        public virtual HTMLBodyElement ToParent()
         {
             FinishConstruction();
-            return _Parent;
+            return (HTMLBodyElement) _Parent;
         }
 
         /// <summary>
@@ -121,13 +122,13 @@ namespace SharpTemplar
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement AddHeader(string level, string content)
+        public HTMLBodyElement AddHeader(HeaderLevel level, string content)
         {
             var h = new Header(level, content, this);
             AddElement(h);
             return this;
         }
-        public HTMLBodyElement AddHeader(out HTMLBodyElement saveIn, string level, string content)
+        public HTMLBodyElement AddHeader(out HTMLBodyElement saveIn, HeaderLevel level, string content)
         {
             var h = new Header(level, content, this);
             saveIn = h;
@@ -281,6 +282,20 @@ namespace SharpTemplar
             AddElement(form);
             saveIn = form;
             return form;
+        }
+
+        public HTMLListElement BeginUnorderedList()
+        {
+            var list = new UnorderedList(this);
+            AddElement(list);
+            return list;
+        }
+        public HTMLListElement BeginUnorderedList(out HTMLListElement saveIn)
+        {
+            var list = new UnorderedList(this);
+            AddElement(list);
+            saveIn = list;
+            return list;
         }
     }
 }

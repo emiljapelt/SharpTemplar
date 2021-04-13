@@ -24,9 +24,10 @@ namespace testapi.Controllers
 
             HTMLBodyElement nav;
             HTMLBodyElement body;
+            HTMLListElement messages;
 
             doc.Body.AddDiv().WithClass("page").EnterIt()
-                .AddHeader("1", "Minitwit")
+                .AddHeader(HeaderLevel.One, "Minitwit")
                 .AddDiv(out nav).WithClass("navigation")
                 .AddDiv(out body).WithClass("body")
                 .AddDiv().WithClass("footer").EnterIt().InsertHTMLString("Minitwit - Not A Flask Application");
@@ -35,9 +36,15 @@ namespace testapi.Controllers
                 .InsertHTMLString("|")
                 .AddAnchor("sign_up").EnterIt().InsertHTMLString("sign up").ToParent()
                 .InsertHTMLString("|")
-                .AddAnchor("sign_in").EnterIt().InsertHTMLString("sign in").ToParent();
+                .AddAnchor("sign_in").EnterIt().InsertHTMLString("sign in");
 
-            body.AddHeader("2", "Public Timeline");
+            body.AddHeader(HeaderLevel.Two, "Public Timeline")
+                .BeginUnorderedList(out messages).WithAttribute("class","messages");
+
+            for (int i = 0; i < 10; i++)
+            {
+                messages.AddItem().AddStrong("Janell Gollhofer").InsertHTMLString(" When they got out into the matter with his pike, sought to restrain them.").AddSmall("- 2021-04-13 @ 20:53");
+            }
 
             return new ContentResult
             {
