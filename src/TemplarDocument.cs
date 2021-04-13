@@ -2,16 +2,16 @@ using System.Text;
 using Elements.BodyElements;
 using Elements.HeadElements;
 
-namespace Elements
+namespace SharpTemplar
 {
     public class TemplarDocument
     {
         public Head Head { get; }
         public Body Body { get; }
 
-        public TemplarDocument()
+        public TemplarDocument(string title)
         {
-            Head = new Head("integrationTest");
+            Head = new Head(title);
             Body = new Body();
         }
 
