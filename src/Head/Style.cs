@@ -1,7 +1,7 @@
 using System.IO;
-using Elements.Shared;
+using SharpTemplar.Shared;
 
-namespace Elements.HeadElements
+namespace SharpTemplar.HeadElements
 {
     public class Style : HTMLHeadElement
     {

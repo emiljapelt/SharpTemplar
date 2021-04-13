@@ -1,7 +1,7 @@
-using Elements.FormElements;
-using Elements.Shared;
+using SharpTemplar.FormElements;
+using SharpTemplar.Shared;
 
-namespace Elements
+namespace SharpTemplar
 {
     public abstract class HTMLFormElement : HTMLElement
     {

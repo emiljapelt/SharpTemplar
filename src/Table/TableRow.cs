@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Elements.TableElements
+namespace SharpTemplar.TableElements
 {
     public class TableRow : HTMLTableRowElement
     {

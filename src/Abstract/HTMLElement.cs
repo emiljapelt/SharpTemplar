@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Elements
+namespace SharpTemplar
 {
     public abstract class HTMLElement
     {

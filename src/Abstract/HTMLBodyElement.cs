@@ -1,9 +1,9 @@
-using Elements.BodyElements;
-using Elements.TableElements;
-using Elements.FormElements;
-using Elements.Shared;
+using SharpTemplar.BodyElements;
+using SharpTemplar.TableElements;
+using SharpTemplar.FormElements;
+using SharpTemplar.Shared;
 
-namespace Elements
+namespace SharpTemplar
 {
     public abstract class HTMLBodyElement : HTMLElement
     {
@@ -112,6 +112,26 @@ namespace Elements
             var p = new Paragraph(content, this);
             saveIn = p;
             AddElement(p);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds Header into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddHeader(string level, string content)
+        {
+            var h = new Header(level, content, this);
+            AddElement(h);
+            return this;
+        }
+        public HTMLBodyElement AddHeader(out HTMLBodyElement saveIn, string level, string content)
+        {
+            var h = new Header(level, content, this);
+            saveIn = h;
+            AddElement(h);
             return this;
         }
 

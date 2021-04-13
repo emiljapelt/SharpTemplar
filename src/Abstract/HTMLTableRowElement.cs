@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Elements.TableElements;
+using SharpTemplar.TableElements;
 
-namespace Elements
+namespace SharpTemplar
 {
     public abstract class HTMLTableRowElement : HTMLElement
     {

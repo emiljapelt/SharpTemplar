@@ -1,6 +1,6 @@
-using Elements.Shared;
+using SharpTemplar.Shared;
 
-namespace Elements.FormElements
+namespace SharpTemplar.FormElements
 {
     public class Label : HTMLFormElement
     {

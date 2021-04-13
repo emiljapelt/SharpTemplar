@@ -1,6 +1,6 @@
-using Elements.Shared;
+using SharpTemplar.Shared;
 
-namespace Elements.BodyElements
+namespace SharpTemplar.BodyElements
 {
     public class Paragraph : HTMLBodyElement
     {

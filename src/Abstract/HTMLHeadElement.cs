@@ -1,7 +1,7 @@
-using Elements.HeadElements;
-using Elements.Shared;
+using SharpTemplar.HeadElements;
+using SharpTemplar.Shared;
 
-namespace Elements
+namespace SharpTemplar
 {
     public abstract class HTMLHeadElement : HTMLElement
     {

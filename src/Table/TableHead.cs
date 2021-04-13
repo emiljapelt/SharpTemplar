@@ -1,7 +1,7 @@
 using System.Text;
-using Elements.Shared;
+using SharpTemplar.Shared;
 
-namespace Elements.TableElements
+namespace SharpTemplar.TableElements
 {
     public class TableHead : HTMLTableRowElement
     {

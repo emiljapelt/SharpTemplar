@@ -1,6 +1,6 @@
-using Elements.TableElements;
+using SharpTemplar.TableElements;
 
-namespace Elements
+namespace SharpTemplar
 {
     public abstract class HTMLTableElement : HTMLElement
     {

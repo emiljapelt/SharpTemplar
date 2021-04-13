@@ -1,5 +1,5 @@
 
-namespace Elements.BodyElements
+namespace SharpTemplar.BodyElements
 {
     public class Div : HTMLBodyElement
     {

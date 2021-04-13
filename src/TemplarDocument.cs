@@ -1,6 +1,6 @@
 using System.Text;
-using Elements.BodyElements;
-using Elements.HeadElements;
+using SharpTemplar.BodyElements;
+using SharpTemplar.HeadElements;
 
 namespace SharpTemplar
 {

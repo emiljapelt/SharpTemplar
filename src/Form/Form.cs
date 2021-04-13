@@ -1,5 +1,5 @@
 
-namespace Elements.FormElements
+namespace SharpTemplar.FormElements
 {
     public class Form : HTMLFormElement
     {

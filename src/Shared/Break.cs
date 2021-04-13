@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace Elements.Shared
+namespace SharpTemplar.Shared
 {
     public class Break : HTMLBodyElement
     {
