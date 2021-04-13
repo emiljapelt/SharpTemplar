@@ -9,5 +9,8 @@ namespace SharpTemplar.Shared
         {
             Contains.Add(new HTMLString(content));
         }
+
+        internal Strong(HTMLElement parent)
+            : base("strong", parent) { }
     }
 }

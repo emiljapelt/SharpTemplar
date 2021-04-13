@@ -2,9 +2,9 @@ using SharpTemplar.Shared;
 
 namespace SharpTemplar.ListElements
 {
-    public class ListElement : HTMLListItemElement
+    public class ListItem : HTMLBodyElement
     {
-        internal ListElement(HTMLListElement parent)
+        internal ListItem(HTMLListElement parent)
             : base("li", parent) { }
     }
 }

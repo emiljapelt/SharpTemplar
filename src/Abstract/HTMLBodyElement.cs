@@ -32,7 +32,7 @@ namespace SharpTemplar
         /// <returns>
         /// Parent of the Element it is called on.
         /// </returns>
-        public virtual HTMLBodyElement ToParent()
+        public virtual HTMLBodyElement Exit()
         {
             FinishConstruction();
             return (HTMLBodyElement) _Parent;
@@ -113,6 +113,60 @@ namespace SharpTemplar
             var p = new Paragraph(content, this);
             saveIn = p;
             AddElement(p);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds Strong into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddStrong(string content)
+        {
+            var strong = new Strong(content, this);
+            AddElement(strong);
+            return this;
+        }
+        public HTMLBodyElement AddStrong(out HTMLBodyElement saveIn, string content)
+        {
+            var strong = new Strong(content, this);
+            saveIn = strong;
+            AddElement(strong);
+            return this;
+        }
+
+        public HTMLBodyElement AddStrong()
+        {
+            var strong = new Strong(this);
+            AddElement(strong);
+            return this;
+        }
+        public HTMLBodyElement AddStrong(out HTMLBodyElement saveIn)
+        {
+            var strong = new Strong(this);
+            saveIn = strong;
+            AddElement(strong);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds Small into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddSmall(string content)
+        {
+            var small = new Small(content, this);
+            AddElement(small);
+            return this;
+        }
+        public HTMLBodyElement AddSmall(out HTMLBodyElement saveIn, string content)
+        {
+            var small = new Small(content, this);
+            saveIn = small;
+            AddElement(small);
             return this;
         }
 

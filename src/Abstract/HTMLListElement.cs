@@ -35,9 +35,9 @@ namespace SharpTemplar
             return this;
         }
 
-        public HTMLListItemElement AddItem()
+        public ListItem AddItem()
         {
-            var li = new ListElement(this);
+            var li = new ListItem(this);
             AddElement(li);
             return li;
         }
