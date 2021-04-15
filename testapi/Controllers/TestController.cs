@@ -20,9 +20,14 @@ namespace testapi.Controllers
         {
             var doc = new TemplarDocument("Minitwit");
 
+            HTMLBodyElement coolListItem;
             doc.Body.BeginUnorderedList().WithAttribute("cool","stats")
-                .AddItem().InsertHTMLString("wow")
-                .Exit().AddDiv();
+                .AddTextItem("wow")
+                .AddTextItem("cool")
+                .AddItem(out coolListItem).ExitList()
+                .AddDiv();
+            
+            coolListItem.AddHeader(HeaderLevel.Three, "damn");
 
             return new ContentResult
             {
@@ -60,7 +65,9 @@ namespace testapi.Controllers
 
             for (int i = 0; i < 10; i++)
             {
-                messages.AddItem().AddStrong().EnterIt().AddAnchor("deadend").EnterIt().InsertHTMLString("Janell Gollhofer ").Exit().Exit().InsertHTMLString("When they got out into the matter with his pike, sought to restrain them.").AddSmall("- 2021-04-13 @ 20:53");
+                HTMLBodyElement item;
+                messages.AddItem(out item);
+                item.AddStrong().EnterIt().AddAnchor("deadend").EnterIt().InsertHTMLString("Janell Gollhofer ").Exit().Exit().InsertHTMLString("When they got out into the matter with his pike, sought to restrain them.").AddSmall("- 2021-04-13 @ 20:53");
             }
 
             return new ContentResult
