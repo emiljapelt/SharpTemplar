@@ -102,6 +102,12 @@ namespace SharpTemplar
         /// <returns>
         /// The Element it is called on.
         /// </returns>
+        public HTMLBodyElement AddParagraph()
+        {
+            var p = new Paragraph(this);
+            AddElement(p);
+            return this;
+        }
         public HTMLBodyElement AddParagraph(string content)
         {
             var p = new Paragraph(content, this);
@@ -206,6 +212,25 @@ namespace SharpTemplar
         {           
             var a = new Anchor(href, this);
             saveIn = a;
+            AddElement(a);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds Image into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddImage(string src)
+        {           
+            var a = new Image(src, this);
+            AddElement(a);
+            return this;
+        }
+        public HTMLBodyElement AddImage(string src, string alt)
+        {           
+            var a = new Image(src, alt, this);
             AddElement(a);
             return this;
         }

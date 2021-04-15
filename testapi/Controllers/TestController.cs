@@ -25,7 +25,8 @@ namespace testapi.Controllers
                 .AddTextItem("wow")
                 .AddTextItem("cool")
                 .AddItem(out coolListItem).ExitList()
-                .AddDiv();
+                .AddDiv()
+                .AddImage("https://www.gravatar.com/avatar/2a848aee6300789fe1f741b589572a98?d=identicon&s=48");
             
             coolListItem.AddHeader(HeaderLevel.Three, "damn");
 
@@ -67,7 +68,12 @@ namespace testapi.Controllers
             {
                 HTMLBodyElement item;
                 messages.AddItem(out item);
-                item.AddStrong().EnterIt().AddAnchor("deadend").EnterIt().InsertHTMLString("Janell Gollhofer ").Exit().Exit().InsertHTMLString("When they got out into the matter with his pike, sought to restrain them.").AddSmall("- 2021-04-13 @ 20:53");
+                item.AddImage("https://www.gravatar.com/avatar/2a848aee6300789fe1f741b589572a98?d=identicon&s=48")
+                    .AddParagraph().EnterIt()
+                        .AddStrong().EnterIt()
+                            .AddAnchor("deadend").EnterIt().InsertHTMLString("Leatha Duncker").Exit().InsertHTMLString(" ").Exit()
+                        .InsertHTMLString("Perhaps you can take it for an instant.")
+                        .AddSmall(" - 2021-04-15 @ 14:11");
             }
 
             return new ContentResult
