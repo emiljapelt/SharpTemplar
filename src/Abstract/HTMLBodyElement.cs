@@ -351,5 +351,19 @@ namespace SharpTemplar
             saveIn = list;
             return list;
         }
+
+        public HTMLListElement BeginOrderedList()
+        {
+            var list = new OrderedList(this);
+            AddElement(list);
+            return list;
+        }
+        public HTMLListElement BeginOrderedList(out HTMLListElement saveIn)
+        {
+            var list = new OrderedList(this);
+            AddElement(list);
+            saveIn = list;
+            return list;
+        }
     }
 }

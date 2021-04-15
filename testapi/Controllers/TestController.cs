@@ -21,7 +21,7 @@ namespace testapi.Controllers
             var doc = new TemplarDocument("Minitwit");
 
             HTMLBodyElement coolListItem;
-            doc.Body.BeginUnorderedList().WithAttribute("cool","stats")
+            doc.Body.BeginOrderedList().WithAttribute("cool","stats")
                 .AddTextItem("wow")
                 .AddTextItem("cool")
                 .AddItem(out coolListItem).ExitList()
