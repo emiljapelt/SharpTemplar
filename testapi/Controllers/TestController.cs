@@ -20,15 +20,14 @@ namespace testapi.Controllers
         {
             var doc = new TemplarDocument("Minitwit");
 
-            HTMLBodyElement coolListItem;
-            doc.Body.BeginOrderedList().WithAttribute("cool","stats")
-                .AddTextItem("wow")
-                .AddTextItem("cool")
-                .AddItem(out coolListItem).ExitList()
-                .AddDiv()
-                .AddImage("https://www.gravatar.com/avatar/2a848aee6300789fe1f741b589572a98?d=identicon&s=48");
+            doc.Body.BeginTable()
+                .BeginRow()
+                    .AddHead("Id")
+                    .AddHead("Cool").ExitRow()
+                .BeginRow()
+                    .AddData("1223")
+                    .AddData("True").WithAttribute("style", "background-color:#AD1515;");
             
-            coolListItem.AddHeader(HeaderLevel.Three, "damn");
 
             return new ContentResult
             {
@@ -38,8 +37,7 @@ namespace testapi.Controllers
             };
         }
 
-        [HttpGet("minitwit")]
-        public IActionResult GetMinitwit()
+        private (TemplarDocument doc, HTMLBodyElement bdy) GenerateMinitwitBaseDocument()
         {
             var doc = new TemplarDocument("Minitwit");
 
@@ -47,7 +45,6 @@ namespace testapi.Controllers
 
             HTMLBodyElement nav;
             HTMLBodyElement body;
-            HTMLListElement messages;
 
             doc.Body.AddDiv().WithClass("page").EnterIt()
                 .AddHeader(HeaderLevel.One, "Minitwit")
@@ -55,11 +52,21 @@ namespace testapi.Controllers
                 .AddDiv(out body).WithClass("body")
                 .AddDiv().WithClass("footer").EnterIt().InsertHTMLString("Minitwit - Not A Flask Application");
             
-            nav.AddAnchor("public").EnterIt().InsertHTMLString("public timeline").Exit()
+            nav.AddAnchor("/minitwit").EnterIt().InsertHTMLString("public timeline").Exit()
                 .InsertHTMLString("|")
-                .AddAnchor("sign_up").EnterIt().InsertHTMLString("sign up").Exit()
+                .AddAnchor("/minitwit/sign_up").EnterIt().InsertHTMLString("sign up").Exit()
                 .InsertHTMLString("|")
-                .AddAnchor("sign_in").EnterIt().InsertHTMLString("sign in");
+                .AddAnchor("deadend").EnterIt().InsertHTMLString("sign in");
+
+            return (doc, body);
+        }
+
+        [HttpGet("minitwit")]
+        public IActionResult GetMinitwit()
+        {
+            var (doc, body) = GenerateMinitwitBaseDocument();
+
+            HTMLListElement messages;
 
             body.AddHeader(HeaderLevel.Two, "Public Timeline")
                 .BeginUnorderedList(out messages).WithAttribute("class","messages");
@@ -75,6 +82,21 @@ namespace testapi.Controllers
                         .InsertHTMLString("Perhaps you can take it for an instant.")
                         .AddSmall(" - 2021-04-15 @ 14:11");
             }
+
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                StatusCode = 200,
+                Content = doc.GeneratePage()
+            };
+        }
+
+        [HttpGet("minitwit/sign_up")]
+        public IActionResult GetMinitwitSignUp()
+        {
+            var (doc, body) = GenerateMinitwitBaseDocument();
+
+            body.AddHeader(HeaderLevel.Two, "Sign Up");
 
             return new ContentResult
             {
