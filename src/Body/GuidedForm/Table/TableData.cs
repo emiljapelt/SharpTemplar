@@ -5,8 +5,9 @@ namespace SharpTemplar.GuidedForm.TableElements
 {
     public class TableData : HTMLTableRowElement
     {
+        internal override string TagType => "td";
         internal TableData(HTMLElement parent, string _data)
-            : base("td", parent) 
+            : base(parent) 
         {
             Contains.Add(new HTMLString(_data));
         }

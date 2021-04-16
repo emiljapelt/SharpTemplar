@@ -6,14 +6,15 @@ namespace SharpTemplar.HeadElements
     public class Script : HTMLHeadElement
     {
         private string path;
+        internal override string TagType => "script";
         internal Script(string _path)
-            : base("script")
+            : base()
         {
             path = _path;
         }
 
         internal Script()
-            : base("script") { }
+            : base() { }
 
 
         internal override void ConstructElement(StringBuilder sb)

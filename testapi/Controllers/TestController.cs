@@ -19,17 +19,11 @@ namespace testapi.Controllers
         [HttpGet]
         public IActionResult GetTestSite()
         {
-            var doc = new GuidedFormDocument("Minitwit");
+            var doc = new FreeFormDocument("Minitwit");
             
             doc.Head.AddScript();
 
-            doc.Body.BeginTable()
-                .BeginRow()
-                    .AddHead("Id")
-                    .AddHead("Cool").ExitRow()
-                .BeginRow()
-                    .AddData("1223")
-                    .AddData("True").WithAttribute("style", "background-color:#AD1515;");
+            doc.Body.AddParagraph().EnterIt().AddSmall().AddBreak().AddStrong();
             
 
             return new ContentResult

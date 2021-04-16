@@ -1,8 +1,8 @@
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.GuidedForm.FormElements
+namespace SharpTemplar.FreeForm.FormElements
 {
-    public class Label : HTMLFormElement
+    public class Label : HTMLBodyElement
     {
         internal override string TagType => "label";
         internal Label(string _refTo, string content, HTMLElement parent)

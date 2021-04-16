@@ -1,17 +1,17 @@
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.GuidedForm.ListElements
+namespace SharpTemplar.FreeForm.ListElements
 {
     public class ListItem : HTMLBodyElement
     {
         internal override string TagType => "li";
-        internal ListItem(HTMLListElement parent)
+        internal ListItem(HTMLBodyElement parent)
             : base(parent) 
         { 
             Parent = this;
         }
 
-        internal ListItem(string text, HTMLListElement parent)
+        internal ListItem(string text, HTMLBodyElement parent)
             : base(parent) 
         {
             Parent = this;

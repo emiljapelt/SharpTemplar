@@ -3,8 +3,9 @@ namespace SharpTemplar.HeadElements
 {
     public class Head : HTMLHeadElement
     {
+        internal override string TagType => "head";
         internal Head(string title)
-            : base("head")
+            : base()
         {
             Contains.Add(new Title(title));
         }

@@ -1,12 +1,12 @@
 using System.Text;
 
-namespace SharpTemplar.GuidedForm.Shared
+namespace SharpTemplar.FreeForm.BodyElements
 {
     public class Break : HTMLBodyElement
     {
         internal override string TagType => "br";
         internal Break()
-            : base(null) { }
+            : base (null) {}
 
         internal override void ConstructElement(StringBuilder sb)
         {

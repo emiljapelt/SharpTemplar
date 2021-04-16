@@ -1,7 +1,6 @@
-using System;
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.GuidedForm.BodyElements
+namespace SharpTemplar.FreeForm.BodyElements
 {
     public class Header : HTMLBodyElement
     {

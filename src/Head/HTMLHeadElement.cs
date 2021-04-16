@@ -18,8 +18,8 @@ namespace SharpTemplar.HeadElements
         }
 
 
-        protected HTMLHeadElement(string tagType)
-            : base(tagType, null) { }
+        protected HTMLHeadElement()
+            : base(null) { }
 
 
         /// <summary>

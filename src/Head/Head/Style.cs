@@ -6,8 +6,9 @@ namespace SharpTemplar.HeadElements
     public class Style : HTMLHeadElement
     {
         private string path;
+        internal override string TagType => "style";
         internal Style(string _path)
-            : base("style")
+            : base()
         {
             path = _path;
         }

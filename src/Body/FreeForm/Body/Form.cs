@@ -1,9 +1,8 @@
-
-namespace SharpTemplar.GuidedForm.FormElements
+namespace SharpTemplar.FreeForm.FormElements
 {
-    public class Form : HTMLFormElement
+    public class Form : HTMLBodyElement
     {
-        private string id; 
+        private string id;
         internal override string TagType => "form";
         internal Form(HTMLBodyElement parent, string _id)
             : base(parent) 

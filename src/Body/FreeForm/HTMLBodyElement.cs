@@ -3,7 +3,7 @@ using SharpTemplar.Shared;
 
 namespace SharpTemplar.FreeForm
 {
-    public abstract class HTMLBodyElement : HTMLElement
+    public abstract partial class HTMLBodyElement : HTMLElement
     {
         private HTMLElement _Parent;
         internal override HTMLElement Parent 
@@ -19,8 +19,8 @@ namespace SharpTemplar.FreeForm
         }
 
 
-        protected HTMLBodyElement(string tagType, HTMLElement parent)
-            : base(tagType, parent) { }
+        protected HTMLBodyElement(HTMLElement parent)
+            : base(parent) { }
 
 
         /// <summary>
@@ -92,7 +92,33 @@ namespace SharpTemplar.FreeForm
         {
             return WithAttribute("style", value);
         }
-/*
+
+        /// <summary>
+        /// Adds text into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement InsertHTMLString(string content)
+        {
+            FinishConstruction();
+            Contains.Add(new HTMLString(content));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds break into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public virtual HTMLBodyElement AddBreak()
+        {
+            FinishConstruction();
+            Contains.Add(new Break());
+            return this;
+        }
+
         /// <summary>
         /// Adds Paragraph into the Element it is called on.
         /// </summary>
@@ -102,6 +128,13 @@ namespace SharpTemplar.FreeForm
         public HTMLBodyElement AddParagraph()
         {
             var p = new Paragraph(this);
+            AddElement(p);
+            return this;
+        }
+        public HTMLBodyElement AddParagraph(out HTMLBodyElement saveIn)
+        {
+            var p = new Paragraph(this);
+            saveIn = p;
             AddElement(p);
             return this;
         }
@@ -125,20 +158,6 @@ namespace SharpTemplar.FreeForm
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement AddStrong(string content)
-        {
-            var strong = new Strong(content, this);
-            AddElement(strong);
-            return this;
-        }
-        public HTMLBodyElement AddStrong(out HTMLBodyElement saveIn, string content)
-        {
-            var strong = new Strong(content, this);
-            saveIn = strong;
-            AddElement(strong);
-            return this;
-        }
-
         public HTMLBodyElement AddStrong()
         {
             var strong = new Strong(this);
@@ -152,6 +171,19 @@ namespace SharpTemplar.FreeForm
             AddElement(strong);
             return this;
         }
+        public HTMLBodyElement AddStrong(string text)
+        {
+            var strong = new Strong(text, this);
+            AddElement(strong);
+            return this;
+        }
+        public HTMLBodyElement AddStrong(out HTMLBodyElement saveIn, string text)
+        {
+            var strong = new Strong(text, this);
+            saveIn = strong;
+            AddElement(strong);
+            return this;
+        }
 
         /// <summary>
         /// Adds Small into the Element it is called on.
@@ -159,15 +191,28 @@ namespace SharpTemplar.FreeForm
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement AddSmall(string content)
+        public HTMLBodyElement AddSmall()
         {
-            var small = new Small(content, this);
+            var small = new Small(this);
             AddElement(small);
             return this;
         }
-        public HTMLBodyElement AddSmall(out HTMLBodyElement saveIn, string content)
+        public HTMLBodyElement AddSmall(out HTMLBodyElement saveIn)
         {
-            var small = new Small(content, this);
+            var small = new Small(this);
+            saveIn = small;
+            AddElement(small);
+            return this;
+        }
+        public HTMLBodyElement AddSmall(string text)
+        {
+            var small = new Small(text, this);
+            AddElement(small);
+            return this;
+        }
+        public HTMLBodyElement AddSmall(out HTMLBodyElement saveIn, string text)
+        {
+            var small = new Small(text, this);
             saveIn = small;
             AddElement(small);
             return this;
@@ -233,32 +278,6 @@ namespace SharpTemplar.FreeForm
         }
 
         /// <summary>
-        /// Adds text into the Element it is called on.
-        /// </summary>
-        /// <returns>
-        /// The Element it is called on.
-        /// </returns>
-        public HTMLBodyElement InsertHTMLString(string content)
-        {
-            FinishConstruction();
-            Contains.Add(new HTMLString(content));
-            return this;
-        }
-
-        /// <summary>
-        /// Adds break into the Element it is called on.
-        /// </summary>
-        /// <returns>
-        /// The Element it is called on.
-        /// </returns>
-        public virtual HTMLBodyElement AddBreak()
-        {
-            FinishConstruction();
-            Contains.Add(new Break());
-            return this;
-        }
-
-        /// <summary>
         /// Adds Div into the Element it is called on.
         /// </summary>
         /// <returns>
@@ -278,6 +297,7 @@ namespace SharpTemplar.FreeForm
             return this;
         }
 
+/*
         /// <summary>
         /// Adds Lable into the Element it is called on.
         /// </summary>

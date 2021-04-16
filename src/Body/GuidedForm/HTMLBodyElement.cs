@@ -23,8 +23,8 @@ namespace SharpTemplar.GuidedForm
         }
 
 
-        protected HTMLBodyElement(string tagType, HTMLElement parent)
-            : base(tagType, parent) { }
+        protected HTMLBodyElement(HTMLElement parent)
+            : base(parent) { }
 
 
         /// <summary>

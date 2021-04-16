@@ -1,5 +1,5 @@
 
-namespace SharpTemplar.GuidedForm.BodyElements
+namespace SharpTemplar.FreeForm.BodyElements
 {
     public class Anchor : HTMLBodyElement
     {

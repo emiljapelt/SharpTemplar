@@ -7,7 +7,7 @@ namespace SharpTemplar.Shared
         public string Content;
 
         internal HTMLString(string content)
-            : base(null, null)
+            : base(null)
         {
             Content = content;
         }

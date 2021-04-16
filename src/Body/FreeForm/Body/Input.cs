@@ -1,7 +1,6 @@
-
-namespace SharpTemplar.GuidedForm.FormElements
+namespace SharpTemplar.FreeForm.FormElements
 {
-    public class Input : HTMLFormElement
+    public class Input : HTMLBodyElement
     {
         internal override string TagType => "input";
         internal Input(string id, string type, HTMLElement parent)

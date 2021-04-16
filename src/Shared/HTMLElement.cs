@@ -5,16 +5,15 @@ namespace SharpTemplar
 {
     public abstract class HTMLElement
     {
-        internal string TagType;
+        internal virtual string TagType { get; }
         internal Dictionary<string, string> Attributes;
         internal virtual List<HTMLElement> Contains { get; }
         internal virtual HTMLElement Parent { get; set; }
         internal virtual HTMLElement Newest { get; set; }
         internal virtual HTMLElement UnderConstruction { get; set; }
 
-        protected HTMLElement(string tagType, HTMLElement parent)
+        protected HTMLElement(HTMLElement parent)
         {
-            TagType = tagType;
             Parent = parent;
             Contains = new List<HTMLElement>();
             Attributes = new Dictionary<string, string>();

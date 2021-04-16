@@ -21,8 +21,8 @@ namespace SharpTemplar.GuidedForm
         }
 
 
-        protected HTMLTableRowElement(string tagType, HTMLElement parent)
-            : base(tagType, parent) 
+        protected HTMLTableRowElement(HTMLElement parent)
+            : base(parent) 
             {
                 data = new List<string>();
             }

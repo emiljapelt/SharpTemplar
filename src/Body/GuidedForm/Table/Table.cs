@@ -4,11 +4,12 @@ namespace SharpTemplar.GuidedForm.TableElements
 {
     public class Table : HTMLTableElement
     {
+        internal override string TagType => "table";
         internal Table(HTMLBodyElement parent, string[] _colums)
-            : base("table", parent) { }
+            : base(parent) { }
 
         internal Table(HTMLBodyElement parent)
-            : base("table", parent) { }
+            : base(parent) { }
 
         internal override void ConstructElement(StringBuilder sb)
         {

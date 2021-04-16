@@ -1,11 +1,11 @@
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.GuidedForm.FormElements
+namespace SharpTemplar.FreeForm.FormElements
 {
-    public class Button : HTMLFormElement
+    public class Button : HTMLBodyElement
     {
         internal override string TagType => "button";
-        internal Button(string type, string text, HTMLElement parent)
+        internal Button(string type, string text, HTMLBodyElement parent)
             : base(parent)
         {
             Attributes.Add("type", type);

@@ -18,8 +18,8 @@ namespace SharpTemplar.GuidedForm
         }
 
 
-        protected HTMLListElement(string tagType, HTMLElement parent)
-            : base(tagType, parent) { }
+        protected HTMLListElement(HTMLElement parent)
+            : base(parent) { }
 
 
         public HTMLBodyElement ExitList()
