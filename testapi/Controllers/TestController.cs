@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SharpTemplar.GuidedForm;
+// using SharpTemplar.GuidedForm;
+using SharpTemplar.FreeForm;
 using SharpTemplar;
 
 namespace testapi.Controllers
@@ -36,7 +37,7 @@ namespace testapi.Controllers
 
         private (TemplarDocument doc, HTMLBodyElement bdy) GenerateMinitwitBaseDocument()
         {
-            var doc = new GuidedFormDocument("Minitwit");
+            var doc = new FreeFormDocument("Minitwit");
 
             doc.Head.AddStyle("./styles/minitwit.css");
 
@@ -63,15 +64,15 @@ namespace testapi.Controllers
         {
             var (doc, body) = GenerateMinitwitBaseDocument();
 
-            HTMLListElement messages;
+            HTMLBodyElement messages;
 
             body.AddHeader(HeaderLevel.Two, "Public Timeline")
-                .BeginUnorderedList(out messages).WithAttribute("class","messages");
+                .AddUnorderedList(out messages).WithAttribute("class","messages");
 
             for (int i = 0; i < 10; i++)
             {
                 HTMLBodyElement item;
-                messages.AddItem(out item);
+                messages.AddListItem(out item);
                 item.AddImage("https://www.gravatar.com/avatar/2a848aee6300789fe1f741b589572a98?d=identicon&s=48")
                     .AddParagraph().EnterIt()
                         .AddStrong().EnterIt()

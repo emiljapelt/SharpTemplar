@@ -337,61 +337,155 @@ namespace SharpTemplar.FreeForm
             return this;
         }
 
-
         public HTMLBodyElement AddTable()
         {
             var table = new Table(this);
             AddElement(table);
-            return table;
+            return this;
         }
         public HTMLBodyElement AddTable(out HTMLBodyElement saveIn)
         {
             var table = new Table(this);
             saveIn = table;
             AddElement(table);
-            return table;
+            return this;
+        }
+
+        public HTMLBodyElement AddTableRow()
+        {
+            var tr = new TableRow(this);
+            AddElement(tr);
+            return this;
+        }
+        public HTMLBodyElement AddTableRow(out HTMLBodyElement saveIn)
+        {
+            var tr = new TableRow(this);
+            saveIn = tr;
+            AddElement(tr);
+            return this;
+        }
+
+        public HTMLBodyElement AddTableHead()
+        {
+            var th = new TableHead(this);
+            AddElement(th);
+            return this;
+        }
+        public HTMLBodyElement AddTableHead(string text)
+        {
+            var th = new TableHead(text, this);
+            AddElement(th);
+            return this;
+        }
+        public HTMLBodyElement AddTableHead(out HTMLBodyElement saveIn)
+        {
+            var th = new TableHead(this);
+            saveIn = th;
+            AddElement(th);
+            return this;
+        }
+        public HTMLBodyElement AddTableHead(out HTMLBodyElement saveIn, string text)
+        {
+            var th = new TableHead(text, this);
+            saveIn = th;
+            AddElement(th);
+            return this;
+        }
+
+        public HTMLBodyElement AddTableData()
+        {
+            var td = new TableData(this);
+            AddElement(td);
+            return this;
+        }
+        public HTMLBodyElement AddTableData(string text)
+        {
+            var td = new TableData(text, this);
+            AddElement(td);
+            return this;
+        }
+        public HTMLBodyElement AddTableData(out HTMLBodyElement saveIn)
+        {
+            var td = new TableData(this);
+            saveIn = td;
+            AddElement(td);
+            return this;
+        }
+        public HTMLBodyElement AddTableData(out HTMLBodyElement saveIn, string text)
+        {
+            var td = new TableData(text, this);
+            saveIn = td;
+            AddElement(td);
+            return this;
         }
 
         public HTMLBodyElement AddForm(string id)
         {
             var form = new Form(id, this);
             AddElement(form);
-            return form;
+            return this;
         }
         public HTMLBodyElement AddForm(out HTMLBodyElement saveIn, string id)
         {
             var form = new Form(id, this);
             AddElement(form);
             saveIn = form;
-            return form;
+            return this;
         }
 
         public HTMLBodyElement AddUnorderedList()
         {
             var list = new UnorderedList(this);
             AddElement(list);
-            return list;
+            return this;
         }
         public HTMLBodyElement AddUnorderedList(out HTMLBodyElement saveIn)
         {
             var list = new UnorderedList(this);
             AddElement(list);
             saveIn = list;
-            return list;
+            return this;
         }
 
         public HTMLBodyElement AddOrderedList()
         {
             var list = new OrderedList(this);
             AddElement(list);
-            return list;
+            return this;
         }
         public HTMLBodyElement AddOrderedList(out HTMLBodyElement saveIn)
         {
             var list = new OrderedList(this);
             AddElement(list);
             saveIn = list;
-            return list;
+            return this;
+        }
+
+        public HTMLBodyElement AddListItem()
+        {
+            var li = new ListItem(this);
+            AddElement(li);
+            return this;
+        }
+        public HTMLBodyElement AddListItem(string text)
+        {
+            var li = new ListItem(text, this);
+            AddElement(li);
+            return this;
+        }
+        public HTMLBodyElement AddListItem(out HTMLBodyElement saveIn)
+        {
+            var li = new ListItem(this);
+            AddElement(li);
+            saveIn = li;
+            return this;
+        }
+        public HTMLBodyElement AddListItem(out HTMLBodyElement saveIn, string text)
+        {
+            var li = new ListItem(text, this);
+            AddElement(li);
+            saveIn = li;
+            return this;
         }
     }
 }
