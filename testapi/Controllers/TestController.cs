@@ -20,7 +20,8 @@ namespace testapi.Controllers
         public IActionResult GetTestSite()
         {
             var doc = new GuidedFormDocument("Minitwit");
-            var d = new FreeFormDocument("uhm");
+            
+            doc.Head.AddScript("./scripts/test.js");
 
             doc.Body.BeginTable()
                 .BeginRow()

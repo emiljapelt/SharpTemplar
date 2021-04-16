@@ -1,14 +1,22 @@
 using System.IO;
-using SharpTemplar.Shared;
+using System.Text;
 
 namespace SharpTemplar.HeadElements
 {
     public class Style : HTMLHeadElement
     {
-        internal Style(string path)
+        private string path;
+        internal Style(string _path)
             : base("style")
         {
-            Contains.Add(new HTMLString(File.ReadAllText(path)));
+            path = _path;
+        }
+
+        internal override void ConstructElement(StringBuilder sb)
+        {
+            sb.Append($"<{TagType}>");
+            sb.Append(File.ReadAllText(path));
+            sb.Append($"</{TagType}>");
         }
     }
 }
