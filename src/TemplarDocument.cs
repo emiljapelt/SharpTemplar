@@ -1,18 +1,16 @@
 using System.Text;
-using SharpTemplar.BodyElements;
 using SharpTemplar.HeadElements;
 
 namespace SharpTemplar
 {
-    public class TemplarDocument
+    public abstract class TemplarDocument
     {
         public Head Head { get; }
-        public Body Body { get; }
+        internal virtual HTMLElement _Body { get; set; }
 
-        public TemplarDocument(string title)
+        protected TemplarDocument(string title)
         {
             Head = new Head(title);
-            Body = new Body();
         }
 
         public string GeneratePage()
@@ -21,7 +19,7 @@ namespace SharpTemplar
             sb.Append("<!DOCTYPE html>");
             sb.Append("<html>");
             Head.ConstructElement(sb);
-            Body.ConstructElement(sb);
+            _Body.ConstructElement(sb);
             sb.Append("</html>");
             return sb.ToString();
         }

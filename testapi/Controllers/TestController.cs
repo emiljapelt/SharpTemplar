@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using SharpTemplar.GuidedForm;
 using SharpTemplar;
 
 namespace testapi.Controllers
@@ -18,7 +19,8 @@ namespace testapi.Controllers
         [HttpGet]
         public IActionResult GetTestSite()
         {
-            var doc = new TemplarDocument("Minitwit");
+            var doc = new GuidedFormDocument("Minitwit");
+            var d = new FreeFormDocument("uhm");
 
             doc.Body.BeginTable()
                 .BeginRow()
@@ -39,7 +41,7 @@ namespace testapi.Controllers
 
         private (TemplarDocument doc, HTMLBodyElement bdy) GenerateMinitwitBaseDocument()
         {
-            var doc = new TemplarDocument("Minitwit");
+            var doc = new GuidedFormDocument("Minitwit");
 
             doc.Head.AddStyle("./styles/minitwit.css");
 
