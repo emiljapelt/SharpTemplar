@@ -45,15 +45,15 @@ namespace testapi.Controllers
             HTMLBodyElement body;
 
             doc.Body.AddDiv().WithClass("page").EnterIt()
-                .AddHeader(HeaderLevel.One, "Minitwit")
+                .AddHeader(HeaderLevel.One, "MiniTwit")
                 .AddDiv(out nav).WithClass("navigation")
                 .AddDiv(out body).WithClass("body")
-                .AddDiv().WithClass("footer").EnterIt().AddHTMLString("Minitwit - Not A Flask Application");
+                .AddDiv().WithClass("footer").EnterIt().AddHTMLString("MiniTwit &mdash; Not A Flask Application");
             
             nav.AddAnchor("/minitwit").InjectHTMLString("public timeline")
-                .AddHTMLString("|")
+                .AddHTMLString(" | ")
                 .AddAnchor("/minitwit/sign_up").InjectHTMLString("sign up")
-                .AddHTMLString("|")
+                .AddHTMLString(" | ")
                 .AddAnchor("deadend").InjectHTMLString("sign in");
 
             return (doc, body);
@@ -95,6 +95,25 @@ namespace testapi.Controllers
             var (doc, body) = GenerateMinitwitBaseDocument();
 
             body.AddHeader(HeaderLevel.Two, "Sign Up");
+
+            HTMLBodyElement form;
+
+            body.AddForm(out form, "signUpForm").WithAttributes(("method", "post"),("action","sign_up")).EnterIt()
+                    .AddDescriptionList().EnterIt()
+                        .AddTerm().InjectHTMLString("Username:")
+                        .AddTermDescription().EnterIt()
+                            .AddInput("signUpForm", "text").WithAttributes(("name", "Username"),("size", "30")).Exit()
+                        .AddTerm().InjectHTMLString("E-Mail:")
+                        .AddTermDescription().EnterIt()
+                            .AddInput("signUpForm", "text").WithAttributes(("name", "Email"),("size", "30")).Exit()
+                        .AddTerm().InjectHTMLString("Password:")
+                        .AddTermDescription().EnterIt()
+                            .AddInput("signUpForm", "text").WithAttributes(("name", "Password1"),("size", "30")).Exit()
+                        .AddTerm().EnterIt().AddHTMLString("Password ").AddSmall("(repeat)").AddHTMLString(":").Exit()
+                        .AddTermDescription().EnterIt()
+                            .AddInput("signUpForm", "text").WithAttributes(("name", "Password2"),("size", "30")).Exit();
+
+            form.AddDiv().WithAttribute("class","actions").EnterIt().AddInput("signUpForm", "submit").WithAttribute("value", "Sign Up");
 
             return new ContentResult
             {

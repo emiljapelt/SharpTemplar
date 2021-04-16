@@ -500,5 +500,26 @@ namespace SharpTemplar.FreeForm
             saveIn = li;
             return this;
         }
+
+        public HTMLBodyElement AddDescriptionList()
+        {
+            var dl = new DescriptionList(this);
+            AddElement(dl);
+            return this;
+        }
+
+        public HTMLBodyElement AddTerm()
+        {
+            var dt = new Term(this);
+            AddElement(dt);
+            return this;
+        }
+
+        public HTMLBodyElement AddTermDescription()
+        {
+            var dd = new TermDescription(this);
+            AddElement(dd);
+            return this;
+        }
     }
 }
