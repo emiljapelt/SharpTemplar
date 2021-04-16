@@ -1,6 +1,6 @@
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.FreeForm.FormElements
+namespace SharpTemplar.FreeForm.BodyElements
 {
     public class Button : HTMLBodyElement
     {

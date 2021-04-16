@@ -1,6 +1,6 @@
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.FreeForm.ListElements
+namespace SharpTemplar.FreeForm.BodyElements
 {
     public class ListItem : HTMLBodyElement
     {

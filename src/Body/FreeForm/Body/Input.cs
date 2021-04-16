@@ -1,4 +1,5 @@
-namespace SharpTemplar.FreeForm.FormElements
+
+namespace SharpTemplar.FreeForm.BodyElements
 {
     public class Input : HTMLBodyElement
     {

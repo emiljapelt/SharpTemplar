@@ -297,7 +297,6 @@ namespace SharpTemplar.FreeForm
             return this;
         }
 
-/*
         /// <summary>
         /// Adds Lable into the Element it is called on.
         /// </summary>
@@ -318,9 +317,9 @@ namespace SharpTemplar.FreeForm
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement AddInput(string type)
+        public HTMLBodyElement AddInput(string id, string type)
         {
-            var input = new Input(type, this);
+            var input = new Input(id, type, this);
             AddElement(input);
             return this;
         }
@@ -338,27 +337,14 @@ namespace SharpTemplar.FreeForm
             return this;
         }
 
-        public HTMLTableElement BeginTable(params string[] columns)
-        {
-            var table = new Table(this, columns);
-            AddElement(table);
-            return table;
-        }
-        public HTMLTableElement BeginTable(out HTMLTableElement saveIn, params string[] columns)
-        {
-            var table = new Table(this, columns);
-            saveIn = table;
-            AddElement(table);
-            return table;
-        }
 
-        public HTMLTableElement BeginTable()
+        public HTMLBodyElement AddTable()
         {
             var table = new Table(this);
             AddElement(table);
             return table;
         }
-        public HTMLTableElement BeginTable(out HTMLTableElement saveIn)
+        public HTMLBodyElement AddTable(out HTMLBodyElement saveIn)
         {
             var table = new Table(this);
             saveIn = table;
@@ -366,27 +352,27 @@ namespace SharpTemplar.FreeForm
             return table;
         }
 
-        public HTMLFormElement BeginForm(string id)
+        public HTMLBodyElement AddForm(string id)
         {
-            var form = new Form(this, id);
+            var form = new Form(id, this);
             AddElement(form);
             return form;
         }
-        public HTMLFormElement BeginForm(out HTMLFormElement saveIn, string id)
+        public HTMLBodyElement AddForm(out HTMLBodyElement saveIn, string id)
         {
-            var form = new Form(this, id);
+            var form = new Form(id, this);
             AddElement(form);
             saveIn = form;
             return form;
         }
 
-        public HTMLListElement BeginUnorderedList()
+        public HTMLBodyElement AddUnorderedList()
         {
             var list = new UnorderedList(this);
             AddElement(list);
             return list;
         }
-        public HTMLListElement BeginUnorderedList(out HTMLListElement saveIn)
+        public HTMLBodyElement AddUnorderedList(out HTMLBodyElement saveIn)
         {
             var list = new UnorderedList(this);
             AddElement(list);
@@ -394,19 +380,18 @@ namespace SharpTemplar.FreeForm
             return list;
         }
 
-        public HTMLListElement BeginOrderedList()
+        public HTMLBodyElement AddOrderedList()
         {
             var list = new OrderedList(this);
             AddElement(list);
             return list;
         }
-        public HTMLListElement BeginOrderedList(out HTMLListElement saveIn)
+        public HTMLBodyElement AddOrderedList(out HTMLBodyElement saveIn)
         {
             var list = new OrderedList(this);
             AddElement(list);
             saveIn = list;
             return list;
         }
-*/
     }
 }
