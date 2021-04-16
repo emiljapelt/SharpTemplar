@@ -21,7 +21,7 @@ namespace testapi.Controllers
         {
             var doc = new GuidedFormDocument("Minitwit");
             
-            doc.Head.AddScript("./scripts/test.js");
+            doc.Head.AddScript();
 
             doc.Body.BeginTable()
                 .BeginRow()

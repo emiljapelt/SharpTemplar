@@ -19,7 +19,7 @@ namespace SharpTemplar.HeadElements
         internal override void ConstructElement(StringBuilder sb)
         {
             sb.Append($"<{TagType}>");
-            sb.Append(File.ReadAllText(path));
+            if (path is not null) sb.Append(File.ReadAllText(path));
             sb.Append($"</{TagType}>");
         }
     }
