@@ -35,15 +35,14 @@ namespace SharpTemplar.HeadElements
         }
 
         /// <summary>
-        /// Adds text into the Element it is called on.
+        /// Adds text into the Element under construction.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLHeadElement InsertHTMLString(string content)
+        public HTMLHeadElement InjectHTMLString(string content)
         {
-            FinishConstruction();
-            Contains.Add(new HTMLString(content));
+            UnderConstruction.Contains.Add(new HTMLString(content));
             return this;
         }
 

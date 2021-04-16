@@ -1,5 +1,6 @@
 using System.IO;
 using System.Text;
+using SharpTemplar.Shared;
 
 namespace SharpTemplar.HeadElements
 {
@@ -19,9 +20,8 @@ namespace SharpTemplar.HeadElements
 
         internal override void ConstructElement(StringBuilder sb)
         {
-            sb.Append($"<{TagType}>");
-            if (path is not null) sb.Append(File.ReadAllText(path));
-            sb.Append($"</{TagType}>");
+            if (path is not null) Contains.Add(new HTMLString(File.ReadAllText(path)));
+            base.ConstructElement(sb);
         }
     }
 }

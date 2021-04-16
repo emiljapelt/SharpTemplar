@@ -99,10 +99,23 @@ namespace SharpTemplar.FreeForm
         /// <returns>
         /// The Element it is called on.
         /// </returns>
-        public HTMLBodyElement InsertHTMLString(string content)
+        public HTMLBodyElement AddHTMLString(string content)
         {
             FinishConstruction();
             Contains.Add(new HTMLString(content));
+            return this;
+        }
+
+        /// <summary>
+        /// Adds text into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement InjectHTMLString(string content)
+        {
+            if (UnderConstruction is not null) UnderConstruction.Contains.Add(new HTMLString(content));
+            else AddHTMLString(content);
             return this;
         }
 
