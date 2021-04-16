@@ -50,11 +50,11 @@ namespace testapi.Controllers
                 .AddDiv(out body).WithClass("body")
                 .AddDiv().WithClass("footer").EnterIt().AddHTMLString("Minitwit - Not A Flask Application");
             
-            nav.AddAnchor("/minitwit").EnterIt().AddHTMLString("public timeline").Exit()
+            nav.AddAnchor("/minitwit").InjectHTMLString("public timeline")
                 .AddHTMLString("|")
-                .AddAnchor("/minitwit/sign_up").EnterIt().AddHTMLString("sign up").Exit()
+                .AddAnchor("/minitwit/sign_up").InjectHTMLString("sign up")
                 .AddHTMLString("|")
-                .AddAnchor("deadend").EnterIt().AddHTMLString("sign in");
+                .AddAnchor("deadend").InjectHTMLString("sign in");
 
             return (doc, body);
         }
@@ -76,7 +76,7 @@ namespace testapi.Controllers
                 item.AddImage("https://www.gravatar.com/avatar/2a848aee6300789fe1f741b589572a98?d=identicon&s=48")
                     .AddParagraph().EnterIt()
                         .AddStrong().EnterIt()
-                            .AddAnchor("deadend").EnterIt().AddHTMLString("Leatha Duncker").Exit().AddHTMLString(" ").Exit()
+                            .AddAnchor("deadend").InjectHTMLString("Leatha Duncker").AddHTMLString(" ").Exit()
                         .AddHTMLString("Perhaps you can take it for an instant.")
                         .AddSmall(" - 2021-04-15 @ 14:11");
             }
