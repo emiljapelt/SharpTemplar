@@ -5,6 +5,7 @@
     <PackageId>SharpTemplar</PackageId>
     <Version>0.1.0</Version>
     <Author>Emil Jäpelt</Author>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
 </Project>
