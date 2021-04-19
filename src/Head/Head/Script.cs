@@ -2,7 +2,7 @@ using System.IO;
 using System.Text;
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.HeadElements
+namespace SharpTemplar
 {
     public class Script : HTMLHeadElement
     {

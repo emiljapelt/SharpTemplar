@@ -1,5 +1,4 @@
 using System.Text;
-using SharpTemplar.HeadElements;
 
 namespace SharpTemplar
 {

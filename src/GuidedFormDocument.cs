@@ -1,7 +1,7 @@
 using System.Text;
 using SharpTemplar.GuidedForm.BodyElements;
 
-namespace SharpTemplar
+namespace SharpTemplar.GuidedForm
 {
     public class GuidedFormDocument : TemplarDocument
     {

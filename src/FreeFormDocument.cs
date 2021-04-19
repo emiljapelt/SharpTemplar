@@ -1,7 +1,7 @@
 using System.Text;
 using SharpTemplar.FreeForm.BodyElements;
 
-namespace SharpTemplar
+namespace SharpTemplar.FreeForm
 {
     public class FreeFormDocument : TemplarDocument
     {

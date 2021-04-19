@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text;
 
-namespace SharpTemplar.HeadElements
+namespace SharpTemplar
 {
     public class Style : HTMLHeadElement
     {

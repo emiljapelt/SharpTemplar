@@ -1,6 +1,6 @@
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.HeadElements
+namespace SharpTemplar
 {
     public class Title : HTMLHeadElement
     {

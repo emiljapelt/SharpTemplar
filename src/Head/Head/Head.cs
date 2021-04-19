@@ -1,5 +1,5 @@
 
-namespace SharpTemplar.HeadElements
+namespace SharpTemplar
 {
     public class Head : HTMLHeadElement
     {
