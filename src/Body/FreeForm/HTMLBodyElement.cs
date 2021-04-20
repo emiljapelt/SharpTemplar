@@ -82,6 +82,12 @@ namespace SharpTemplar.FreeForm
             return WithAttribute("class", value);
         }
 
+        public HTMLBodyElement WithClasses(params string[] values)
+        {
+            foreach (var c in values) WithClass(c);
+            return this;
+        }
+
         /// <summary>
         /// Adds style attribute to the Element it is called on.
         /// </summary>

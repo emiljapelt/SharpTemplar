@@ -12,6 +12,9 @@ namespace SharpTemplar
         internal virtual HTMLElement Newest { get; set; }
         internal virtual HTMLElement UnderConstruction { get; set; }
 
+        private static List<string> UniqueAttributes = 
+            new List<string> {"id"};
+
         protected HTMLElement(HTMLElement parent)
         {
             Parent = parent;
@@ -54,8 +57,8 @@ namespace SharpTemplar
 
         internal virtual void AddAttribute(string key, string value)
         {
-            if (UnderConstruction is null) AddAttributeToSelf(key, value);
-            else AddAttributeToUnderConstruction(key, value);
+            if (UnderConstruction is null) UpdateAttributes(key, value);
+            else UnderConstruction.UpdateAttributes(key, value);
         }
 
         internal virtual void AddAttributes(params (string key, string value)[] list)
@@ -66,16 +69,15 @@ namespace SharpTemplar
             }
         }
 
-        private void AddAttributeToSelf(string key, string value)
+        private void UpdateAttributes(string key, string value)
         {
-            if (Attributes.ContainsKey(key)) Attributes[key] = $"{Attributes[key]} {value}";
+            if (Attributes.ContainsKey(key)) 
+            {
+                if (UniqueAttributes.Contains(key)) Attributes[key] = value;
+                else Attributes[key] = $"{Attributes[key]} {value}";
+                return;
+            }
             Attributes.Add(key, value);
-        }
-
-        private void AddAttributeToUnderConstruction(string key, string value)
-        {
-            if (UnderConstruction.Attributes.ContainsKey(key)) UnderConstruction.Attributes[key] = $"{UnderConstruction.Attributes[key]} {value}";
-            UnderConstruction.Attributes.Add(key, value);
         }
     }
 }
