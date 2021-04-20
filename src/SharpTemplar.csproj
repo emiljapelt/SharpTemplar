@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>SharpTemplar</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.2.0</Version>
     <Author>Emil Jäpelt</Author>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
