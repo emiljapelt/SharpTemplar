@@ -88,6 +88,12 @@ namespace SharpTemplar.FreeForm
             return this;
         }
 
+        public HTMLBodyElement WithId(string value)
+        {
+            WithAttribute("id", value);
+            return this;
+        }
+
         /// <summary>
         /// Adds style attribute to the Element it is called on.
         /// </summary>
@@ -525,6 +531,34 @@ namespace SharpTemplar.FreeForm
         {
             var dd = new TermDescription(this);
             AddElement(dd);
+            return this;
+        }
+
+        public HTMLBodyElement AddSpan()
+        {
+            var span = new Span(this);
+            AddElement(span);
+            return this;
+        }
+        public HTMLBodyElement AddSpan(out HTMLBodyElement saveIn)
+        {
+            var span = new Span(this);
+            saveIn = span;
+            AddElement(span);
+            return this;
+        }
+
+        public HTMLBodyElement AddIdiomatic()
+        {
+            var i = new Idiomatic(this);
+            AddElement(i);
+            return this;
+        }
+        public HTMLBodyElement AddIdiomatic(out HTMLBodyElement saveIn)
+        {
+            var i = new Idiomatic(this);
+            saveIn = i;
+            AddElement(i);
             return this;
         }
     }

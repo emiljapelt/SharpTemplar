@@ -1,10 +1,10 @@
 
 namespace SharpTemplar.FreeForm.BodyElements
 {
-    public class Icon : HTMLBodyElement
+    public class Idiomatic : HTMLBodyElement
     {
         internal override string TagType => "i";
-        internal Icon(HTMLBodyElement parent)
+        internal Idiomatic(HTMLBodyElement parent)
                 : base(parent) { }
     }
 }
