@@ -25,7 +25,6 @@ namespace testapi.Controllers
             doc.Head.AddScript().InjectHTMLString("console.error('yike')");
 
             doc.Body.WithClasses("cool","dude").WithAttributes(("id","first"),("id","second")).AddDiv().WithClasses("container", "overlay");
-            
 
             return new ContentResult
             {

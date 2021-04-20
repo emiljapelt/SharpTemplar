@@ -48,7 +48,7 @@ namespace SharpTemplar.FreeForm
         }
 
         /// <summary>
-        /// Adds attribute of any kind to the Element it is called on. If the Element already has the attribute, the new attribute is appended to the old attribute with a single space.
+        /// Adds attribute of any kind to the Element it is called on.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
@@ -72,7 +72,7 @@ namespace SharpTemplar.FreeForm
         }
         
         /// <summary>
-        /// Adds class attribute to the Element it is called on.
+        /// Adds a class attribute to the Element it is called on.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
@@ -106,7 +106,7 @@ namespace SharpTemplar.FreeForm
         }
 
         /// <summary>
-        /// Adds text into the Element it is called on.
+        /// Adds text into the Element this is called on.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
@@ -119,7 +119,7 @@ namespace SharpTemplar.FreeForm
         }
 
         /// <summary>
-        /// Adds text into the Element it is called on.
+        /// Adds text into the most recently added Element, in the Element this is called on.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
@@ -143,7 +143,7 @@ namespace SharpTemplar.FreeForm
             Contains.Add(new Break());
             return this;
         }
-
+        
         /// <summary>
         /// Adds Paragraph into the Element it is called on.
         /// </summary>
@@ -519,6 +519,13 @@ namespace SharpTemplar.FreeForm
             AddElement(dl);
             return this;
         }
+        public HTMLBodyElement AddDescriptionList(out HTMLBodyElement saveIn)
+        {
+            var dl = new DescriptionList(this);
+            saveIn = dl;
+            AddElement(dl);
+            return this;
+        }
 
         public HTMLBodyElement AddTerm()
         {
@@ -526,10 +533,24 @@ namespace SharpTemplar.FreeForm
             AddElement(dt);
             return this;
         }
+        public HTMLBodyElement AddTerm(out HTMLBodyElement saveIn)
+        {
+            var dt = new Term(this);
+            saveIn = dt;
+            AddElement(dt);
+            return this;
+        }
 
         public HTMLBodyElement AddTermDescription()
         {
             var dd = new TermDescription(this);
+            AddElement(dd);
+            return this;
+        }
+        public HTMLBodyElement AddTermDescription(out HTMLBodyElement saveIn)
+        {
+            var dd = new TermDescription(this);
+            saveIn = dd;
             AddElement(dd);
             return this;
         }
