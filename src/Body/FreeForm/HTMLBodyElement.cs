@@ -24,7 +24,7 @@ namespace SharpTemplar.FreeForm
 
 
         /// <summary>
-        /// Navigates to the Parent Element.
+        /// Navigates to the Parent Element. For the Body element, the parent is itself.
         /// </summary>
         /// <returns>
         /// Parent of the Element it is called on.
@@ -36,7 +36,7 @@ namespace SharpTemplar.FreeForm
         }
 
         /// <summary>
-        /// Navigates to the newest added element.
+        /// Navigates to the newest added element. For Element where no Elements have been added, the newest element is itself.
         /// </summary>
         /// <returns>
         /// Most recently added Element.
@@ -48,7 +48,7 @@ namespace SharpTemplar.FreeForm
         }
 
         /// <summary>
-        /// Adds attribute of any kind to the Element it is called on.
+        /// Adds an attribute of any kind to the Element it is called on.
         /// </summary>
         /// <returns>
         /// The Element it is called on.
