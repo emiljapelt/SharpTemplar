@@ -42,7 +42,7 @@ namespace SharpTemplar
         /// </returns>
         public HTMLHeadElement InjectHTMLString(string content)
         {
-            UnderConstruction.Contains.Add(new HTMLString(content));
+            Newest.Contains.Add(new HTMLString(content));
             return this;
         }
 

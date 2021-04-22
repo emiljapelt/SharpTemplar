@@ -13,7 +13,6 @@ namespace SharpTemplar.GuidedForm.TableElements
 
         internal override void ConstructElement(StringBuilder sb)
         {
-            FinishConstruction();
             sb.Append($"<{TagType}");
             foreach(var a in Attributes) sb.Append($" {a.Key}=\"{a.Value}\"");
             sb.Append(">");

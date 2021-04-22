@@ -9,19 +9,6 @@ namespace SharpTemplar.GuidedForm
 {
     public abstract class HTMLBodyElement : HTMLElement
     {
-        private HTMLElement _Parent;
-        internal override HTMLElement Parent 
-        { 
-            get { return _Parent; }
-            set { _Parent = value; }
-        }
-        private HTMLElement _Newest;
-        internal override HTMLElement Newest 
-        { 
-            get { return _Newest; }
-            set { _Newest = value; }
-        }
-
 
         protected HTMLBodyElement(HTMLElement parent)
             : base(parent) { }
@@ -35,8 +22,8 @@ namespace SharpTemplar.GuidedForm
         /// </returns>
         public virtual HTMLBodyElement Exit()
         {
-            FinishConstruction();
-            return (HTMLBodyElement) _Parent;
+            ResetThisElement();
+            return (HTMLBodyElement) Parent;
         }
 
         /// <summary>
@@ -47,8 +34,9 @@ namespace SharpTemplar.GuidedForm
         /// </returns>
         public HTMLBodyElement EnterIt()
         {
-            FinishConstruction();
-            return (HTMLBodyElement) _Newest;
+            var toEnter = Newest;
+            ResetThisElement();
+            return (HTMLBodyElement) Newest;
         }
 
         /// <summary>
@@ -244,7 +232,7 @@ namespace SharpTemplar.GuidedForm
         /// </returns>
         public HTMLBodyElement InsertHTMLString(string content)
         {
-            FinishConstruction();
+            ResetThisElement();
             Contains.Add(new HTMLString(content));
             return this;
         }
@@ -257,7 +245,7 @@ namespace SharpTemplar.GuidedForm
         /// </returns>
         public virtual HTMLBodyElement AddBreak()
         {
-            FinishConstruction();
+            ResetThisElement();
             Contains.Add(new Break());
             return this;
         }

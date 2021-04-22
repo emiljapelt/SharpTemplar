@@ -25,8 +25,8 @@ namespace SharpTemplar.GuidedForm
 
         public HTMLBodyElement ExitForm()
         {
-            FinishConstruction();
-            _Parent.FinishConstruction();
+            ResetThisElement();
+            _Parent.ResetThisElement();
             return (HTMLBodyElement) _Parent;
         }
 
@@ -38,7 +38,7 @@ namespace SharpTemplar.GuidedForm
 
         public HTMLFormElement AddBreak()
         {
-            FinishConstruction();
+            ResetThisElement();
             Contains.Add(new Break());
             return this;
         }

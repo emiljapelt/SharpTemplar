@@ -5,19 +5,6 @@ namespace SharpTemplar.FreeForm
 {
     public abstract partial class HTMLBodyElement : HTMLElement
     {
-        private HTMLElement _Parent;
-        internal override HTMLElement Parent 
-        { 
-            get { return _Parent; }
-            set { _Parent = value; }
-        }
-        private HTMLElement _Newest;
-        internal override HTMLElement Newest 
-        { 
-            get { return _Newest; }
-            set { _Newest = value; }
-        }
-
 
         protected HTMLBodyElement(HTMLElement parent)
             : base(parent) { }
@@ -31,8 +18,8 @@ namespace SharpTemplar.FreeForm
         /// </returns>
         public virtual HTMLBodyElement Exit()
         {
-            FinishConstruction();
-            return (HTMLBodyElement) _Parent;
+            ResetThisElement();
+            return (HTMLBodyElement) Parent;
         }
 
         /// <summary>
@@ -43,8 +30,9 @@ namespace SharpTemplar.FreeForm
         /// </returns>
         public HTMLBodyElement EnterIt()
         {
-            FinishConstruction();
-            return (HTMLBodyElement) _Newest;
+            var toEnter = Newest;
+            ResetThisElement();
+            return (HTMLBodyElement) toEnter;
         }
 
         /// <summary>
@@ -113,7 +101,7 @@ namespace SharpTemplar.FreeForm
         /// </returns>
         public HTMLBodyElement AddHTMLString(string content)
         {
-            FinishConstruction();
+            ResetThisElement();
             Contains.Add(new HTMLString(content));
             return this;
         }
@@ -126,8 +114,7 @@ namespace SharpTemplar.FreeForm
         /// </returns>
         public HTMLBodyElement InjectHTMLString(string content)
         {
-            if (UnderConstruction is not null) UnderConstruction.Contains.Add(new HTMLString(content));
-            else AddHTMLString(content);
+            Newest.Contains.Add(new HTMLString(content));
             return this;
         }
 
@@ -139,7 +126,7 @@ namespace SharpTemplar.FreeForm
         /// </returns>
         public virtual HTMLBodyElement AddBreak()
         {
-            FinishConstruction();
+            ResetThisElement();
             Contains.Add(new Break());
             return this;
         }

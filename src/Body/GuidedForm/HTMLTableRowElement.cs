@@ -30,8 +30,8 @@ namespace SharpTemplar.GuidedForm
         
         public HTMLTableElement ExitRow()
         {
-            FinishConstruction();
-            _Parent.FinishConstruction();
+            ResetThisElement();
+            _Parent.ResetThisElement();
             return (HTMLTableElement) _Parent;
         }
 

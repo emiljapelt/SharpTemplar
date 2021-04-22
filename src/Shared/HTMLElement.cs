@@ -10,7 +10,6 @@ namespace SharpTemplar
         internal virtual List<HTMLElement> Contains { get; }
         internal virtual HTMLElement Parent { get; set; }
         internal virtual HTMLElement Newest { get; set; }
-        internal virtual HTMLElement UnderConstruction { get; set; }
 
         private static List<string> UniqueAttributes = 
             new List<string> {"id"};
@@ -21,12 +20,10 @@ namespace SharpTemplar
             Contains = new List<HTMLElement>();
             Attributes = new Dictionary<string, string>();
             Newest = this;
-            UnderConstruction = null;
         }
 
         internal virtual void ConstructElement(StringBuilder sb)
         {
-            FinishConstruction();
             sb.Append($"<{TagType}");
             foreach(var a in Attributes)
             {
@@ -42,23 +39,18 @@ namespace SharpTemplar
 
         internal void AddElement(HTMLElement e)
         {
-            FinishConstruction();
-            UnderConstruction = e;
+            Contains.Add(e);
+            Newest = e;
         }
 
-        internal void FinishConstruction()
+        internal void ResetThisElement()
         {
-            if (UnderConstruction is null) return;
-            var element = UnderConstruction;
-            UnderConstruction = null;
-            Contains.Add(element);
-            Newest = element;
+            Newest = this;
         }
 
         internal virtual void AddAttribute(string key, string value)
         {
-            if (UnderConstruction is null) UpdateAttributes(key, value);
-            else UnderConstruction.UpdateAttributes(key, value);
+            Newest.UpdateAttributes(key, value);
         }
 
         internal virtual void AddAttributes(params (string key, string value)[] list)

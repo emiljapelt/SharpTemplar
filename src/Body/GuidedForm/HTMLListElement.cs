@@ -24,8 +24,8 @@ namespace SharpTemplar.GuidedForm
 
         public HTMLBodyElement ExitList()
         {
-            FinishConstruction();
-            _Parent.FinishConstruction();
+            ResetThisElement();
+            _Parent.ResetThisElement();
             return (HTMLBodyElement) _Parent;
         }
 
