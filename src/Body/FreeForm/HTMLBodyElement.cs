@@ -336,6 +336,27 @@ namespace SharpTemplar.FreeForm
             return this;
         }
 
+        public HTMLBodyElement AddSelect(string name)
+        {
+            var select = new Select(name, this);
+            AddElement(select);
+            return this;
+        }
+
+        public HTMLBodyElement AddOption(string value)
+        {
+            var option = new Option(value, this);
+            AddElement(option);
+            return this;
+        }
+
+        public HTMLBodyElement AddOption(string value, string text)
+        {
+            var option = new Option(value, text, this);
+            AddElement(option);
+            return this;
+        }
+
         /// <summary>
         /// Adds Button into the Element it is called on.
         /// </summary>
