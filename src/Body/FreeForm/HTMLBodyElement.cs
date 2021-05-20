@@ -343,6 +343,14 @@ namespace SharpTemplar.FreeForm
             return this;
         }
 
+        public HTMLBodyElement AddSelect(out HTMLBodyElement saveIn, string name)
+        {
+            var select = new Select(name, this);
+            saveIn = select;
+            AddElement(select);
+            return this;
+        }
+
         public HTMLBodyElement AddOption(string value)
         {
             var option = new Option(value, this);
@@ -350,9 +358,25 @@ namespace SharpTemplar.FreeForm
             return this;
         }
 
+        public HTMLBodyElement AddOption(out HTMLBodyElement saveIn, string value)
+        {
+            var option = new Option(value, this);
+            saveIn = option;
+            AddElement(option);
+            return this;
+        }
+
         public HTMLBodyElement AddOption(string value, string text)
         {
             var option = new Option(value, text, this);
+            AddElement(option);
+            return this;
+        }
+
+        public HTMLBodyElement AddOption(out HTMLBodyElement saveIn, string value, string text)
+        {
+            var option = new Option(value, text, this);
+            saveIn = option;
             AddElement(option);
             return this;
         }
