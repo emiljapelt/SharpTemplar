@@ -614,5 +614,12 @@ namespace SharpTemplar.FreeForm
             AddElement(i);
             return this;
         }
+
+        public HTMLBodyElement PlaceTemplate(string templatePath, params string[] replacements)
+        {
+            var t = new Template(templatePath, replacements);
+            AddElement(t);
+            return this;
+        }
     }
 }

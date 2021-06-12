@@ -20,12 +20,9 @@ namespace testapi.Controllers
         [HttpGet]
         public IActionResult GetTestSite()
         {
-            var doc = new FreeFormDocument("Minitwit");
+            var doc = new FreeFormDocument("test");
             
-            doc.Body.AddForm("form1").EnterIt()
-                .AddSelect("car").EnterIt()
-                    .AddOption("volve","Volvo")
-                    .AddOption("ford").InjectHTMLString("Ford");
+            doc.Body.PlaceTemplate("./templates/test.sthtml", "Emil", "Nice");
 
             return new ContentResult
             {
