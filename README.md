@@ -8,7 +8,7 @@ SharpTemplar is a library that makes it easy to create HTML webpages in C#. Shar
 |element | the object representing an HTML tag |
 
 ## FreeForm
-FreeForm allows any tag to be placed anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. Table rows does, for example, not make sense outside of a table.
+FreeForm allows any tag to be placed anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. A table row does, for example, not make sense outside of a table.
 
 ## GuidedForm
 Development of GuidedForm is on hold, and should not be considered usable. Information from the "How to use" and "Supported tags" sections, does not necessarily apply to GuidedForm.
