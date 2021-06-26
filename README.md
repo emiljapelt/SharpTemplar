@@ -47,7 +47,7 @@ The resulting page in this example would be
 ### Applying attributes
 Attributes are applied to the just added element, or the element the method is called on in case there was not just added an element.
 
-Note that applying the same attribute multiple times, will append the new value with a whitespace in front. The exeption is the "id" attribute, which will simply override the value.
+Note that applying the same attribute multiple times, will append the new value with a whitespace in front. The exception is the "id" attribute, which will simply override the value.
 
 ### Nesting tags
 Notice that in the first example, the elements added to the Body have the same parent element. This happens because the methods were both called on the Body element. To change what element is being called methods upon, use the methods Enter or Exit. Enter will change to the just added element. Exit will change to the parent of the current element.
