@@ -1,20 +1,16 @@
-# SharpTemplar
-SharpTemplar is a library that makes it easy to create HTML webpages in C#. SharpTemplar has two forms, FreeForm and GuidedForm. 
+# SharpTemplar - FreeForm
+SharpTemplar is a library that makes it easy to create HTML webpages in C#. 
+
+FreeForm allows any tag to be placed anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. A table row does, for example, not make sense outside of a table.
 
 ## Terminology
 | Term | Description |
 |--|--|
 |tag | an HTML tag |
-|element | the object representing an HTML tag |
-
-## FreeForm
-FreeForm allows any tag to be placed anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. A table row does, for example, not make sense outside of a table.
-
-## GuidedForm
-Development of GuidedForm is on hold, and should not be considered usable. Information from the "How to use" and "Supported tags" sections, does not necessarily apply to GuidedForm.
+|element | the object representing an HTML tag | 
 
 ## How to use
-To use SharpTemplar instantiate a TemplarDocument (FreeFormDocument or GuidedFormDocument). This objects contains two elements, namely a Head and a Body. 
+To use SharpTemplar instantiate a FreeFormDocument. This objects contains two elements, namely a Head and a Body. 
 
 These elements contain methods to add other elements into them (Methods beginning with "Add") or apply attributes (Methods beginning with "With"). 
 
