@@ -1,14 +1,15 @@
+# SharpTemplar
+SharpTemplar is a library that makes it easy to create HTML webpages in C#. 
+
 ## Terminology
 | Term | Description |
 |--|--|
 |tag | a HTML tag |
 |element | an object representing a HTML tag | 
-__________
+___
 
 
-# SharpTemplar - FreeForm
-SharpTemplar is a library that makes it easy to create HTML webpages in C#. 
-
+# FreeForm
 FreeForm allows any tag to be placed anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. A table row does, for example, not make sense outside of a table.
 
 ## How to use
@@ -195,7 +196,7 @@ The resulting page in this example would be
 - Term \<dt\>
 - TermDescription \<dd\>
 - UnorderedList \<ul\>
-
+___
 
 
 
