@@ -28,7 +28,7 @@ namespace SharpTemplar.FreeForm
         /// <returns>
         /// Most recently added Element.
         /// </returns>
-        public HTMLBodyElement EnterIt()
+        public HTMLBodyElement Enter()
         {
             var toEnter = Newest;
             ResetThisElement();

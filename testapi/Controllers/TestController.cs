@@ -22,7 +22,9 @@ namespace testapi.Controllers
         {
             var doc = new FreeFormDocument("test");
             
-            doc.Body.PlaceTemplate("./templates/test.sthtml", "Emil", "Nice");
+            doc.Head.AddMeta().WithAttribute("charset","utf-8");
+
+            doc.Body.PlaceTemplate("path-to-template", "foobar");
 
             System.Console.WriteLine(doc);
 
