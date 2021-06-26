@@ -200,7 +200,7 @@ ___
 
 
 
-# SharpTemplar - GuidedForm
+# GuidedForm
 Development of GuidedForm is on hold, and should not be considered usable. 
 
 ## How to use
