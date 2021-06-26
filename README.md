@@ -13,7 +13,7 @@ ___
 FreeForm allows any tag to be placed anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. A table row does, for example, not make sense outside of a table.
 
 ## How to use
-To use SharpTemplar instantiate a FreeFormDocument. This objects contains two elements, namely a Head and a Body. 
+To use SharpTemplar in FreeForm instantiate a FreeFormDocument. This objects contains two elements, namely a Head and a Body. 
 
 These elements contain methods to add other elements into them (Methods beginning with "Add") or apply attributes (Methods beginning with "With"). 
 
