@@ -24,6 +24,8 @@ namespace testapi.Controllers
             
             doc.Body.PlaceTemplate("./templates/test.sthtml", "Emil", "Nice");
 
+            System.Console.WriteLine(doc);
+
             return new ContentResult
             {
                 ContentType = "text/html",

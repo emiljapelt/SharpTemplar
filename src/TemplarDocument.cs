@@ -12,6 +12,12 @@ namespace SharpTemplar
             Head = new Head(title);
         }
 
+
+        public override string ToString()
+        {
+            return GeneratePage();
+        }
+
         public string GeneratePage()
         {
             StringBuilder sb = new StringBuilder();
