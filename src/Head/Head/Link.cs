@@ -11,4 +11,20 @@ namespace SharpTemplar
             Attributes.Add("href", href);
         }
     }
+
+    public abstract partial class HTMLHeadElement : HTMLElement
+    {
+        /// <summary>
+        /// Adds Link into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLHeadElement AddLink(string rel, string href)
+        {
+            var link = new Link(rel, href);
+            AddElement(link);
+            return this;
+        }
+    }
 }

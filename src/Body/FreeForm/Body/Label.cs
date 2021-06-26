@@ -1,6 +1,6 @@
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.FreeForm.BodyElements
+namespace SharpTemplar.FreeForm
 {
     public class Label : HTMLBodyElement
     {
@@ -10,6 +10,23 @@ namespace SharpTemplar.FreeForm.BodyElements
         {
             Contains.Add(new HTMLString(content));
             Attributes.Add("for", _refTo);
+        }
+    }
+
+    public abstract partial class HTMLBodyElement : HTMLElement
+    {
+        /// <summary>
+        /// Adds Lable into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddLabel(string form, string refTo, string content)
+        {
+            var label = new Label(refTo, content, this);
+            label.WithAttribute("form", form);
+            AddElement(label);
+            return this;
         }
     }
 }

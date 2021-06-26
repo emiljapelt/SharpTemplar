@@ -1,5 +1,5 @@
 
-namespace SharpTemplar.FreeForm.BodyElements
+namespace SharpTemplar.FreeForm
 {
     public class Body : HTMLBodyElement
     {

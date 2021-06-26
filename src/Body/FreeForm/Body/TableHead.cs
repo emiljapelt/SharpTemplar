@@ -1,7 +1,7 @@
 using System.Text;
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.FreeForm.BodyElements
+namespace SharpTemplar.FreeForm
 {
     public class TableHead : HTMLBodyElement
     {
@@ -14,6 +14,36 @@ namespace SharpTemplar.FreeForm.BodyElements
             : base(parent) 
         {
             Contains.Add(new HTMLString(text));
+        }
+    }
+
+    public abstract partial class HTMLBodyElement : HTMLElement
+    {
+        public HTMLBodyElement AddTableHead()
+        {
+            var th = new TableHead(this);
+            AddElement(th);
+            return this;
+        }
+        public HTMLBodyElement AddTableHead(string text)
+        {
+            var th = new TableHead(text, this);
+            AddElement(th);
+            return this;
+        }
+        public HTMLBodyElement AddTableHead(out HTMLBodyElement saveIn)
+        {
+            var th = new TableHead(this);
+            saveIn = th;
+            AddElement(th);
+            return this;
+        }
+        public HTMLBodyElement AddTableHead(out HTMLBodyElement saveIn, string text)
+        {
+            var th = new TableHead(text, this);
+            saveIn = th;
+            AddElement(th);
+            return this;
         }
     }
 }

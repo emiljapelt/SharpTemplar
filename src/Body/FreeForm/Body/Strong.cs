@@ -1,6 +1,6 @@
 using SharpTemplar.Shared;
 
-namespace SharpTemplar.FreeForm.BodyElements
+namespace SharpTemplar.FreeForm
 {
     public class Strong : HTMLBodyElement
     {
@@ -12,6 +12,42 @@ namespace SharpTemplar.FreeForm.BodyElements
             : base (parent) 
         {
             Contains.Add(new HTMLString(text));
+        }
+    }
+
+    public abstract partial class HTMLBodyElement : HTMLElement
+    {
+        /// <summary>
+        /// Adds Strong into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddStrong()
+        {
+            var strong = new Strong(this);
+            AddElement(strong);
+            return this;
+        }
+        public HTMLBodyElement AddStrong(out HTMLBodyElement saveIn)
+        {
+            var strong = new Strong(this);
+            saveIn = strong;
+            AddElement(strong);
+            return this;
+        }
+        public HTMLBodyElement AddStrong(string text)
+        {
+            var strong = new Strong(text, this);
+            AddElement(strong);
+            return this;
+        }
+        public HTMLBodyElement AddStrong(out HTMLBodyElement saveIn, string text)
+        {
+            var strong = new Strong(text, this);
+            saveIn = strong;
+            AddElement(strong);
+            return this;
         }
     }
 }

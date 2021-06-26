@@ -1,5 +1,5 @@
 
-namespace SharpTemplar.FreeForm.BodyElements
+namespace SharpTemplar.FreeForm
 {
     public class Input : HTMLBodyElement
     {
@@ -9,6 +9,22 @@ namespace SharpTemplar.FreeForm.BodyElements
         {
             Attributes.Add("type", type);
             Attributes.Add("id", id);
+        }
+    }
+
+    public abstract partial class HTMLBodyElement : HTMLElement
+    {
+        /// <summary>
+        /// Adds Input into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLBodyElement AddInput(string id, string type)
+        {
+            var input = new Input(id, type, this);
+            AddElement(input);
+            return this;
         }
     }
 }

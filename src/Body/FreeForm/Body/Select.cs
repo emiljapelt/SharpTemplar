@@ -1,5 +1,5 @@
 
-namespace SharpTemplar.FreeForm.BodyElements
+namespace SharpTemplar.FreeForm
 {
     public class Select : HTMLBodyElement
     {
@@ -8,6 +8,24 @@ namespace SharpTemplar.FreeForm.BodyElements
             : base(parent)
         {
             Attributes.Add("name", name);
+        }
+    }
+
+    public abstract partial class HTMLBodyElement : HTMLElement
+    {
+        public HTMLBodyElement AddSelect(string name)
+        {
+            var select = new Select(name, this);
+            AddElement(select);
+            return this;
+        }
+
+        public HTMLBodyElement AddSelect(out HTMLBodyElement saveIn, string name)
+        {
+            var select = new Select(name, this);
+            saveIn = select;
+            AddElement(select);
+            return this;
         }
     }
 }

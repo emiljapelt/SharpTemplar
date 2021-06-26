@@ -24,7 +24,7 @@ namespace testapi.Controllers
             
             doc.Head.AddMeta().WithAttribute("charset","utf-8");
 
-            doc.Body.PlaceTemplate("path-to-template", "foobar");
+            doc.Body.AddDiv().Enter().AddParagraph("1").Exit().AddParagraph("2");
 
             System.Console.WriteLine(doc);
 

@@ -3,7 +3,7 @@ using System.IO;
 using System;
 using System.Text.RegularExpressions;
 
-namespace SharpTemplar.FreeForm.BodyElements
+namespace SharpTemplar.FreeForm
 {
     public class Template : HTMLBodyElement
     {
@@ -25,6 +25,16 @@ namespace SharpTemplar.FreeForm.BodyElements
                 builder.Replace($"<{i+1}!>", Replacements[i]);
             }
             sb.Append(Regex.Replace(builder.ToString(), @"<\d+?!>", ""));
+        }
+    }
+
+    public abstract partial class HTMLBodyElement : HTMLElement
+    {
+        public HTMLBodyElement PlaceTemplate(string templatePath, params string[] replacements)
+        {
+            var t = new Template(templatePath, replacements);
+            AddElement(t);
+            return this;
         }
     }
 }

@@ -20,4 +20,20 @@ namespace SharpTemplar
             sb.Append($"</{TagType}>");
         }
     }
+
+    public abstract partial class HTMLHeadElement : HTMLElement
+    {
+        /// <summary>
+        /// Adds Style into the Element it is called on.
+        /// </summary>
+        /// <returns>
+        /// The Element it is called on.
+        /// </returns>
+        public HTMLHeadElement AddStyle(string path)
+        {
+            var style = new Style(path);
+            AddElement(style);
+            return this;
+        }
+    }
 }
