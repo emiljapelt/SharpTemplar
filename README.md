@@ -1,5 +1,5 @@
 # SharpTemplar
-SharpTemplar is a library that makes it easy to create HTML webpages in C#. 
+SharpTemplar is a library that makes it easy to create HTML webpages in C#. It can be used in two forms, FreeForm or ~~GuidedForm~~.
 
 ## Terminology
 | Term | Description |
