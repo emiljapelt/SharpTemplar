@@ -24,7 +24,9 @@ namespace testapi.Controllers
             
             doc.Head.AddMeta().WithAttribute("charset","utf-8");
 
-            doc.Body.AddDiv().Enter().AddParagraph("1").Exit().AddParagraph("2");
+            doc.Body.AddOrderedList().Enter()
+                .AddListItem().Enter().AddHTMLString("hi").Exit()
+                .AddListItem("hello").Enter().AddHTMLString("hello").Exit().Exit().AddParagraph("list of greetings");
 
             System.Console.WriteLine(doc);
 
