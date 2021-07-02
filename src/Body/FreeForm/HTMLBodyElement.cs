@@ -116,5 +116,14 @@ namespace SharpTemplar.FreeForm
             Newest.Contains.Add(new HTMLString(content));
             return this;
         }
+
+        public HTMLBodyElement OnEvent(HTMLEvent eventName, string functionName, params object[] functionArguments)
+        {
+            var args = string.Join(",", functionArguments);
+            string function = functionName + "(" + args + ")";
+            
+            AddAttribute("on"+eventName.ToString().ToLower(),function);
+            return this;
+        }
     }
 }
