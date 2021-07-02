@@ -119,6 +119,11 @@ namespace SharpTemplar.FreeForm
 
         public HTMLBodyElement OnEvent(HTMLEvent eventName, string functionName, params object[] functionArguments)
         {
+            for (int i = 0; i < functionArguments.Length; i++)
+            {
+                if (functionArguments[i] is string) functionArguments[i] = $"'{functionArguments[i]}'";
+            }
+
             var args = string.Join(",", functionArguments);
             string function = functionName + "(" + args + ")";
             

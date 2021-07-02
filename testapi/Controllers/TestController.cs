@@ -27,7 +27,7 @@ namespace testapi.Controllers
             doc.Head.AddScript("./scripts/test.js");
 
             doc.Body.AddButton("button","click me!").OnEvent(click, "test1");
-            doc.Body.AddButton("button","click me too!").OnEvent(click, "test2", "'hi'");
+            doc.Body.AddButton("button","click me too!").OnEvent(click, "test3", "hi", 2);
 
             System.Console.WriteLine(doc);
 
