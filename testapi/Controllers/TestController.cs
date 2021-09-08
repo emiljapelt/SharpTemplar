@@ -25,6 +25,7 @@ namespace testapi.Controllers
             
             doc.Head.AddMeta().WithAttribute("charset","utf-8");
             doc.Head.AddScript("./scripts/test.js");
+            doc.Head.AddMeta().WithAttributes(("name","viewport"),("size","large"));
 
             doc.Body.AddButton("button","click me!").OnEvent(click, "test1");
             doc.Body.AddButton("button","click me too!").OnEvent(click, "test3", "hi", 2);

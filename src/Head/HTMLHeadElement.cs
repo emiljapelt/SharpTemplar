@@ -33,6 +33,11 @@ namespace SharpTemplar
             AddAttribute(key, value);
             return this;
         }
+        public HTMLHeadElement WithAttributes(params (string key, string value)[] list)
+        {
+            AddAttributes(list);
+            return this;
+        }
 
         /// <summary>
         /// Adds text into the Element under construction.
