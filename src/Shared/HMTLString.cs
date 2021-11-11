@@ -1,20 +1,19 @@
 using System.Text;
 
-namespace SharpTemplar.Shared
+namespace SharpTemplar;
+
+internal class HTMLString : HTMLElement
 {
-    internal class HTMLString : HTMLElement
+    public string Content;
+
+    internal HTMLString(string content)
+        : base(null)
     {
-        public string Content;
+        Content = content;
+    }
 
-        internal HTMLString(string content)
-            : base(null)
-        {
-            Content = content;
-        }
-
-        internal override void ConstructElement(StringBuilder sb)
-        {
-            sb.Append(Content);
-        }
+    internal override void ConstructElement(StringBuilder sb)
+    {
+        sb.Append(Content);
     }
 }

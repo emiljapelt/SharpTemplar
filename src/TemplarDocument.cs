@@ -1,32 +1,32 @@
 using System.Text;
 
-namespace SharpTemplar
+namespace SharpTemplar;
+
+public class TemplarDocument
 {
-    public abstract class TemplarDocument
+    public Head Head { get; }
+    public Body Body { get; }
+
+    public TemplarDocument(string title)
     {
-        public Head Head { get; }
-        internal virtual HTMLElement _Body { get; set; }
-
-        protected TemplarDocument(string title)
-        {
-            Head = new Head(title);
-        }
+        Head = new Head(title);
+        Body = new Body();
+    }
 
 
-        public override string ToString()
-        {
-            return GeneratePage();
-        }
+    public override string ToString()
+    {
+        return GeneratePage();
+    }
 
-        public string GeneratePage()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<!DOCTYPE html>");
-            sb.Append("<html>");
-            Head.ConstructElement(sb);
-            _Body.ConstructElement(sb);
-            sb.Append("</html>");
-            return sb.ToString();
-        }
+    public string GeneratePage()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("<!DOCTYPE html>");
+        sb.Append("<html>");
+        Head.ConstructElement(sb);
+        Body.ConstructElement(sb);
+        sb.Append("</html>");
+        return sb.ToString();
     }
 }

@@ -1,75 +1,73 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SharpTemplar
+namespace SharpTemplar;
+public abstract class HTMLElement
 {
-    public abstract class HTMLElement
+    internal virtual string? TagType { get; }
+    internal Dictionary<string, string> Attributes;
+    internal virtual List<HTMLElement> Contains { get; }
+    internal virtual HTMLElement? Parent { get; set; }
+    internal virtual HTMLElement Newest { get; set; }
+
+    private static List<string> UniqueAttributes = 
+        new List<string> {"id"};
+
+    protected HTMLElement(HTMLElement? parent)
     {
-        internal virtual string TagType { get; }
-        internal Dictionary<string, string> Attributes;
-        internal virtual List<HTMLElement> Contains { get; }
-        internal virtual HTMLElement Parent { get; set; }
-        internal virtual HTMLElement Newest { get; set; }
+        Parent = parent;
+        Contains = new List<HTMLElement>();
+        Attributes = new Dictionary<string, string>();
+        Newest = this;
+    }
 
-        private static List<string> UniqueAttributes = 
-            new List<string> {"id"};
-
-        protected HTMLElement(HTMLElement parent)
+    internal virtual void ConstructElement(StringBuilder sb)
+    {
+        sb.Append($"<{TagType}");
+        foreach(var a in Attributes)
         {
-            Parent = parent;
-            Contains = new List<HTMLElement>();
-            Attributes = new Dictionary<string, string>();
-            Newest = this;
+            sb.Append($" {a.Key}=\"{a.Value}\"");
         }
-
-        internal virtual void ConstructElement(StringBuilder sb)
+        sb.Append(">");
+        foreach(HTMLElement e in Contains)
         {
-            sb.Append($"<{TagType}");
-            foreach(var a in Attributes)
-            {
-                sb.Append($" {a.Key}=\"{a.Value}\"");
-            }
-            sb.Append(">");
-            foreach(HTMLElement e in Contains)
-            {
-                e.ConstructElement(sb);
-            }
-            sb.Append($"</{TagType}>");
+            e.ConstructElement(sb);
         }
+        sb.Append($"</{TagType}>");
+    }
 
-        internal void AddElement(HTMLElement e)
-        {
-            Contains.Add(e);
-            Newest = e;
-        }
+    internal void AddElement(HTMLElement e)
+    {
+        Contains.Add(e);
+        Newest = e;
+    }
 
-        internal void ResetThisElement()
-        {
-            Newest = this;
-        }
+    internal void ResetThisElement()
+    {
+        Newest = this;
+    }
 
-        internal virtual void AddAttribute(string key, string value)
-        {
-            Newest.UpdateAttributes(key, value);
-        }
+    internal virtual void AddAttribute(string key, string value)
+    {
+        Newest.UpdateAttributes(key, value);
+    }
 
-        internal virtual void AddAttributes(params (string key, string value)[] list)
+    internal virtual void AddAttributes(params (string key, string value)[] list)
+    {
+        foreach(var a in list)
         {
-            foreach(var a in list)
-            {
-                AddAttribute(a.key, a.value);
-            }
+            AddAttribute(a.key, a.value);
         }
+    }
 
-        private void UpdateAttributes(string key, string value)
+    private void UpdateAttributes(string key, string value)
+    {
+        if (Attributes.ContainsKey(key)) 
         {
-            if (Attributes.ContainsKey(key)) 
-            {
-                if (UniqueAttributes.Contains(key)) Attributes[key] = value;
-                else Attributes[key] = $"{Attributes[key]} {value}";
-                return;
-            }
-            Attributes.Add(key, value);
+            if (UniqueAttributes.Contains(key)) Attributes[key] = value;
+            else Attributes[key] = $"{Attributes[key]} {value}";
+            return;
         }
+        Attributes.Add(key, value);
     }
 }

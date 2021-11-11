@@ -1,13 +1,12 @@
 
-namespace SharpTemplar
+namespace SharpTemplar;
+
+public enum HeaderLevel
 {
-    public enum HeaderLevel
-    {
-        One,
-        Two,
-        Three,
-        Four,
-        Five,
-        Six
-    }
+    One,
+    Two,
+    Three,
+    Four,
+    Five,
+    Six
 }
