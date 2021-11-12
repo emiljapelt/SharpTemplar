@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <PackageId>SharpTemplar</PackageId>
     <Version>0.4.1</Version>
     <Author>Emil Jäpelt</Author>

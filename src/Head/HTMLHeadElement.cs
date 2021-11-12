@@ -3,7 +3,7 @@ namespace SharpTemplar;
 public abstract partial class HTMLHeadElement : HTMLElement
 {
     private HTMLHeadElement _Parent;
-    internal override HTMLElement? Parent 
+    internal override HTMLElement Parent 
     { 
         get { return _Parent; }
         set { _Parent = (HTMLHeadElement) value; }

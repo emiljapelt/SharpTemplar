@@ -4,16 +4,16 @@ using System.Text;
 namespace SharpTemplar;
 public abstract class HTMLElement
 {
-    internal virtual string? TagType { get; }
+    internal virtual string TagType { get; }
     internal Dictionary<string, string> Attributes;
     internal virtual List<HTMLElement> Contains { get; }
-    internal virtual HTMLElement? Parent { get; set; }
+    internal virtual HTMLElement Parent { get; set; }
     internal virtual HTMLElement Newest { get; set; }
 
     private static List<string> UniqueAttributes = 
         new List<string> {"id"};
 
-    protected HTMLElement(HTMLElement? parent)
+    protected HTMLElement(HTMLElement parent)
     {
         Parent = parent;
         Contains = new List<HTMLElement>();
