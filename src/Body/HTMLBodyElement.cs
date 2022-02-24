@@ -14,10 +14,12 @@ public abstract partial class HTMLBodyElement : HTMLElement
     /// <returns>
     /// Parent of the Element it is called on.
     /// </returns>
-    public virtual HTMLBodyElement Exit()
+    public HTMLBodyElement Exit
     {
-        ResetThisElement();
-        return (HTMLBodyElement) Parent;
+        get { 
+            ResetThisElement(); 
+            return (HTMLBodyElement) Parent; 
+        }
     }
 
     /// <summary>
@@ -26,11 +28,13 @@ public abstract partial class HTMLBodyElement : HTMLElement
     /// <returns>
     /// Most recently added Element.
     /// </returns>
-    public HTMLBodyElement Enter()
+    public HTMLBodyElement Enter
     {
-        var toEnter = Newest;
-        ResetThisElement();
-        return (HTMLBodyElement) toEnter;
+        get {
+            var toEnter = Newest;
+            ResetThisElement();
+            return (HTMLBodyElement) toEnter;
+        }
     }
 
     /// <summary>
