@@ -1,5 +1,5 @@
 # SharpTemplar
-SharpTemplar is a library that makes it easy to create HTML webpages in C#. SharpTemplar allows any tag to be placed anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. A table row does, for example, not make sense outside of a table.
+SharpTemplar is a library for making HTML webpages in C#. SharpTemplar allows any tag to be placed nearly anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. A table row does, for example, not make sense outside of a table, but SharpTemplar woundn't mind.
 
 ## Terminology
 | Term | Description |
@@ -9,7 +9,7 @@ SharpTemplar is a library that makes it easy to create HTML webpages in C#. Shar
 ___
 
 ## How to use
-To use SharpTemplar instantiate a TemplarDocument. This objects contains two elements, namely a Head and a Body. 
+To use SharpTemplar instantiate a TemplarDocument. This object contains two elements, namely a Head and a Body. 
 
 These elements contain methods to add other elements into them (Methods beginning with "Add") or apply attributes (Methods beginning with "With"). 
 
@@ -46,7 +46,7 @@ Attributes are applied to the just added element, or the element the method is c
 Note that applying the same attribute multiple times, will append the new value with a whitespace in front. The exception is the "id" attribute, which will simply override the previous value.
 
 ### Nesting tags
-Notice that in the first example, the two added elements have the same parent element. This happens because the methods were both called on the Body element. To change what element is being called methods upon, use Enter or Exit. Enter will change to the just added element, or, if no element was just added, it does nothing. Exit will change to the parent of the current element.
+Notice that in the first example, the two added elements have the same parent. This happens because the methods were both called on the Body element. To change what element is being called methods upon, use Enter or Exit. Enter will change to the just added element, or, if no element was just added, it does nothing. Exit will change to the parent of the current element, or do nothing when the element has no parent, i.e. the body element.
 
 For example
 ```
@@ -81,6 +81,61 @@ Results in:
     </body>
 </html>
 ```
+
+Switching between elements might result in elements being added, and attributes applied, to elements that was not intended. This happens when an element has not been reset, i.e. there is still some element, that has just been added to it.
+
+For example:
+```
+var doc = new TemplarDocument("test");
+            
+doc.Head.AddMeta().WithAttribute("charset","utf-8");
+
+doc.Body.AddDiv();
+
+doc.Body.WithAttribute("class","container");'
+
+string page = doc.GeneratePage();
+```
+In this case the Div that was added to Body, has still just been added, when the class attribute is applied. Therefor the resulting page is:
+
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test</title>
+        <meta charset="utf-8"></meta>
+    </head>
+    <body>
+        <div class="container"></div>
+    </body>
+</html>
+```
+This can be fixes by resetting the body, with End.
+```
+var doc = new TemplarDocument("test");
+            
+doc.Head.AddMeta().WithAttribute("charset","utf-8");
+
+doc.Body.AddDiv().End;
+
+doc.Body.WithAttribute("class","container");'
+
+string page = doc.GeneratePage();
+```
+Which will give:
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test</title>
+        <meta charset="utf-8"></meta>
+    </head>
+    <body class="container">
+        <div></div>
+    </body>
+</html>
+```
+Note that calling Enter, Exit or End on any element, will reset it.
 
 ### Outing
 Most methods for adding elements are overloaded with an out. If used, the added element is saved in the supplied variable. This could for example be used if some elements need to be added to the outed element in a loop or conditionally.
@@ -119,7 +174,7 @@ Results in:
 ### Conditional/Loop
 As an alternative to using the C# loops and conditionals, SharpTemplar offers the Conditional- and Loop-element. 
 
-The Conditional element is used with the If() method, and takes a condition. To get out of the conditional, Exit is used. For example:
+The Conditional element is used with the If method, and takes a condition. To get out of the conditional, Exit is used. For example:
 
 ```
 var doc = new TemplarDocument("test");
@@ -175,7 +230,7 @@ Would result in this page:
 </html>
 ```
 
-The loop element is used via the While() method, which takes a condition and some change. Just like the Conditional, Exit is used to get out of the loop. Elements added to the loop, while be rendered as many times as the loop runs.
+The Loop element is used via the While method, which takes a condition and a change. Just like the Conditional, Exit is used to get out of the loop. Elements added to the loop, will be rendered as many times as the loop runs.
 
 For example:
 ```
@@ -191,7 +246,7 @@ doc.Body.While(() => i < 2, () => i++)
 
 string page = doc.GeneratePage();
 ```
-Generates:
+Results in:
 ```
 <!DOCTYPE html>
 <html>
@@ -212,7 +267,7 @@ If you have some reaccuring HTML structure, then using a template might be a goo
 
 Templates are written in .sthtml files, which essentially just contains standart HTML. The only difference being the addition of replacement tags. Replacement tags have the following form: ```<x!>```. Where ```x > 0```. 
 
-Example of a template:
+Example of a template, template.sthtml:
 ```
 <div class="messagecontainer">
     <p>This is a message</p>
@@ -222,18 +277,18 @@ Example of a template:
 
 When placeing a template in a TemplarDocument, any number of string parameters can be given, after the path to the template file. These will be used as replacements. All ```<1!>``` tags would for instance be replaced with the first parameter given. If the integer in the replacement tag is larger than the amount of given parameters, the replacement tag is replaced with the empty string.
 
-Example
+Example:
 ```
 var doc = new TemplarDocument("test");
             
 doc.Head.AddMeta().WithAttribute("charset","utf-8");
 
-doc.Body.PlaceTemplate("path-to-template", "foobar");
+doc.Body.PlaceTemplate("path-to-template\template.sthtml", "foobar");
 
 string page = doc.GeneratePage();
 ```
 
-The resulting page in this example would be 
+The resulting page in this example would be:
 ```
 <!DOCTYPE html>
 <html>

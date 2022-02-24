@@ -4,10 +4,8 @@ var doc = new TemplarDocument("test");
             
 doc.Head.AddMeta().WithAttribute("charset","utf-8");
 
-int i = 0;
-doc.Body.While(() => i < 2, () => i++)
-            .AddParagraph("1")
-        .Exit
-        .AddParagraph("2");
+doc.Body.AddDiv().End;
+
+doc.Body.WithAttribute("class","container");
 
 Console.WriteLine(doc.GeneratePage());

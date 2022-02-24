@@ -38,6 +38,20 @@ public abstract partial class HTMLBodyElement : HTMLElement
     }
 
     /// <summary>
+    /// Resets this element
+    /// </summary>
+    /// <returns>
+    /// The element it was called on
+    /// </returns>
+    public HTMLBodyElement End
+    {
+        get {
+            ResetThisElement();
+            return this;
+        }
+    }
+
+    /// <summary>
     /// Adds an attribute of any kind to the Element it is called on.
     /// </summary>
     /// <returns>
