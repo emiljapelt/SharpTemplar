@@ -2,9 +2,6 @@ using System.Text;
 
 namespace SharpTemplar;
 
-public delegate bool Condition();
-public delegate void loopChange();
-
 public class Loop : HTMLBodyElement {
         private Condition Condition;
         private loopChange Change;
@@ -22,7 +19,6 @@ public class Loop : HTMLBodyElement {
 
                 Change();
             }
-            return;
         }
     }
 
