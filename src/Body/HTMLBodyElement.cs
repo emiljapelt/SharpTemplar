@@ -43,12 +43,9 @@ public abstract partial class HTMLBodyElement : HTMLElement
     /// <returns>
     /// The element it was called on
     /// </returns>
-    public HTMLBodyElement End
+    public void End()
     {
-        get {
-            ResetThisElement();
-            return this;
-        }
+        ResetThisElement();
     }
 
     /// <summary>

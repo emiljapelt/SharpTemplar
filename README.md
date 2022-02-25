@@ -116,7 +116,7 @@ var doc = new TemplarDocument("test");
             
 doc.Head.AddMeta().WithAttribute("charset","utf-8");
 
-doc.Body.AddDiv().End;
+doc.Body.AddDiv().End();
 
 doc.Body.WithAttribute("class","container");'
 
@@ -135,7 +135,7 @@ Which will give:
     </body>
 </html>
 ```
-Note that calling Enter, Exit or End on any element, will reset it.
+Note that calling Enter, Exit or End on any element, will reset it. Although Enter and Exit cannot be the end of a call chain.
 
 ### Outing
 Most methods for adding elements are overloaded with an out. If used, the added element is saved in the supplied variable. This could for example be used if some elements need to be added to the outed element in a loop or conditionally.
