@@ -38,6 +38,13 @@ public abstract partial class HTMLHeadElement : HTMLElement
         AddElement(script);
         return this;
     }
+    public HTMLHeadElement AddDeferScript(string path)
+    {
+        var script = new Script(path);
+        script.AddAttribute("defer","true");
+        AddElement(script);
+        return this;
+    }
 
     /// <summary>
     /// Adds Script into the Element it is called on.
