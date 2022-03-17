@@ -8,6 +8,10 @@
     <Version>0.5.1</Version>
     <Author>Emil Jäpelt</Author>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>
+      A library for making HTML webpages in C#.
+    </Description>
+    <PackageTags>HTML;website;webpage</PackageTags>
   </PropertyGroup>
 
 </Project>
