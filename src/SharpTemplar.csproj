@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <PackageId>SharpTemplar</PackageId>
-    <Version>0.5.1</Version>
+    <Version>0.5.2</Version>
     <Author>Emil Jäpelt</Author>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>
