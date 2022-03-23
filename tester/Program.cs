@@ -8,9 +8,7 @@ public class Program
                     
         doc.Head.AddMeta().WithAttribute("charset","utf-8");
 
-        doc.Body.AddDiv().End();
-
-        doc.Body.WithAttribute("class","container");
+        doc.Body.AddForm().Enter.AddLabel("meme", "Wauw").AddInput("text", "amazing").WithId("meme");
 
         Console.WriteLine(doc.GeneratePage());
     }
