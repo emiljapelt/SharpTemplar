@@ -4,11 +4,11 @@ namespace SharpTemplar;
 public class Input : HTMLBodyElement
 {
     internal override string TagType => "input";
-    internal Input(string id, string type, HTMLElement parent)
+    internal Input(string type, string name, HTMLElement parent)
         : base(parent)
     {
-        Attributes.Add("type", type);
-        Attributes.Add("id", id);
+        AddAttribute("type", type);
+        AddAttribute("name", name);
     }
 }
 
@@ -20,9 +20,17 @@ public abstract partial class HTMLBodyElement : HTMLElement
     /// <returns>
     /// The Element it is called on.
     /// </returns>
-    public HTMLBodyElement AddInput(string id, string type)
+    public HTMLBodyElement AddInput(string type, string name)
     {
-        var input = new Input(id, type, this);
+        var input = new Input(type, name, this);
+        AddElement(input);
+        return this;
+    }
+
+    public HTMLBodyElement AddInput(string type, string name, string form)
+    {
+        var input = new Input(type, name, this);
+        input.AddAttribute("form", form);
         AddElement(input);
         return this;
     }

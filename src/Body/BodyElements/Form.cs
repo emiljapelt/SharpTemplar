@@ -3,26 +3,22 @@ namespace SharpTemplar;
 
 public class Form : HTMLBodyElement
 {
-    private string id;
     internal override string TagType => "form";
-    internal Form(string _id, HTMLBodyElement parent)
-        : base(parent) 
-    {
-        id = _id;
-    }
+    internal Form(HTMLBodyElement parent)
+        : base(parent) {}
 }
 
 public abstract partial class HTMLBodyElement : HTMLElement
 {
-    public HTMLBodyElement AddForm(string id)
+    public HTMLBodyElement AddForm()
     {
-        var form = new Form(id, this);
+        var form = new Form(this);
         AddElement(form);
         return this;
     }
-    public HTMLBodyElement AddForm(out HTMLBodyElement saveIn, string id)
+    public HTMLBodyElement AddForm(out HTMLBodyElement saveIn)
     {
-        var form = new Form(id, this);
+        var form = new Form(this);
         AddElement(form);
         saveIn = form;
         return this;
