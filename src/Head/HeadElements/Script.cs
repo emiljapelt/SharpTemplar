@@ -41,7 +41,7 @@ public abstract partial class HTMLHeadElement : HTMLElement
     public HTMLHeadElement AddDeferScript(string path)
     {
         var script = new Script(path);
-        script.AddAttribute("defer","true");
+        script.WithAttr(("defer","true"));
         AddElement(script);
         return this;
     }

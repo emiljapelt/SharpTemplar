@@ -7,8 +7,8 @@ public class Input : HTMLBodyElement
     internal Input(string type, string name, HTMLElement parent)
         : base(parent)
     {
-        AddAttribute("type", type);
-        AddAttribute("name", name);
+        WithAttr(("type", type));
+        WithAttr(("name", name));
     }
 }
 
@@ -30,7 +30,7 @@ public abstract partial class HTMLBodyElement : HTMLElement
     public HTMLBodyElement AddInput(string type, string name, string form)
     {
         var input = new Input(type, name, this);
-        input.AddAttribute("form", form);
+        input.WithAttr(("form", form));
         AddElement(input);
         return this;
     }

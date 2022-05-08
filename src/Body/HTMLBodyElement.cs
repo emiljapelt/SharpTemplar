@@ -48,25 +48,13 @@ public abstract partial class HTMLBodyElement : HTMLElement
         ResetThisElement();
     }
 
-    /// <summary>
-    /// Adds an attribute of any kind to the Element it is called on.
-    /// </summary>
-    /// <returns>
-    /// The Element it is called on.
-    /// </returns>
-    public virtual HTMLBodyElement WithAttribute(string key, string value)
-    {
-        AddAttribute(key, value);
-        return this;
-    }
-
-    /// <summary>
-    /// Adds many attributes of any kind to the Element it is called on.
-    /// </summary>
-    /// <returns>
-    /// The Element it is called on.
-    /// </returns>
-    public virtual  HTMLBodyElement WithAttributes(params (string key, string value)[] list)
+    // /// <summary>
+    // /// Add an attributes of any kind to the Element it is called on.
+    // /// </summary>
+    // /// <returns>
+    // /// The Element it is called on.
+    // /// </returns>
+    public virtual  HTMLBodyElement WithAttr(params (string key, string value)[] list)
     {
         AddAttributes(list);
         return this;
@@ -80,7 +68,7 @@ public abstract partial class HTMLBodyElement : HTMLElement
     /// </returns>
     public HTMLBodyElement WithClass(string value)
     {
-        return WithAttribute("class", value);
+        return WithAttr(("class", value));
     }
 
     public HTMLBodyElement WithClasses(params string[] values)
@@ -91,7 +79,7 @@ public abstract partial class HTMLBodyElement : HTMLElement
 
     public HTMLBodyElement WithId(string value)
     {
-        WithAttribute("id", value);
+        WithAttr(("id", value));
         return this;
     }
 
@@ -103,7 +91,7 @@ public abstract partial class HTMLBodyElement : HTMLElement
     /// </returns>
     public HTMLBodyElement WithStyle(string value)
     {
-        return WithAttribute("style", value);
+        return WithAttr(("style", value));
     }
 
     /// <summary>

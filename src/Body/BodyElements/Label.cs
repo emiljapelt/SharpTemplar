@@ -30,7 +30,7 @@ public abstract partial class HTMLBodyElement : HTMLElement
     public HTMLBodyElement AddLabel(string refTo, string text, string form)
     {
         var label = new Label(refTo, text, this);
-        label.WithAttribute("form", form);
+        label.WithAttr(("form", form));
         AddElement(label);
         return this;
     }

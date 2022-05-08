@@ -21,17 +21,12 @@ public abstract partial class HTMLHeadElement : HTMLElement
 
 
     /// <summary>
-    /// Adds attribute of any kind to the Element it is called on. If the Element already has the attribute, the old attribute is replaced.
+    /// Adds attributes of any kind to the Element it is called on.
     /// </summary>
     /// <returns>
     /// The Element it is called on.
     /// </returns>        
-    public HTMLHeadElement WithAttribute(string key, string value)
-    {
-        AddAttribute(key, value);
-        return this;
-    }
-    public HTMLHeadElement WithAttributes(params (string key, string value)[] list)
+    public HTMLHeadElement WithAttr(params (string key, string value)[] list)
     {
         AddAttributes(list);
         return this;

@@ -18,7 +18,7 @@ For example
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 doc.Body.AddDiv().AddParagraph("bar");
 
@@ -52,7 +52,7 @@ For example
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 doc.Body.AddDiv().Enter
             .AddParagraph("1")
@@ -88,11 +88,11 @@ For example:
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 doc.Body.AddDiv();
 
-doc.Body.WithAttribute("class","container");'
+doc.Body.WithAttr(("class","container"));
 
 string page = doc.GeneratePage();
 ```
@@ -114,11 +114,11 @@ This can be fixes by resetting the body, with End.
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 doc.Body.AddDiv().End();
 
-doc.Body.WithAttribute("class","container");'
+doc.Body.WithAttr(("class","container"));
 
 string page = doc.GeneratePage();
 ```
@@ -144,7 +144,7 @@ For example
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 HTMLBodyElement div;
 doc.Body.AddDiv(out div).AddParagraph("3");
@@ -179,7 +179,7 @@ The Conditional element is used with the If method, and takes a condition. To ge
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 doc.Body.If(() => 1 == 2)
             .AddParagraph("1")
@@ -206,7 +206,7 @@ While this:
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 doc.Body.If(() => 1 == 1)
             .AddParagraph("1")
@@ -236,7 +236,7 @@ For example:
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 int i = 0;
 doc.Body.While(() => i < 2, () => i++)
@@ -281,7 +281,7 @@ Example:
 ```
 var doc = new TemplarDocument("test");
             
-doc.Head.AddMeta().WithAttribute("charset","utf-8");
+doc.Head.AddMeta().WithAttr(("charset","utf-8"));
 
 doc.Body.PlaceTemplate("path-to-template\template.sthtml", "foobar");
 
