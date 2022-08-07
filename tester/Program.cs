@@ -1,15 +1,17 @@
-﻿using SharpTemplar;
+﻿using static SharpTemplar.Monadic.MarkupMonad;
+using static SharpTemplar.Monadic.CreationCommand;
+using static SharpTemplar.Monadic.NavigationCommand;
+using static SharpTemplar.Monadic.ArgumentCommands;
+using static SharpTemplar.Monadic.ParamsCommands;
 
 public class Program 
 {
     public static void Main()
     {
-        var doc = new TemplarDocument("test");
-        
-        doc.Head.AddMeta().WithAttr(("chatset", "utf-8"));
-
-        doc.Body.AddForm().Enter.AddLabel("meme", "Wauw").AddInput("text", "amazing").WithId("meme");
-
-        Console.WriteLine(doc.GeneratePage());
+        Markup()
+            ._(body)._(enter)
+                ._(div)._(@class, "box", "meme")
+                ._(div)._(@id, "memes")
+        .Print();
     }
 }
