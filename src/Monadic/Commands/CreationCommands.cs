@@ -1,12 +1,5 @@
-using static SharpTemplar.Monadic.Helpers;
 
 namespace SharpTemplar.Monadic;
-
-public enum NavigationCommand
-{
-    enter,
-    exit,
-}
 
 public class CreationCommand
 {
@@ -38,37 +31,5 @@ public class CreationCommand
         tagName = "p",
         contexts = new string[]{"body"},
         directContexts = new string[]{}
-    };
-}
-
-public delegate Func<HTMLtag, MMonad> ArgumentCommand(MarkupMonad monad, string input);
-public class ArgumentCommands
-{
-    public static ArgumentCommand @id = (monad, input) => {
-
-        if (monad.ids.Contains(input)) return (tag) => FailWith($"Id '{input}' is already in use!");
-        return (tag) => {
-            tag.attributes.Add(("id", input));
-            monad.ids.Add(input);
-            return monad;
-        };
-    };
-
-    public static ArgumentCommand text = (monad, input) => {
-        return (tag) => {
-            tag.children.Add(new HTMLtext(input));
-            return monad;
-        };
-    };
-}
-
-public delegate Func<HTMLtag, MMonad> ParamsCommand(MarkupMonad monad, params string[] inputs);
-public class ParamsCommands
-{
-    public static ParamsCommand @class = (monad, inputs) => {
-        return (tag) => {
-            tag.attributes.Add(("class", string.Join(" ", inputs)));
-            return monad;
-        };
     };
 }
