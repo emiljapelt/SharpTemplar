@@ -4,14 +4,18 @@ using static SharpTemplar.Monadic.NavigationCommand;
 using static SharpTemplar.Monadic.ArgumentCommands;
 using static SharpTemplar.Monadic.ParamsCommands;
 
+using System.Text;
+
 public class Program 
 {
     public static void Main()
-    {
-        Markup()
+    { 
+        var s = Markup()
             ._(body)._(enter)
                 ._(div)._(@class, "box", "meme")
                 ._(div)._(@id, "memes")
-        .Print();
+        .Build();
+
+        Console.WriteLine(s);
     }
 }

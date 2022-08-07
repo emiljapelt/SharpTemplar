@@ -9,6 +9,7 @@ public abstract class MMonad
     public abstract MMonad _(ArgumentCommand command, string input);
     public abstract MMonad _(ParamsCommand command, params string[] inputs);
     public abstract MMonad Print();
+    public abstract string Build();
     public abstract MMonad Out(out MMonad to);
 }
 
@@ -112,6 +113,13 @@ public class MarkupMonad : MMonad
         else to = new MarkupMonad(pointer, ids);
         return this;
     }
+
+    public override string Build()
+    {
+        var temp = pointer;
+        while(temp.parent is not null) temp = temp.parent;
+        return temp.Build();
+    }
 }
 
 public class MarkupFailure : MMonad
@@ -142,5 +150,10 @@ public class MarkupFailure : MMonad
     {
         to = new MarkupFailure("Outted from MarkupFailure");
         return this;
+    }
+
+    public override string Build()
+    {
+        return failureMsg;
     }
 }
