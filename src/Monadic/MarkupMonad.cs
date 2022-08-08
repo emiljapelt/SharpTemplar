@@ -1,23 +1,19 @@
-using static SharpTemplar.Monadic.NavigationCommand;
+using static SharpTemplar.Monadic.Helpers;
 
 namespace SharpTemplar.Monadic;
 
 public abstract class MMonad
 {
-    public abstract MMonad _(NavigationCommand command);
-    public abstract MMonad _(CreationCommand command);
-    public abstract MMonad _(ArgumentCommand command, string input);
-    public abstract MMonad _(ParamsCommand command, params string[] inputs);
+    public abstract MMonad _(Functor f);
     public abstract MMonad Print();
     public abstract string Build();
     public abstract MMonad Out(out MMonad to);
 }
 
-
 public class MarkupMonad : MMonad
 {
-    private HTMLtag pointer;
-    private HTMLtag newest;
+    internal HTMLtag pointer;
+    internal HTMLtag newest;
     internal HashSet<string> ids;
 
     public static MarkupMonad Markup()
@@ -31,33 +27,14 @@ public class MarkupMonad : MMonad
         ids = i;
     }
 
-    public static MMonad FailWith(string msg) 
-    {
-        return new MarkupFailure(msg);
-    }
-
-    public override MMonad _(NavigationCommand command)
-    {
-        switch(command) {
-            case enter:
-                if (newest is null) return FailWith("No newest added element to Enter!");
-                else return new MarkupMonad(newest, ids);
-            case exit:
-                if (pointer.parent is null) return FailWith("No parent to Exit to!");
-                else return new MarkupMonad(pointer.parent, ids);
-            default:
-                throw new System.Exception("Unknown command");
-        }
-    }
-
-    private void addHTMLtag(string tagName)
+    internal void addHTMLtag(string tagName)
     {
         var tag = new HTMLtag(tagName, pointer);
         pointer.children.Add(tag);
         newest = tag;
     }
 
-    private bool isInside(string tagName)
+    internal bool isInside(string tagName)
     {
         var temp = pointer;
         while(true) {
@@ -67,36 +44,14 @@ public class MarkupMonad : MMonad
         }
     }
 
-    public override MMonad _(CreationCommand tag)
-    {
-        var dc = false;
-        var c = false;
-
-        if (tag.directContexts.Length == 0) dc = true;
-        foreach(string directContext in tag.directContexts)
-            if( pointer.tagName == directContext ) dc = true;
-        
-        if (tag.contexts.Length == 0) c = true;
-        foreach(string context in tag.contexts) 
-            if (isInside(context)) c = true;
-        
-        if (dc && c) { addHTMLtag(tag.tagName); return this; }
-        return FailWith($"'{tag.tagName}': Context failure!");
-    }
-
-    public MMonad newestOrCurrent(Func<HTMLtag, MMonad> f) {
+    internal MMonad newestOrCurrent(Func<HTMLtag, MMonad> f) {
         if (newest is null) return f(pointer); 
         else return f(newest);
     }
 
-    public override MMonad _(ArgumentCommand command, string input)
+    public override MMonad _(Functor f)
     {
-        return newestOrCurrent(command(this, input));
-    }
-
-    public override MMonad _(ParamsCommand command, params string[] inputs)
-    {
-        return newestOrCurrent(command(this, inputs));
+        return f(this);
     }
 
     public override MMonad Print()
@@ -127,17 +82,9 @@ public class MarkupFailure : MMonad
     private string failureMsg;
 
     public MarkupFailure(string fm)
-    {
-        failureMsg = fm;
-    }
+    { failureMsg = fm; }
 
-    public override MMonad _(NavigationCommand command)
-    { return this; }
-    public override MMonad _(CreationCommand command)
-    { return this; }
-    public override MMonad _(ArgumentCommand command, string input)
-    { return this; }
-    public override MMonad _(ParamsCommand command, params string[] inputs)
+    public override MMonad _(Functor f)
     { return this; }
 
     public override MMonad Print()
@@ -153,7 +100,5 @@ public class MarkupFailure : MMonad
     }
 
     public override string Build()
-    {
-        return failureMsg;
-    }
+    { return failureMsg; }
 }
