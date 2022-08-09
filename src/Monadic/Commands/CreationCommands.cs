@@ -9,28 +9,37 @@ public class CreationInfo
     public string[] contexts { get; set; }
 }
 
-public class CreationCommands
+public static class CreationCommands
 {
+    public static MMonad Head(this MMonad m) { return applyFunctor(head, m); }
     public static Functor head = constructTag(new CreationInfo() { 
         tagName = "head", 
         contexts = new string[]{}, 
         directContexts = new string[]{"html"}
     });
+
+    public static MMonad Body(this MMonad m) { return applyFunctor(body, m); }
     public static Functor body = constructTag(new CreationInfo() { 
         tagName = "body", 
         contexts = new string[]{}, 
         directContexts = new string[]{"html"} 
     });
+
+    public static MMonad Div(this MMonad m) { return applyFunctor(div, m); }
     public static Functor div = constructTag(new CreationInfo() {
         tagName = "div",
         contexts = new string[]{"body"},
         directContexts = new string[]{}
     });
+
+    public static MMonad Span(this MMonad m) { return applyFunctor(span, m); }
     public static Functor span = constructTag(new CreationInfo() {
         tagName = "span",
         contexts = new string[]{"body"},
         directContexts = new string[]{}
     });
+
+    public static MMonad P(this MMonad m) { return applyFunctor(p, m); }
     public static Functor p = constructTag(new CreationInfo() {
         tagName = "p",
         contexts = new string[]{"body"},

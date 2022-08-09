@@ -9,4 +9,9 @@ public class Helpers
     {
         return new MarkupFailure(msg);
     }
+
+    public static MMonad applyFunctor(Functor f, MMonad target) {
+        if (target is MarkupMonad m) return f(m);
+        else return target;
+    }
 }

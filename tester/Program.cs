@@ -19,12 +19,11 @@ public class Program
                     ._(p)._(text($"I am box {num}"))._(exit);
             };
         }
-        
 
         var s = Markup()
-            ._(body)._(enter)
-                ._(div)._(@class("outerbox"))._(@class("meme"))._(enter)
-                    ._(box)._(exit)
+            .Body().Enter()
+                .Div().@Class("outerbox").@Class("meme").Enter()
+                    ._(box).Exit()
                 ._(box)
                 ._(numbox(1))
                 ._(numbox(2))
