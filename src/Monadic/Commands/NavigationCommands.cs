@@ -2,7 +2,7 @@ using static SharpTemplar.Monadic.Helpers;
 
 namespace SharpTemplar.Monadic;
 
-public static class NavigationCommands
+public class NavigationCommands
 {
     public static Functor enter = (monad) => {
         if (monad.newest is null) return FailWith("No newest added element to Enter!");

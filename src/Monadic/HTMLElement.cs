@@ -42,24 +42,35 @@ public class HTMLtext : HTMLElement
 
 public class HTMLtag : HTMLElement
 {
-    public HTMLtag parent;
-    public List<HTMLElement> children;
+    public readonly HTMLtag parent;
+    public readonly List<HTMLElement> children;
     public readonly string tagName;
-    public List<(string name, string attr)> attributes;
+    public readonly Dictionary<string, string> attributes;
 
     public HTMLtag(string t, HTMLtag p)
     {
         parent = p;
         tagName = t;
         children = new List<HTMLElement>();
-        attributes = new List<(string name, string attr)>();
+        attributes = new Dictionary<string, string>();
     }
 
     public HTMLtag(string t)
     {
         tagName = t;
         children = new List<HTMLElement>();
-        attributes = new List<(string name, string attr)>();
+        attributes = new Dictionary<string, string>();
+    }
+
+    public void AddAttribute(string key, string value) 
+    {
+        string oldvalue;
+        if(attributes.TryGetValue(key, out oldvalue)) {
+            attributes[key] =  $"{oldvalue} {value}";
+        }
+        else {
+            attributes.Add(key, value);
+        }
     }
 
     internal override void Print(int level)

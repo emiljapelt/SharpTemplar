@@ -2,56 +2,59 @@ using static SharpTemplar.Monadic.Helpers;
 
 namespace SharpTemplar.Monadic;
 
-public class CreationCommand
+public class CreationInfo
 {
-    public string tagName { get; private set; }
-    public string[] directContexts { get; private set; }
-    public string[] contexts { get; private set; }
+    public string tagName { get; set; }
+    public string[] directContexts { get; set; }
+    public string[] contexts { get; set; }
+}
 
-    public static Functor head = construct(new CreationCommand() { 
+public class CreationCommands
+{
+    public static Functor head = constructTag(new CreationInfo() { 
         tagName = "head", 
         contexts = new string[]{}, 
         directContexts = new string[]{"html"}
     });
-    public static Functor body = construct(new CreationCommand() { 
+    public static Functor body = constructTag(new CreationInfo() { 
         tagName = "body", 
         contexts = new string[]{}, 
         directContexts = new string[]{"html"} 
     });
-    public static Functor div = construct(new CreationCommand() {
+    public static Functor div = constructTag(new CreationInfo() {
         tagName = "div",
         contexts = new string[]{"body"},
         directContexts = new string[]{}
     });
-    public static Functor span = construct(new CreationCommand() {
+    public static Functor span = constructTag(new CreationInfo() {
         tagName = "span",
         contexts = new string[]{"body"},
         directContexts = new string[]{}
     });
-    public static Functor p = construct(new CreationCommand() {
+    public static Functor p = constructTag(new CreationInfo() {
         tagName = "p",
         contexts = new string[]{"body"},
         directContexts = new string[]{}
     });
 
 
-    private static Functor construct(CreationCommand cmd)
+    public static Functor constructTag(CreationInfo info)
     {
         return (monad) => {
             if (monad is MarkupMonad m) {
                 var dc = false;
                 var c = false;
 
-                if (cmd.directContexts.Length == 0) dc = true;
-                foreach(string directContext in cmd.directContexts)
+                if (info.directContexts.Length == 0) dc = true;
+                foreach(string directContext in info.directContexts)
                     if(m.pointer.tagName == directContext) dc = true;
                 
-                if (cmd.contexts.Length == 0) c = true;
-                foreach(string context in cmd.contexts) 
+                if (info.contexts.Length == 0) c = true;
+                foreach(string context in info.contexts) 
                     if (m.isInside(context)) c = true;
                 
-                if (dc && c) { m.addHTMLtag(cmd.tagName); return m; }
-                return FailWith($"'{cmd.tagName}': Context failure!");
+                if (dc && c) { m.addHTMLtag(info.tagName); return m; }
+                return FailWith($"'{info.tagName}': Context failure!");
             }
             else return monad;
         };

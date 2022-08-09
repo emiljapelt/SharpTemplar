@@ -1,5 +1,5 @@
 ﻿using static SharpTemplar.Monadic.MarkupMonad;
-using static SharpTemplar.Monadic.CreationCommand;
+using static SharpTemplar.Monadic.CreationCommands;
 using static SharpTemplar.Monadic.ArgumentCommands;
 using static SharpTemplar.Monadic.NavigationCommands;
 using SharpTemplar.Monadic;
@@ -23,7 +23,7 @@ public class Program
 
         var s = Markup()
             ._(body)._(enter)
-                ._(div)._(@class("outerbox"))._(enter)
+                ._(div)._(@class("outerbox"))._(@class("meme"))._(enter)
                     ._(box)._(exit)
                 ._(box)
                 ._(numbox(1))
