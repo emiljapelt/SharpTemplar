@@ -1,7 +1,5 @@
-﻿using static SharpTemplar.Monadic.MarkupMonad;
-using static SharpTemplar.Monadic.CreationCommands;
-using static SharpTemplar.Monadic.ArgumentCommands;
-using static SharpTemplar.Monadic.NavigationCommands;
+﻿using static SharpTemplar.Monadic.Bundle.Base;
+using static SharpTemplar.Monadic.Bundle.Head;
 using SharpTemplar.Monadic;
 
 public class Program 
@@ -9,21 +7,25 @@ public class Program
     public static void Main()
     {
         Functor box = (monad) => {
-            return monad._(div)._(@class("box"))._(enter)
-                ._(p)._(text("I am a box"))._(exit);
+            return monad
+                .div().@class("box").enter()
+                    .p().text("I am a box").exit();
         };
 
         Functor numbox(int num) {
             return (monad) => {
-                return monad._(div)._(@class("box"))._(enter)
-                    ._(p)._(text($"I am box {num}"))._(exit);
+                return monad
+                    .div().@class("box").enter()
+                        .p().text($"I am box {num}").exit();
             };
         }
 
         var s = Markup()
-            .Body().Enter()
-                .Div().@Class("outerbox").@Class("meme").Enter()
-                    ._(box).Exit()
+            .head().enter()
+                .link().exit()
+            .body().enter()
+                .div().@class("outerbox").@class("meme").enter()
+                    ._(box).exit()
                 ._(box)
                 ._(numbox(1))
                 ._(numbox(2))

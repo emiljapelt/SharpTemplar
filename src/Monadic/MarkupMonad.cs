@@ -16,11 +16,6 @@ public class MarkupMonad : MMonad
     internal HTMLtag newest;
     internal HashSet<string> ids;
 
-    public static MarkupMonad Markup()
-    { 
-        return new MarkupMonad(new HTMLtag("html"), new HashSet<string>()); 
-    }
-
     public MarkupMonad(HTMLtag p, HashSet<string> i)
     {
         pointer = p;
