@@ -1,5 +1,5 @@
 ﻿using static SharpTemplar.Monadic.Bundle.Base;
-using static SharpTemplar.Monadic.Bundle.Head;
+using static SharpTemplar.Monadic.Bundle.Text;
 using SharpTemplar.Monadic;
 
 public class Program 
@@ -21,9 +21,9 @@ public class Program
         }
 
         var s = Markup()
-            .head().enter()
-                .link().exit()
+            .head()
             .body().enter()
+                .h(2).text("MEMEs")
                 .div().@class("outerbox").@class("meme").enter()
                     ._(box).exit()
                 ._(box)

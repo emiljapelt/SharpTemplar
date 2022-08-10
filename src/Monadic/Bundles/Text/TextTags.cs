@@ -90,7 +90,7 @@ public static partial class Text
 
     public static MMonad h(this MMonad m, int level) { return applyFunctor(H(level), m); }
     public static Func<int, Functor> H = (int level) => (monad) => {
-        if (level < 0 || 6 > level) return FailWith("Header level must be between 1 and 6!");
+        if (level < 0 || 6 < level) return FailWith("Header level must be between 1 and 6!");
         return constructTag(new TagInfo() { 
             tagName = $"h{level}", 
             contexts = new string[]{"body"}, 
