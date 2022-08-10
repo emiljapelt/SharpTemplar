@@ -1,5 +1,6 @@
 ﻿using static SharpTemplar.Monadic.Bundle.Base;
 using static SharpTemplar.Monadic.Bundle.Text;
+using static SharpTemplar.Monadic.Bundle.Media;
 using SharpTemplar.Monadic;
 
 public class Program 
@@ -23,6 +24,8 @@ public class Program
         var s = Markup()
             .head()
             .body().enter()
+                .audio().enter()
+                    .source("audio/mpeg", "horse.mp3").exit()
                 .h(2).text("MEMEs")
                 .div().@class("outerbox").@class("meme").enter()
                     ._(box).exit()

@@ -44,6 +44,7 @@ TABLES
 - td
 
 MEDIA
+- source
 - audio
 - figure
 - figcaption
