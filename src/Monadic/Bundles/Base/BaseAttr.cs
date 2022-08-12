@@ -5,24 +5,31 @@ namespace SharpTemplar.Monadic.Bundle;
 public static partial class Base
 {
     public static MMonad @id(this MMonad m, string input) { return applyFunctor(@Id(input), m); }
-    public static Functor @Id(string input) {
-        return (monad) => {
-            if (monad.ids.Contains(input)) return FailWith($"Id '{input}' is already in use!");
-            monad.ids.Add(input);
-            return monad.newestOrCurrent((tag) => {
-                tag.AddAttribute("id", input);
-                return monad;
-            });
-        };
-    }
+    public static Func<string, Functor> @Id = (input) => (monad) => {
+        if (monad.ids.Contains(input)) return FailWith($"Id '{input}' is already in use!");
+        monad.ids.Add(input);
+        var res = constructAttribute(new AttrInfo() {
+            attrName = "id",
+            contexts = new string[]{}
+        })(input)(monad);
+        return res;
+    };
 
-    public static MMonad @class(this MMonad m, params string[] inputs) { return applyFunctor(@Class(inputs), m); }
-    public static Functor @Class(params string[] inputs) {
-        return (monad) => {
-            return monad.newestOrCurrent((tag) => {
-                tag.AddAttribute("class", string.Join(" ", inputs));
-                return monad;
-            });
-        };
-    }
+
+    public static MMonad @class(this MMonad m, params string[] input) { return applyFunctor(@Class(string.Join(" ", input)), m); }
+    public static Func<string, Functor> @Class = constructAttribute(new AttrInfo() {
+        attrName = "class",
+        contexts = new string[]{}
+    });
+
+
+    public static MMonad @defer(this MMonad m, bool b) { return applyFunctor(@Defer(b.ToString().ToLower()), m); }
+    public static MMonad @defer(this MMonad m) { return applyFunctor(@Defer("true"), m); }
+    public static Func<string, Functor> @Defer = (input) => (monad) => {
+        var res = constructAttribute(new AttrInfo() {
+            attrName = "defer",
+            contexts = new string[]{"script"}
+        })(input)(monad);
+        return res;
+    };
 }
