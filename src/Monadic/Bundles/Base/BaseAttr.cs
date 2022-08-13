@@ -32,4 +32,13 @@ public static partial class Base
         })(input)(monad);
         return res;
     };
+
+    public static MMonad @href(this MMonad m, string input) { return applyFunctor(@Href(input), m); }
+    public static Func<string, Functor> @Href = (input) => (monad) => {
+        var res = constructAttribute(new AttrInfo() {
+            attrName = "href",
+            contexts = new string[]{"a","area","base","link"}
+        })(input)(monad);
+        return res;
+    };
 }

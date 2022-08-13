@@ -9,14 +9,14 @@ public class Program
     {
         Func<string, Functor> link = (l) => (monad) => monad
                 .small().@class("link").Enter()
-                    .a().text(l).Exit();
+                    .a().@href(l).text(l).Exit();
 
         Func<(string, string), Functor> userbox = (user) => (monad) => monad
             .span().@class("userbox").Enter()
                 .p().text(user.Item1).Enter()._(link($"/{user.Item2}")).Exit().Exit();
 
         var navs = new string[] {"www.google.com", "www.bing.com", "www.github.com/emiljapelt/SharpTemplar"};
-        var users = new (string,string)[] {("Bob", "@bob_boob"), ("Alice", "@x64_gamer"), ("John", "@johnny_boi"), ("Mike", "@m_dog")};
+        var users = new (string,string)[] {("Bob", "@bob_boob"), ("Alice", "@x86_gamer"), ("John", "@johnny_boi"), ("Mike", "@m_dog")};
 
         var s = Markup()
             .head()
