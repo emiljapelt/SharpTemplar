@@ -50,4 +50,12 @@ public static partial class Base
         }
         return monad;
     };
+
+    public static MMonad OnList<T>(this MMonad m, IEnumerable<T> l, Func<T, Functor> f) { return applyFunctor(LoopOver(l, f), m); }
+    public static Functor LoopOver<T>(IEnumerable<T> list, Func<T, Functor> f) => (monad) => {
+        foreach(var e in list) {
+            f(e)(monad);
+        }
+        return monad;
+    };
 }
