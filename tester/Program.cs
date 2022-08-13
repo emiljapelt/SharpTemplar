@@ -7,38 +7,27 @@ public class Program
 {
     public static void Main()
     {
-        Functor box = (monad) => monad
-            .div().@class("box").Enter()
-                .p().text("I am a box").Exit();
+        Func<string, Functor> link = (l) => (monad) => monad
+                .small().@class("link").Enter()
+                    .a().text(l).Exit();
 
-        Functor numbox(int num) { return (monad) => monad
-                .div().@class("box").Enter()
-                    .p().text($"I am box {num}").Exit();
-        }
+        Func<(string, string), Functor> userbox = (user) => (monad) => monad
+            .span().@class("userbox").Enter()
+                .p().text(user.Item1).Enter()._(link($"/{user.Item2}")).Exit().Exit();
 
-        Func<string, Functor> meme = (name) => (monad) => monad
-            .div().@class("userbox").Enter()
-                .p().text(name).Exit();
-
-        Functor namedbox(string name) { return (monad) => monad
-                .div().@class("userbox").Enter()
-                    .p().text(name).Exit();
-        }
-
-        var users = new string[] {"Bob", "Alice", "John", "Mike"};
+        var navs = new string[] {"www.google.com", "www.bing.com", "www.github.com/emiljapelt/SharpTemplar"};
+        var users = new (string,string)[] {("Bob", "@bob_boob"), ("Alice", "@x64_gamer"), ("John", "@johnny_boi"), ("Mike", "@m_dog")};
 
         var s = Markup()
             .head()
             .body().Enter()
-                .audio().Enter()
-                    .source(type: "audio/mpeg", src: "horse.mp3").Exit()
-                .img(src: "meme.jpg", alt: "just imagine a meme")
-                .h(2).@id("1").text("MEMEs")
-                .div().@id("2").@class("outerbox").@class("meme").Enter()
-                    ._(box).Exit()
-                ._(box)
-                .Range(4, (i) => numbox(i))
-                .OnList(users, namedbox)
+                .img(src: "logo.jpg", alt: "NO_IMAGE")
+                .h(2).@id("title").text("BookFace")
+                .span().@id("navs").Enter()
+                    .OnList(navs, (l) => (monad) => {return monad._(link(l)).text(" | ");}).Exit()
+                .h(3).text("Online friends")
+                .div().@id("users").Enter()
+                    .OnList(users, userbox)
         .Build();
 
         Console.WriteLine(s);
