@@ -41,4 +41,12 @@ public static partial class Base
         })(input)(monad);
         return res;
     };
+
+    public static MMonad @name(this MMonad m, string input) { return applyFunctor(@Name(input), m); }
+    public static Func<string, Functor> @Name = (string name) => (monad) => {
+    return constructAttribute(new AttrInfo() {
+        attrName = "name",
+        contexts = new string[]{"button", "form", "input", "meta", "select", "textarea"}
+    })(name)(monad);
+    };
 }

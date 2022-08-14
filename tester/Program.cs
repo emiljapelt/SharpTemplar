@@ -1,6 +1,7 @@
 ﻿using static SharpTemplar.Monadic.Bundle.Base;
 using static SharpTemplar.Monadic.Bundle.Text;
 using static SharpTemplar.Monadic.Bundle.Media;
+using static SharpTemplar.Monadic.HTMLEvent;
 using SharpTemplar.Monadic;
 
 public class Program 
@@ -20,7 +21,7 @@ public class Program
 
         var s = Markup()
             .head()
-            .body().Enter()
+            .body().@on(pageshow, "confetti").Enter()
                 .img(src: "logo.jpg", alt: "NO_IMAGE")
                 .h(2).@id("title").text("BookFace")
                 .span().@id("navs").Enter()
