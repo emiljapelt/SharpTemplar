@@ -16,6 +16,20 @@ public class AttrInfo
     public string[] contexts { get; set; }
 }
 
+public abstract class EventInfo{};
+
+public class InclusiveEventInfo : EventInfo
+{
+    public string eventName { get; set; }
+    public string[] contexts { get; set; }
+}
+
+public class ExclusiveEventInfo : EventInfo
+{
+    public string eventName { get; set; }
+    public string[] contexts { get; set; }
+}
+
 public class Helpers
 {
     public static MMonad FailWith(string msg) 

@@ -33,11 +33,15 @@ public static partial class Base
     });
 
     public static MMonad br(this MMonad m) { return applyFunctor(Br, m); }
-    public static Functor Br = constructTag(new TagInfo() { 
-        tagName = "br", 
-        contexts = new string[]{"body"}, 
-        directContexts = new string[]{}
-    });
+    public static Functor Br = (monad) => {
+        constructTag(new TagInfo() { 
+            tagName = "br", 
+            contexts = new string[]{"body"}, 
+            directContexts = new string[]{}
+        })(monad);
+        monad.newest = null;
+        return monad;
+    };
 
     public static MMonad button(this MMonad m) { return applyFunctor(Button, m); }
     public static Functor Button = constructTag(new TagInfo() { 

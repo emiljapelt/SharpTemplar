@@ -1,7 +1,7 @@
 ﻿using static SharpTemplar.Monadic.Bundle.Base;
 using static SharpTemplar.Monadic.Bundle.Text;
 using static SharpTemplar.Monadic.Bundle.Media;
-using static SharpTemplar.Monadic.HTMLEvent;
+using static SharpTemplar.Monadic.Bundle.Events;
 using SharpTemplar.Monadic;
 
 public class Program 
