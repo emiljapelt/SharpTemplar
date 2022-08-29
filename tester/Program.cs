@@ -20,7 +20,7 @@ public class Program
         var users = new (string,string)[] {("Bob", "@bob_boob"), ("Alice", "@x86_gamer"), ("John", "@johnny_boi"), ("Mike", "@m_dog")};
 
         var s = Markup()
-            .head()
+            .head().Enter().a().Exit()
             .body().@on(pageshow, "confetti").Enter()
                 .img(src: "logo.jpg", alt: "NO_IMAGE")
                 .h(2).@id("title").text("BookFace")

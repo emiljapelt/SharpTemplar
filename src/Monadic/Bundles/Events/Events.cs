@@ -34,7 +34,7 @@ public static partial class Events
                             if(tag.tagName == context) { c = false; break; }
 
                         if (c) { tag.AddAttribute("on" + eei.eventName, call); return m; }
-                        return FailWith($"'{eei.eventName}': Event context failure!");
+                        return FailWith(info, $"'{eei.eventName}': Event context failure!");
                     });
                 }   
                 else return monad;

@@ -1,3 +1,4 @@
+using System.Text;
 
 namespace SharpTemplar.Monadic;
 
@@ -32,9 +33,36 @@ public class ExclusiveEventInfo : EventInfo
 
 public class Helpers
 {
-    public static MMonad FailWith(string msg) 
-    {
-        return new MarkupFailure(msg);
+    public static MMonad FailWith(string msg) { return new MarkupFailure(msg); }
+    public static MMonad FailWith(TagInfo info, string msg) { 
+        var sb = new StringBuilder();
+        sb.Append(msg + Environment.NewLine + "Direct contexts: [ ");
+        foreach(var dc in info.directContexts) sb.Append($"{dc} ");
+        sb.Append("]" + Environment.NewLine + "Contexts: [ ");
+        foreach(var c in info.contexts) sb.Append($"{c} ");
+        sb.Append("]");
+        return new MarkupFailure(sb.ToString()); 
+    }
+    public static MMonad FailWith(AttrInfo info, string msg) { 
+        var sb = new StringBuilder();
+        sb.Append(msg + Environment.NewLine + "Contexts: [ ");
+        foreach(var c in info.contexts) sb.Append($"{c} ");
+        sb.Append("]");
+        return new MarkupFailure(sb.ToString()); 
+    }
+    public static MMonad FailWith(EventInfo info, string msg) { 
+        var sb = new StringBuilder();
+        if (info is InclusiveEventInfo iei) {
+            sb.Append(msg + Environment.NewLine + "Contexts: [ ");
+            foreach(var c in iei.contexts) sb.Append($"{c} ");
+            sb.Append("]");
+        } 
+        else if (info is ExclusiveEventInfo eei) {
+            sb.Append(msg + Environment.NewLine + "Excluded contexts: [ ");
+            foreach(var c in eei.contexts) sb.Append($"{c} ");
+            sb.Append("]");
+        }
+        return new MarkupFailure(sb.ToString()); 
     }
 
     public static MMonad applyFunctor(Functor f, MMonad target) {
@@ -58,7 +86,7 @@ public class Helpers
                     if (m.isInside(context)) { c = true; break; }
                 
                 if (dc && c) { m.addHTMLtag(info.tagName); return m; }
-                return FailWith($"'{info.tagName}': Tag context failure!");
+                return FailWith(info, $"'{info.tagName}': Tag context failure!");
             }
             else return monad;
         };
@@ -76,7 +104,7 @@ public class Helpers
                         if(tag.tagName == context) { c = true; break; }
 
                     if (c) { tag.AddAttribute(info.attrName, input); return m; }
-                    return FailWith($"'{info.attrName}': Attribute context failure!");
+                    return FailWith(info, $"'{info.attrName}': Attribute context failure!");
                 });
             }   
             else return monad;
