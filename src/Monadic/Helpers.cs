@@ -35,7 +35,9 @@ internal class TagContexts
 {
     internal static readonly string[] anyContext = new string[]{};
     internal static readonly string[] bodyOnly = new string[]{"body"};
+    internal static readonly string[] headOnly = new string[]{"head"};
     internal static readonly string[] formOnly = new string[]{"form"};
+    internal static readonly string[] tableOnly = new string[]{"table"};
     internal static readonly string[] usualEventExclusives = new string[]{"base", "bdo", "br", "head", "html", "iframe", "meta", "param", "script", "style", "title"};
 }
 
