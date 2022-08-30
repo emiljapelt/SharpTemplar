@@ -31,6 +31,14 @@ public class ExclusiveEventInfo : EventInfo
     public string[] contexts { get; set; }
 }
 
+internal class TagContexts
+{
+    internal static readonly string[] anyContext = new string[]{};
+    internal static readonly string[] bodyOnly = new string[]{"body"};
+    internal static readonly string[] formOnly = new string[]{"form"};
+    internal static readonly string[] usualEventExclusives = new string[]{"base", "bdo", "br", "head", "html", "iframe", "meta", "param", "script", "style", "title"};
+}
+
 public class Helpers
 {
     public static MMonad FailWith(string msg) { return new MarkupFailure(msg); }

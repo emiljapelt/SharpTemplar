@@ -1,4 +1,5 @@
 using static SharpTemplar.Monadic.Helpers;
+using static SharpTemplar.Monadic.TagContexts;
 
 namespace SharpTemplar.Monadic.Bundle;
 
@@ -8,8 +9,8 @@ public static partial class Forms
     public static Func<string, string, Functor> Form = (string method, string action) => (monad) => {
         var res = constructTag(new TagInfo() { 
             tagName = "form", 
-            contexts = new string[]{"body"}, 
-            directContexts = new string[]{}
+            contexts = bodyOnly, 
+            directContexts = anyContext
         })(monad);
         monad.newestOrCurrent((tag) => { tag.AddAttribute("method", method); return monad; });
         monad.newestOrCurrent((tag) => { tag.AddAttribute("action", action); return monad; });
@@ -20,8 +21,8 @@ public static partial class Forms
     public static Func<string, Functor> Input = (string type) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "input",
-            contexts = new string[]{"form"},
-            directContexts = new string[]{}
+            contexts = formOnly,
+            directContexts = anyContext
         })(monad);
         monad.newestOrCurrent((tag) => { tag.AddAttribute("type", type); return monad; });
         return res;
@@ -31,8 +32,8 @@ public static partial class Forms
     public static Func<string, Functor> Label = (string fo) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "label",
-            contexts = new string[]{"form"},
-            directContexts = new string[]{}
+            contexts = formOnly,
+            directContexts = anyContext
         })(monad);
         monad.newestOrCurrent((tag) => { tag.AddAttribute("for", fo); return monad; });
         return res;
@@ -43,8 +44,8 @@ public static partial class Forms
     public static Func<string, string, Functor> TextArea = (string rows, string cols) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "textarea",
-            contexts = new string[]{"form"},
-            directContexts = new string[]{}
+            contexts = formOnly,
+            directContexts = anyContext
         })(monad);
         monad.newestOrCurrent((tag) => { tag.AddAttribute("rows", rows); return monad; });
         monad.newestOrCurrent((tag) => { tag.AddAttribute("cols", cols); return monad; });
@@ -54,15 +55,15 @@ public static partial class Forms
     public static MMonad select(this MMonad m) { return applyFunctor(Select, m); }
     public static Functor Select = constructTag(new TagInfo() {
         tagName = "select",
-        contexts = new string[]{"form"},
-        directContexts = new string[]{}
+        contexts = formOnly,
+        directContexts = anyContext
     });
 
     public static MMonad option(this MMonad m, string value) { return applyFunctor(Option(value), m); }
     public static Func<string, Functor> Option = (string value) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "option",
-            contexts = new string[]{"form"},
+            contexts = formOnly,
             directContexts = new string[]{"select","optgroup","datalist"}
         })(monad);
         monad.newestOrCurrent((tag) => { tag.AddAttribute("value", value); return monad; });
@@ -73,7 +74,7 @@ public static partial class Forms
     public static Func<string, Functor> OptGroup = (string label) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "optgroup",
-            contexts = new string[]{"form"},
+            contexts = formOnly,
             directContexts = new string[]{"select"}
         })(monad);
         monad.newestOrCurrent((tag) => { tag.AddAttribute("label", label); return monad; });
@@ -83,21 +84,21 @@ public static partial class Forms
     public static MMonad datalist(this MMonad m) { return applyFunctor(DataList, m); }
     public static Functor DataList = constructTag(new TagInfo() {
         tagName = "datalist",
-        contexts = new string[]{"form"},
-        directContexts = new string[]{}
+        contexts = formOnly,
+        directContexts = anyContext
     });
 
     public static MMonad fieldset(this MMonad m) { return applyFunctor(FieldSet, m); }
     public static Functor FieldSet = constructTag(new TagInfo() {
         tagName = "fieldset",
-        contexts = new string[]{"form"},
-        directContexts = new string[]{}
+        contexts = formOnly,
+        directContexts = anyContext
     });
 
     public static MMonad legend(this MMonad m) { return applyFunctor(Legend, m); }
     public static Functor Legend = constructTag(new TagInfo() {
         tagName = "legend",
-        contexts = new string[]{"form"},
+        contexts = formOnly,
         directContexts = new string[]{"fieldset"}
     });
 }

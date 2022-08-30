@@ -1,4 +1,5 @@
 using static SharpTemplar.Monadic.Helpers;
+using static SharpTemplar.Monadic.TagContexts;
 
 namespace SharpTemplar.Monadic.Bundle;
 
@@ -10,7 +11,7 @@ public static partial class Base
         monad.ids.Add(input);
         var res = constructAttribute(new AttrInfo() {
             attrName = "id",
-            contexts = new string[]{}
+            contexts = anyContext
         })(input)(monad);
         return res;
     };
@@ -19,7 +20,7 @@ public static partial class Base
     public static MMonad @class(this MMonad m, params string[] input) { return applyFunctor(@Class(string.Join(" ", input)), m); }
     public static Func<string, Functor> @Class = constructAttribute(new AttrInfo() {
         attrName = "class",
-        contexts = new string[]{}
+        contexts = anyContext
     });
 
 

@@ -1,4 +1,5 @@
 using static SharpTemplar.Monadic.Helpers;
+using static SharpTemplar.Monadic.TagContexts;
 
 namespace SharpTemplar.Monadic.Bundle;
 
@@ -43,10 +44,6 @@ public static partial class Events
         else return (monad) => new MarkupFailure("Unknown EventInfo type!");
     }
 
-    private static readonly string[] anyContext = new string[]{};
-    private static readonly string[] bodyOnly = new string[]{"body"};
-    private static readonly string[] usualExclusives = new string[]{"base", "bdo", "br", "head", "html", "iframe", "meta", "param", "script", "style", "title"};
-
 
     // Window events
     public static EventInfo afterprint = new InclusiveEventInfo() { eventName = "afterprint", contexts = bodyOnly };
@@ -66,10 +63,10 @@ public static partial class Events
     public static EventInfo unload = new InclusiveEventInfo() { eventName = "unload", contexts = bodyOnly };
 
     // Form events
-    public static EventInfo blur = new ExclusiveEventInfo() { eventName = "blur", contexts = usualExclusives };
+    public static EventInfo blur = new ExclusiveEventInfo() { eventName = "blur", contexts = usualEventExclusives };
     public static EventInfo change = new InclusiveEventInfo() { eventName = "change", contexts = new string[]{"input", "select", "textarea"} };
     public static EventInfo contextmenu = new InclusiveEventInfo() { eventName = "contextmenu", contexts = new string[]{} };
-    public static EventInfo focus = new ExclusiveEventInfo() { eventName = "focus", contexts = usualExclusives };
+    public static EventInfo focus = new ExclusiveEventInfo() { eventName = "focus", contexts = usualEventExclusives };
     public static EventInfo input = new InclusiveEventInfo() { eventName = "input", contexts = new string[]{"input", "textarea"} };
     public static EventInfo invalid = new InclusiveEventInfo() { eventName = "invalid", contexts = new string[]{"input"} };
     public static EventInfo reset = new InclusiveEventInfo() { eventName = "reset", contexts = new string[]{"form"} };
@@ -77,19 +74,19 @@ public static partial class Events
     public static EventInfo submit = new InclusiveEventInfo() { eventName = "submit", contexts = new string[]{"form"} };
     
     // Keyboard events
-    public static EventInfo keydown = new ExclusiveEventInfo() { eventName = "keydown", contexts = usualExclusives };
-    public static EventInfo keypress = new ExclusiveEventInfo() { eventName = "keypress", contexts = usualExclusives };
-    public static EventInfo keyup = new ExclusiveEventInfo() { eventName = "keyup", contexts = usualExclusives };
+    public static EventInfo keydown = new ExclusiveEventInfo() { eventName = "keydown", contexts = usualEventExclusives };
+    public static EventInfo keypress = new ExclusiveEventInfo() { eventName = "keypress", contexts = usualEventExclusives };
+    public static EventInfo keyup = new ExclusiveEventInfo() { eventName = "keyup", contexts = usualEventExclusives };
 
     // Mouse events
-    public static EventInfo click = new ExclusiveEventInfo() { eventName = "click", contexts = usualExclusives };
-    public static EventInfo dblclick = new ExclusiveEventInfo() { eventName = "dblclick", contexts = usualExclusives };
-    public static EventInfo mousedown = new ExclusiveEventInfo() { eventName = "mousedown", contexts = usualExclusives };
-    public static EventInfo mousemove = new ExclusiveEventInfo() { eventName = "mousemove", contexts = usualExclusives };
-    public static EventInfo mouseout = new ExclusiveEventInfo() { eventName = "mouseout", contexts = usualExclusives };
-    public static EventInfo mouseover = new ExclusiveEventInfo() { eventName = "mouseover", contexts = usualExclusives };
-    public static EventInfo mouseup = new ExclusiveEventInfo() { eventName = "mouseup", contexts = usualExclusives };
-    public static EventInfo wheel = new ExclusiveEventInfo() { eventName = "wheel", contexts = usualExclusives };
+    public static EventInfo click = new ExclusiveEventInfo() { eventName = "click", contexts = usualEventExclusives };
+    public static EventInfo dblclick = new ExclusiveEventInfo() { eventName = "dblclick", contexts = usualEventExclusives };
+    public static EventInfo mousedown = new ExclusiveEventInfo() { eventName = "mousedown", contexts = usualEventExclusives };
+    public static EventInfo mousemove = new ExclusiveEventInfo() { eventName = "mousemove", contexts = usualEventExclusives };
+    public static EventInfo mouseout = new ExclusiveEventInfo() { eventName = "mouseout", contexts = usualEventExclusives };
+    public static EventInfo mouseover = new ExclusiveEventInfo() { eventName = "mouseover", contexts = usualEventExclusives };
+    public static EventInfo mouseup = new ExclusiveEventInfo() { eventName = "mouseup", contexts = usualEventExclusives };
+    public static EventInfo wheel = new ExclusiveEventInfo() { eventName = "wheel", contexts = usualEventExclusives };
 
     // Drag events
     public static EventInfo drag = new InclusiveEventInfo() { eventName = "drag", contexts = anyContext };
