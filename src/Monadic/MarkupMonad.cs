@@ -39,7 +39,8 @@ public class MarkupMonad : MMonad
         }
     }
 
-    internal MMonad newestOrCurrent(Func<HTMLtag, MMonad> f) {
+    internal MMonad newestOrCurrent(Func<HTMLtag, MMonad> f) 
+    {
         if (newest is null) return f(pointer); 
         else return f(newest);
     }

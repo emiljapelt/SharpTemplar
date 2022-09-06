@@ -75,7 +75,7 @@ public class Helpers
         return new MarkupFailure(sb.ToString()); 
     }
 
-    public static MMonad applyFunctor(Functor f, MMonad target) {
+    public static MMonad apply(Functor f, MMonad target) {
         if (target is MarkupMonad m) return f(m);
         else return target;
     }

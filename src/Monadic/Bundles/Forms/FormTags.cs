@@ -5,7 +5,7 @@ namespace SharpTemplar.Monadic.Bundle;
 
 public static partial class Forms
 {
-    public static MMonad form(this MMonad m, string method, string action) { return applyFunctor(Form(method, action), m); }
+    public static MMonad form(this MMonad m, string method, string action) { return apply(Form(method, action), m); }
     public static Func<string, string, Functor> Form = (string method, string action) => (monad) => {
         var res = constructTag(new TagInfo() { 
             tagName = "form", 
@@ -17,7 +17,7 @@ public static partial class Forms
         return res;
     };
 
-    public static MMonad input(this MMonad m, string type) { return applyFunctor(Input(type), m); }
+    public static MMonad input(this MMonad m, string type) { return apply(Input(type), m); }
     public static Func<string, Functor> Input = (string type) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "input",
@@ -28,7 +28,7 @@ public static partial class Forms
         return res;
     };
 
-    public static MMonad label(this MMonad m, string fo) { return applyFunctor(Label(fo), m); }
+    public static MMonad label(this MMonad m, string fo) { return apply(Label(fo), m); }
     public static Func<string, Functor> Label = (string fo) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "label",
@@ -39,8 +39,8 @@ public static partial class Forms
         return res;
     };
 
-    public static MMonad textarea(this MMonad m, string rows, string cols) { return applyFunctor(TextArea(rows, cols), m); }
-    public static MMonad textarea(this MMonad m) { return applyFunctor(TextArea("1", "1"), m); }
+    public static MMonad textarea(this MMonad m, string rows, string cols) { return apply(TextArea(rows, cols), m); }
+    public static MMonad textarea(this MMonad m) { return apply(TextArea("1", "1"), m); }
     public static Func<string, string, Functor> TextArea = (string rows, string cols) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "textarea",
@@ -52,14 +52,14 @@ public static partial class Forms
         return res;
     };
 
-    public static MMonad select(this MMonad m) { return applyFunctor(Select, m); }
+    public static MMonad select(this MMonad m) { return apply(Select, m); }
     public static Functor Select = constructTag(new TagInfo() {
         tagName = "select",
         contexts = formOnly,
         directContexts = anyContext
     });
 
-    public static MMonad option(this MMonad m, string value) { return applyFunctor(Option(value), m); }
+    public static MMonad option(this MMonad m, string value) { return apply(Option(value), m); }
     public static Func<string, Functor> Option = (string value) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "option",
@@ -70,7 +70,7 @@ public static partial class Forms
         return res;
     };
 
-    public static MMonad optgroup(this MMonad m, string label) { return applyFunctor(OptGroup(label), m); }
+    public static MMonad optgroup(this MMonad m, string label) { return apply(OptGroup(label), m); }
     public static Func<string, Functor> OptGroup = (string label) => (monad) => {
         var res = constructTag(new TagInfo() {
             tagName = "optgroup",
@@ -81,21 +81,21 @@ public static partial class Forms
         return res;
     };
 
-    public static MMonad datalist(this MMonad m) { return applyFunctor(DataList, m); }
+    public static MMonad datalist(this MMonad m) { return apply(DataList, m); }
     public static Functor DataList = constructTag(new TagInfo() {
         tagName = "datalist",
         contexts = formOnly,
         directContexts = anyContext
     });
 
-    public static MMonad fieldset(this MMonad m) { return applyFunctor(FieldSet, m); }
+    public static MMonad fieldset(this MMonad m) { return apply(FieldSet, m); }
     public static Functor FieldSet = constructTag(new TagInfo() {
         tagName = "fieldset",
         contexts = formOnly,
         directContexts = anyContext
     });
 
-    public static MMonad legend(this MMonad m) { return applyFunctor(Legend, m); }
+    public static MMonad legend(this MMonad m) { return apply(Legend, m); }
     public static Functor Legend = constructTag(new TagInfo() {
         tagName = "legend",
         contexts = formOnly,

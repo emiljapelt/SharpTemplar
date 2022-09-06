@@ -5,7 +5,7 @@ namespace SharpTemplar.Monadic.Bundle;
 
 public static partial class Events
 {
-    public static MMonad @on(this MMonad m, EventInfo info, string call) { return applyFunctor(@On(info, call), m); }
+    public static MMonad @on(this MMonad m, EventInfo info, string call) { return apply(@On(info, call), m); }
     public static Functor @On(EventInfo info, string call)
     {
         if (info is InclusiveEventInfo iei) {

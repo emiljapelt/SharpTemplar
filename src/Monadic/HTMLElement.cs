@@ -43,7 +43,7 @@ public class HTMLtext : HTMLElement
 public class HTMLtag : HTMLElement
 {
     public readonly HTMLtag parent;
-    public readonly List<HTMLElement> children;
+    public List<HTMLElement> children;
     public readonly string tagName;
     public readonly Dictionary<string, string> attributes;
 
