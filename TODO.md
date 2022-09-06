@@ -1,0 +1,2 @@
+- Create some way of supporting "Component" where the user does not have to worry about sufficient Exit-calls (Saving the starting pointer, and reassigning it immediatly before returing)
+- Make Attempt revert all changes made, not just in its children

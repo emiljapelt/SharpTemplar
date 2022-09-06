@@ -1,0 +1,16 @@
+# NOTES FOR THIS MARKDOWN
+- Bundles seperate different areas of HTML, as to not load unused methods
+- Should the user want to create "Component"/Custom Functors, SharpTemplar.Monadic should be imported
+- Markup() starts a document.
+- _() is the generic Functor application method
+- Functors are delegates, but most have associated extension methods
+  - extensions starting with lower case represent html tags
+  - extensions starting with '@' represent mutations of html tags (fx. attributes)
+  - extensions starting with upper case, represent other functions (Navigation ect.)
+- Enter moves the html pointer to the newest added element
+- Exit moves the html pointer to the parent of the current element
+- If applies a Functor, if it boolean argument is true, otherwise it might apply another Functor, or nothing
+- Attempt applies a Functor, but if this application throws an exception, changes are reverted and an alternative Functor might be applied
+- Range applies a Functor a number of times. The Functor might make the current iteration number as an argument
+- OnList applies a Functor, taking some type T as an argument, for each element of a List of this type T
+- @id is a special case of mutation attribute, as it keeps track of which ids are already in use

@@ -41,6 +41,7 @@ public static partial class Base
     };
 
     public static MMonad Attempt(this MMonad m, Functor main, Functor alternative) { return apply(TryCatch(main, alternative), m); }
+    public static MMonad Attempt(this MMonad m, Functor main) { return apply(TryCatch(main, nothing), m); }
     public static Func<Functor, Functor, Functor> TryCatch = (main, alternative) => (monad) => {
         var backup = new List<HTMLElement>(monad.pointer.children);
         try {
