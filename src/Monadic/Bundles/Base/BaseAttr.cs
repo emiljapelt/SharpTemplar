@@ -5,7 +5,7 @@ namespace SharpTemplar.Monadic.Bundle;
 
 public static partial class Base
 {
-    public static MMonad @id(this MMonad m, string input) { return apply(@Id(input), m); }
+    public static MarkupMonad @id(this MarkupMonad m, string input) { return apply(@Id(input), m); }
     public static Func<string, Functor> @Id = (input) => (monad) => {
         if (monad.ids.Contains(input)) return FailWith($"Id '{input}' is already in use!");
         monad.ids.Add(input);
@@ -17,15 +17,15 @@ public static partial class Base
     };
 
 
-    public static MMonad @class(this MMonad m, params string[] input) { return apply(@Class(string.Join(" ", input)), m); }
+    public static MarkupMonad @class(this MarkupMonad m, params string[] input) { return apply(@Class(string.Join(" ", input)), m); }
     public static Func<string, Functor> @Class = constructAttribute(new AttrInfo() {
         attrName = "class",
         contexts = anyContext
     });
 
 
-    public static MMonad @defer(this MMonad m, bool b) { return apply(@Defer(b.ToString().ToLower()), m); }
-    public static MMonad @defer(this MMonad m) { return apply(@Defer("true"), m); }
+    public static MarkupMonad @defer(this MarkupMonad m, bool b) { return apply(@Defer(b.ToString().ToLower()), m); }
+    public static MarkupMonad @defer(this MarkupMonad m) { return apply(@Defer("true"), m); }
     public static Func<string, Functor> @Defer = (input) => (monad) => {
         var res = constructAttribute(new AttrInfo() {
             attrName = "defer",
@@ -34,7 +34,7 @@ public static partial class Base
         return res;
     };
 
-    public static MMonad @href(this MMonad m, string input) { return apply(@Href(input), m); }
+    public static MarkupMonad @href(this MarkupMonad m, string input) { return apply(@Href(input), m); }
     public static Func<string, Functor> @Href = (input) => (monad) => {
         var res = constructAttribute(new AttrInfo() {
             attrName = "href",
@@ -43,7 +43,7 @@ public static partial class Base
         return res;
     };
 
-    public static MMonad @name(this MMonad m, string input) { return apply(@Name(input), m); }
+    public static MarkupMonad @name(this MarkupMonad m, string input) { return apply(@Name(input), m); }
     public static Func<string, Functor> @Name = (string name) => (monad) => {
     return constructAttribute(new AttrInfo() {
         attrName = "name",

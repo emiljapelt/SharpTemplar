@@ -5,12 +5,12 @@ namespace SharpTemplar.Monadic.Bundle;
 
 public static partial class Events
 {
-    public static MMonad @on(this MMonad m, EventInfo info, string call) { return apply(@On(info, call), m); }
+    public static MarkupMonad @on(this MarkupMonad m, EventInfo info, string call) { return apply(@On(info, call), m); }
     public static Functor @On(EventInfo info, string call)
     {
         if (info is InclusiveEventInfo iei) {
             return (monad) => {
-                if (monad is MarkupMonad m) {
+                if (monad is MarkupSuccess m) {
                     return m.newestOrCurrent((tag) => {
                         var c = false;
 
@@ -27,7 +27,7 @@ public static partial class Events
         }
         else if (info is ExclusiveEventInfo eei) {
             return (monad) => {
-                if (monad is MarkupMonad m) {
+                if (monad is MarkupSuccess m) {
                     return m.newestOrCurrent((tag) => {
                         var c = true;
 

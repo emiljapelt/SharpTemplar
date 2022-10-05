@@ -8,8 +8,11 @@ public class Program
 {
     public static void Main()
     {
-        Func<string, Component> container = (t) => (monad) => monad
-                .div().Enter().text("INSIDE!! " + t);
+        Functor noExit = (monad) => monad
+            .span().Enter()
+                .span().Enter();
+        
+        Functor fix = AnchorFunctor(noExit);
 
         Func<string, Functor> link = (l) => (monad) => monad
                 .small().@class("link").Enter()
@@ -34,7 +37,8 @@ public class Program
                 .span().@id("navs").Enter()
                     .OnList(navs, (l) => (monad) => {return monad._(link(l)).text(" | ");}).Exit()
                 .Attempt(canFail(1), (monad) => monad.p().text("Ooops"))
-                ._(container("tihs"))
+                ._(fix)
+                ._(noExit)
                 .h(3).text("Online friends")
                 .div().@id("users").Enter()
                     .OnList(users, userbox)

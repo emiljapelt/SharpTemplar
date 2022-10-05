@@ -2,21 +2,21 @@ using static SharpTemplar.Monadic.Helpers;
 
 namespace SharpTemplar.Monadic;
 
-public abstract class MMonad
+public abstract class MarkupMonad
 {
-    public abstract MMonad _(Functor f);
-    public abstract MMonad Print();
+    public abstract MarkupMonad _(Functor f);
+    public abstract MarkupMonad Print();
     public abstract string Build();
-    public abstract MMonad Out(out MMonad to);
+    public abstract MarkupMonad Out(out MarkupMonad to);
 }
 
-public class MarkupMonad : MMonad
+public class MarkupSuccess : MarkupMonad
 {
     internal HTMLtag pointer;
     internal HTMLtag newest;
     internal HashSet<string> ids;
 
-    public MarkupMonad(HTMLtag p, HashSet<string> i)
+    public MarkupSuccess(HTMLtag p, HashSet<string> i)
     {
         pointer = p;
         ids = i;
@@ -39,18 +39,18 @@ public class MarkupMonad : MMonad
         }
     }
 
-    internal MMonad newestOrCurrent(Func<HTMLtag, MMonad> f) 
+    internal MarkupMonad newestOrCurrent(Func<HTMLtag, MarkupMonad> f) 
     {
         if (newest is null) return f(pointer); 
         else return f(newest);
     }
 
-    public override MMonad _(Functor f)
+    public override MarkupMonad _(Functor f)
     {
         return f(this);
     }
 
-    public override MMonad Print()
+    public override MarkupMonad Print()
     {
         var temp = pointer;
         while(temp.parent is not null) temp = temp.parent;
@@ -58,10 +58,10 @@ public class MarkupMonad : MMonad
         return this;
     }
 
-    public override MMonad Out(out MMonad to)
+    public override MarkupMonad Out(out MarkupMonad to)
     {
-        if (newest is not null) to = new MarkupMonad(newest, ids);
-        else to = new MarkupMonad(pointer, ids);
+        if (newest is not null) to = new MarkupSuccess(newest, ids);
+        else to = new MarkupSuccess(pointer, ids);
         return this;
     }
 
@@ -73,23 +73,23 @@ public class MarkupMonad : MMonad
     }
 }
 
-public class MarkupFailure : MMonad
+public class MarkupFailure : MarkupMonad
 {
     private string failureMsg;
 
     public MarkupFailure(string fm)
     { failureMsg = fm; }
 
-    public override MMonad _(Functor f)
+    public override MarkupMonad _(Functor f)
     { return this; }
 
-    public override MMonad Print()
+    public override MarkupMonad Print()
     {
         System.Console.WriteLine(failureMsg);
         return this;
     }
 
-    public override MMonad Out(out MMonad to)
+    public override MarkupMonad Out(out MarkupMonad to)
     {
         to = new MarkupFailure("Outted from MarkupFailure");
         return this;

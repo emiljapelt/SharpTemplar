@@ -2,7 +2,7 @@ using System.Text;
 
 namespace SharpTemplar.Monadic;
 
-public delegate MMonad Functor(MarkupMonad m);
+public delegate MarkupMonad Functor(MarkupSuccess m);
 
 public class TagInfo
 {
@@ -43,8 +43,8 @@ internal class TagContexts
 
 public class Helpers
 {
-    public static MMonad FailWith(string msg) { return new MarkupFailure(msg); }
-    public static MMonad FailWith(TagInfo info, string msg) { 
+    public static MarkupMonad FailWith(string msg) { return new MarkupFailure(msg); }
+    public static MarkupMonad FailWith(TagInfo info, string msg) { 
         var sb = new StringBuilder();
         sb.Append(msg + Environment.NewLine + "Direct contexts: [ ");
         foreach(var dc in info.directContexts) sb.Append($"{dc} ");
@@ -53,14 +53,14 @@ public class Helpers
         sb.Append("]");
         return new MarkupFailure(sb.ToString()); 
     }
-    public static MMonad FailWith(AttrInfo info, string msg) { 
+    public static MarkupMonad FailWith(AttrInfo info, string msg) { 
         var sb = new StringBuilder();
         sb.Append(msg + Environment.NewLine + "Contexts: [ ");
         foreach(var c in info.contexts) sb.Append($"{c} ");
         sb.Append("]");
         return new MarkupFailure(sb.ToString()); 
     }
-    public static MMonad FailWith(EventInfo info, string msg) { 
+    public static MarkupMonad FailWith(EventInfo info, string msg) { 
         var sb = new StringBuilder();
         if (info is InclusiveEventInfo iei) {
             sb.Append(msg + Environment.NewLine + "Contexts: [ ");
@@ -75,15 +75,15 @@ public class Helpers
         return new MarkupFailure(sb.ToString()); 
     }
 
-    public static MMonad apply(Functor f, MMonad target) {
-        if (target is MarkupMonad m) return f(m);
+    public static MarkupMonad apply(Functor f, MarkupMonad target) {
+        if (target is MarkupSuccess m) return f(m);
         else return target;
     }
 
     public static Functor constructTag(TagInfo info)
     {
         return (monad) => {
-            if (monad is MarkupMonad m) {
+            if (monad is MarkupSuccess m) {
                 var dc = false;
                 var c = false;
 
@@ -105,7 +105,7 @@ public class Helpers
     public static Func<string, Functor> constructAttribute(AttrInfo info)
     {
         return (input) => (monad) => {
-            if (monad is MarkupMonad m) {
+            if (monad is MarkupSuccess m) {
                 return m.newestOrCurrent((tag) => {
                     var c = false;
 
