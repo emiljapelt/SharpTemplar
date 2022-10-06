@@ -25,6 +25,7 @@ public static partial class Base
     public static Functor AnchorFunctor(Functor f) {
         return (monad) => {
             apply(f, monad);
+            monad.newest = null;
             return monad;
         };
     }
@@ -38,7 +39,10 @@ public static partial class Base
     public static MarkupMonad Exit(this MarkupMonad m) { return apply(exit, m); }
     public static Functor exit = (monad) => {
         if (monad.pointer.parent is null) return FailWith("No parent to Exit to!");
-        else return new MarkupSuccess(monad.pointer.parent, monad.ids);
+        else {
+            monad.newest = null;
+            return new MarkupSuccess(monad.pointer.parent, monad.ids);
+        }
     };
 
     public static MarkupMonad If(this MarkupMonad m, bool b, Functor e, Functor o) { return apply(Cond(b, e, o), m); }
