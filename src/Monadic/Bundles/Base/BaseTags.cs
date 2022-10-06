@@ -26,6 +26,7 @@ public static partial class Base
         directContexts = anyContext
     });
 
+    public static MarkupMonad p(this MarkupMonad m, string text) { return apply(P, m).text(text); }
     public static MarkupMonad p(this MarkupMonad m) { return apply(P, m); }
     public static Functor P = constructTag(new TagInfo() { 
         tagName = "p", 

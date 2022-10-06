@@ -15,6 +15,8 @@ public abstract class HTMLElement
         return sb.ToString();
     }
     internal abstract void Build(int level, StringBuilder sb);
+
+    internal abstract HTMLElement Clone();
 }
 
 public class HTMLtext : HTMLElement
@@ -38,14 +40,20 @@ public class HTMLtext : HTMLElement
         for(int i = 0; i < level; i++)sb.Append("   ");
         sb.Append(text+"\n");
     }
+
+    internal override HTMLElement Clone()
+    {
+        return new HTMLtext(text);
+    }
 }
 
 public class HTMLtag : HTMLElement
 {
-    public readonly HTMLtag parent;
-    public List<HTMLElement> children;
-    public readonly string tagName;
-    public readonly Dictionary<string, string> attributes;
+    internal HTMLtag parent;
+    internal List<HTMLElement> children;
+    internal readonly string tagName;
+    internal readonly Dictionary<string, string> attributes;
+    private HTMLtag clone;
 
     public HTMLtag(string t, HTMLtag p)
     {
@@ -73,6 +81,12 @@ public class HTMLtag : HTMLElement
         }
     }
 
+    public void AddChild(HTMLElement element) 
+    {
+        if (element is HTMLtag t) t.parent = this;
+        children.Add(element);
+    }
+
     internal override void Print(int level)
     {
         var sb = new StringBuilder();
@@ -97,4 +111,38 @@ public class HTMLtag : HTMLElement
             sb.Append("/>\n");
         }
     }
+
+    internal override HTMLElement Clone()
+    {
+        return CloneFunc(this);
+    }
+
+    public HTMLtag RefingClone()
+    {
+        CloneFunc = RefingCloning;
+        var p = this;
+        while(p.parent is not null) p = p.parent;
+        p.Clone();
+        CloneFunc = DefaultCloning;
+        var temp = clone;
+        clone = null;
+        return temp;
+    }
+
+    private Func<HTMLtag, HTMLElement> CloneFunc = DefaultCloning;
+
+    private static readonly Func<HTMLtag, HTMLElement> DefaultCloning = (t) => {
+        var clone = new HTMLtag(t.tagName);
+        foreach(var attr in t.attributes) clone.AddAttribute(attr.Key, attr.Value);
+        foreach (var child in t.children) clone.AddChild(child.Clone());
+        return clone;
+    };
+
+    private static readonly Func<HTMLtag, HTMLElement> RefingCloning = (t) => {
+        var clone = new HTMLtag(t.tagName);
+        foreach(var attr in t.attributes) clone.AddAttribute(attr.Key, attr.Value);
+        foreach (var child in t.children) clone.AddChild(child.Clone());
+        t.clone = clone;
+        return clone;
+    };
 }

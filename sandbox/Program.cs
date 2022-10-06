@@ -29,21 +29,26 @@ public class Program
         var navs = new string[] {"www.google.com", "www.bing.com", "www.github.com/emiljapelt/SharpTemplar"};
         var users = new (string,string)[] {("Bob", "@bob_boob"), ("Alice", "@x86_gamer"), ("John", "@johnny_boi"), ("Mike", "@m_dog")};
 
-        var s = Markup()
-            .head()
-            .body().@on(pageshow, "confetti").Enter()
-                .img(src: "logo.jpg", alt: "NO_IMAGE")
-                .h(2).@id("title").text("BookFace")
-                .span().@id("navs").Enter()
-                    .OnList(navs, (l) => (monad) => {return monad._(link(l)).text(" | ");}).Exit()
-                .Attempt(canFail(1), (monad) => monad.p().text("Ooops"))
-                ._(fix)
-                ._(noExit)
-                .h(3).text("Online friends")
-                .div().@id("users").Enter()
-                    .OnList(users, userbox)
-        .Build();
+        // var s = Markup()
+        //     .head()
+        //     .body().@on(pageshow, "confetti").Enter()
+        //         .img(src: "logo.jpg", alt: "NO_IMAGE")
+        //         .h(2).@id("title").text("BookFace")
+        //         .span().@id("navs").Enter()
+        //             .OnList(navs, (l) => (monad) => {return monad._(link(l)).text(" | ");}).Exit()
+        //         .Attempt(canFail(1), (monad) => monad.p().text("Ooops"))
+        //         ._(fix)
+        //         ._(noExit)
+        //         .h(3).text("Online friends")
+        //         .div().@id("users").Enter()
+        //             .OnList(users, userbox)
+        // .Build();
 
-        Console.WriteLine(s);
+        var s = Markup()
+            .body().Enter()
+                .span().Enter()
+                .Attempt((m) => m.Exit()._(canFail(10)), (m) => m.p("Failed"));
+
+        Console.WriteLine(s.Build());
     }
 }

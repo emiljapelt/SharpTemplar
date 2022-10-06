@@ -1,2 +1,3 @@
 - Do some testing :)
-- Make Attempt revert all changes made, not just in its children
+- Refactor naming in most files
+- Refactor access modifiers in most files

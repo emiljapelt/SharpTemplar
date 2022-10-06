@@ -15,7 +15,7 @@ public static partial class Base
     public static Functor Text(string input) {
         return (monad) => {
             return monad.newestOrCurrent((tag) => {
-                tag.children.Add(new HTMLtext(input));
+                tag.AddChild(new HTMLtext(input));
                 return monad;
             });
         };
@@ -45,6 +45,12 @@ public static partial class Base
         }
     };
 
+    public static MarkupMonad Out(this MarkupMonad m, out MarkupMonad o) {
+        if (m is MarkupSuccess ms) o = new MarkupSuccess(ms.pointer, ms.ids);
+        else o = m;
+        return m;
+    }
+
     public static MarkupMonad If(this MarkupMonad m, bool b, Functor e, Functor o) { return apply(Cond(b, e, o), m); }
     public static MarkupMonad If(this MarkupMonad m, bool b, Functor e) { return apply(Cond(b, e, nothing), m); }
     public static Func<bool, Functor, Functor, Functor> Cond = (condition, either, or) => {
@@ -55,13 +61,13 @@ public static partial class Base
     public static MarkupMonad Attempt(this MarkupMonad m, Functor main, Functor alternative) { return apply(TryCatch(main, alternative), m); }
     public static MarkupMonad Attempt(this MarkupMonad m, Functor main) { return apply(TryCatch(main, nothing), m); }
     public static Func<Functor, Functor, Functor> TryCatch = (main, alternative) => (monad) => {
-        var backup = new List<HTMLElement>(monad.pointer.children);
+        var html_backup = monad.pointer.RefingClone();
+        var id_backup = new HashSet<string>(monad.ids);
         try {
             return apply(main, monad);
         }
         catch (Exception) {
-            monad.pointer.children = backup;
-            return apply(alternative, monad);
+            return apply(alternative, new MarkupSuccess(html_backup, id_backup));
         }
     };
 

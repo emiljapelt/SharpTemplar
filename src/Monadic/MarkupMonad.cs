@@ -24,8 +24,8 @@ public class MarkupSuccess : MarkupMonad
 
     internal void addHTMLtag(string tagName)
     {
-        var tag = new HTMLtag(tagName, pointer);
-        pointer.children.Add(tag);
+        var tag = new HTMLtag(tagName);
+        pointer.AddChild(tag);
         newest = tag;
     }
 
