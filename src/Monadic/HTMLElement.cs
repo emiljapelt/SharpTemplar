@@ -1,5 +1,7 @@
 using System.Text;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("SharpTemplar.Test")]
 namespace SharpTemplar.Monadic;
 
 public abstract class HTMLElement

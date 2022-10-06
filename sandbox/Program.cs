@@ -12,7 +12,7 @@ public class Program
             .span().Enter()
                 .span().Enter();
         
-        Functor fix = AnchorFunctor(noExit);
+        Functor fix = Anchor(noExit);
 
         Func<string, Functor> link = (l) => (monad) => monad
                 .small().@class("link").Enter()

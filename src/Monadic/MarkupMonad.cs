@@ -1,5 +1,7 @@
 using static SharpTemplar.Monadic.Helpers;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("SharpTemplar.Test")]
 namespace SharpTemplar.Monadic;
 
 public abstract class MarkupMonad

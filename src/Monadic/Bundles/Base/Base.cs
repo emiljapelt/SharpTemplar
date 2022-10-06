@@ -21,8 +21,8 @@ public static partial class Base
         };
     }
 
-    public static MarkupMonad Anchor(this MarkupMonad m, Functor f) { return apply(AnchorFunctor(f), m); }
-    public static Functor AnchorFunctor(Functor f) {
+    public static MarkupMonad Anchor(this MarkupMonad m, Functor f) { return apply(Anchor(f), m); }
+    public static Functor Anchor(Functor f) {
         return (monad) => {
             apply(f, monad);
             monad.newest = null;
