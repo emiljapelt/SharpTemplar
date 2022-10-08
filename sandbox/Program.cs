@@ -6,6 +6,10 @@ using SharpTemplar.Monadic;
 
 public class Program 
 {
+    public static Functor compo() {
+        return (monad) => monad.div().Enter().p("input");
+    }
+
     public static void Main()
     {
         Functor noExit = (monad) => monad
@@ -47,7 +51,7 @@ public class Program
         var s = Markup()
             .body().Enter()
                 .span().Enter()
-                .Attempt((m) => m.Exit()._(canFail(10)), (m) => m.p("Failed"));
+                ._(compo());
 
         Console.WriteLine(s.Build());
     }

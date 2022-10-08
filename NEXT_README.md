@@ -102,7 +102,7 @@ Functor component = (monad) => monad
   .div().@class("container").Enter()
     .p().Enter().text("Im a contained paragraph!");
 
-Functor anchored = Anchor(compnent);
+Functor anchored = Anchor(component);
 
 var page = Markup()
   .head()
@@ -156,7 +156,41 @@ Creates the page:
 </html>
 ```
 
-As a final note on components, you can create your own extension methods on ```MarkupMonad```s, using ```apply()```. This makes for nice looking code, so it is recommended, especially for components that are used often.
+Alternativly to using a ```Func<>``` for adding parameters to a component, a method could be used. 
+
+Example
+```
+public Functor component(string name) {
+  return Anchor((monad) => monad
+    .div().@class("container").Enter()
+      .p().Enter().text($"Hello {name}!"));
+}
+```
+```
+var page = Markup()
+  .head()
+  .body().Enter()
+    ._(component("Bob"))
+    ._(component("Alice"))
+.Build();
+```
+Creates the page:
+```
+<html>
+  <head/>
+  <body>
+    <div class="container">
+      <p>Hello Bob!</p>
+    </div>
+    <div class="container">
+      <p>Hello Alice!</p>
+    </div>
+  </body>
+</html>
+```
+
+
+As a final note on components, you can create your own extension methods on ```MarkupMonad```s, using ```apply()```. This makes for nicer looking code, so it is recommended, especially for components that are used often.
 
 Example
 ```
