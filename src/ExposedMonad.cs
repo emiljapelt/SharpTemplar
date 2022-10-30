@@ -9,6 +9,14 @@ public class ExposedMonad
         else throw new Exception("Test given a MarkupFailure");
     }
 
+    public bool isInside(string tagName) {
+        return monad.isInside(tagName);
+    }
+
+    public MarkupMonad newestOrCurrent(Func<HTMLtag, MarkupMonad> f) {
+        return monad.newestOrCurrent(f);
+    }
+
     public HTMLtag pointer() {
         return monad.pointer;
     }
