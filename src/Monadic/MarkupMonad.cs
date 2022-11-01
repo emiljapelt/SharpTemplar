@@ -6,7 +6,7 @@ namespace SharpTemplar.Monadic;
 
 public abstract class MarkupMonad
 {
-    public abstract MarkupMonad _(Functor f);
+    // public abstract MarkupMonad _(Functor f);
     public abstract MarkupMonad Print();
     public abstract string Build();
     public abstract MarkupMonad Out(out MarkupMonad to);
@@ -47,10 +47,10 @@ public class MarkupSuccess : MarkupMonad
         else return f(newest);
     }
 
-    public override MarkupMonad _(Functor f)
-    {
-        return f(this);
-    }
+    // public override MarkupMonad _(Functor f)
+    // {
+    //     return f(this);
+    // }
 
     public override MarkupMonad Print()
     {
@@ -82,8 +82,8 @@ public class MarkupFailure : MarkupMonad
     public MarkupFailure(string fm)
     { failureMsg = fm; }
 
-    public override MarkupMonad _(Functor f)
-    { return this; }
+    // public override MarkupMonad _(Functor f)
+    // { return this; }
 
     public override MarkupMonad Print()
     {

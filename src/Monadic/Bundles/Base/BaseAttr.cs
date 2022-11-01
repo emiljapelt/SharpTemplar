@@ -5,49 +5,28 @@ namespace SharpTemplar.Monadic.Bundle;
 
 public static partial class Base
 {
-    public static MarkupMonad @id(this MarkupMonad m, string input) { return apply(@Id(input), m); }
-    public static Func<string, Functor> @Id = (input) => (monad) => {
-        if (monad.ids.Contains(input)) return FailWith($"Id '{input}' is already in use!");
-        monad.ids.Add(input);
-        var res = constructAttribute(new AttrInfo() {
-            attrName = "id",
-            contexts = anyContext
-        })(input)(monad);
-        return res;
-    };
+    public static Attribute @id = constructAttribute(new AttrInfo() {
+        attrName = "id",
+        contexts = anyContext
+    });
 
-
-    public static MarkupMonad @class(this MarkupMonad m, params string[] input) { return apply(@Class(string.Join(" ", input)), m); }
-    public static Func<string, Functor> @Class = constructAttribute(new AttrInfo() {
+    public static Attribute @class = constructAttribute(new AttrInfo() {
         attrName = "class",
         contexts = anyContext
     });
 
+    public static Attribute @defer = constructAttribute(new AttrInfo() {
+        attrName = "defer",
+        contexts = new string[]{"script"}
+    });
 
-    public static MarkupMonad @defer(this MarkupMonad m, bool b) { return apply(@Defer(b.ToString().ToLower()), m); }
-    public static MarkupMonad @defer(this MarkupMonad m) { return apply(@Defer("true"), m); }
-    public static Func<string, Functor> @Defer = (input) => (monad) => {
-        var res = constructAttribute(new AttrInfo() {
-            attrName = "defer",
-            contexts = new string[]{"script"}
-        })(input)(monad);
-        return res;
-    };
+    public static Attribute @href = constructAttribute(new AttrInfo() {
+        attrName = "href",
+        contexts = new string[]{"a","area","base","link"}
+    });
 
-    public static MarkupMonad @href(this MarkupMonad m, string input) { return apply(@Href(input), m); }
-    public static Func<string, Functor> @Href = (input) => (monad) => {
-        var res = constructAttribute(new AttrInfo() {
-            attrName = "href",
-            contexts = new string[]{"a","area","base","link"}
-        })(input)(monad);
-        return res;
-    };
-
-    public static MarkupMonad @name(this MarkupMonad m, string input) { return apply(@Name(input), m); }
-    public static Func<string, Functor> @Name = (string name) => (monad) => {
-    return constructAttribute(new AttrInfo() {
+    public static Attribute @name = constructAttribute(new AttrInfo() {
         attrName = "name",
         contexts = new string[]{"button", "form", "input", "meta", "select", "textarea"}
-    })(name)(monad);
-    };
+    });
 }

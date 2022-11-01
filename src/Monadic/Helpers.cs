@@ -2,7 +2,12 @@ using System.Text;
 
 namespace SharpTemplar.Monadic;
 
-public delegate MarkupMonad Functor(MarkupSuccess m);
+public delegate MarkupMonad Element(MarkupMonad monad);
+public delegate Element AttributedTag(params Element[] children);
+public delegate AttributedTag Tag(params ValuedAttribute[] attributes);
+
+public delegate MarkupMonad ValuedAttribute(MarkupMonad monad);
+public delegate ValuedAttribute Attribute(params string[] values);
 
 public class TagInfo
 {
@@ -75,49 +80,68 @@ public class Helpers
         return new MarkupFailure(sb.ToString()); 
     }
 
-    public static MarkupMonad apply(Functor f, MarkupMonad target) {
-        if (target is MarkupSuccess m) return f(m);
-        else return target;
-    }
-
-    public static Functor constructTag(TagInfo info)
-    {
-        return (monad) => {
-            if (monad is MarkupSuccess m) {
+    public static Tag constructTag(TagInfo info) {
+        return (attrs) => (children) => (monad) => {
+            if (monad is MarkupSuccess ms) {
                 var dc = false;
                 var c = false;
 
                 if (info.directContexts.Length == 0) dc = true;
                 foreach(string directContext in info.directContexts)
-                    if(m.pointer.tagName == directContext) { dc = true; break; }
+                    if(ms.pointer.tagName == directContext) { dc = true; break; }
                 
                 if (info.contexts.Length == 0) c = true;
                 foreach(string context in info.contexts) 
-                    if (m.isInside(context)) { c = true; break; }
+                    if (ms.isInside(context)) { c = true; break; }
                 
-                if (dc && c) { m.addHTMLtag(info.tagName); return m; }
+                if (dc && c) { 
+                    var tag = new HTMLtag(info.tagName, ms.pointer);
+                    ms.pointer.children.Add(tag);
+                    var temp = ms.pointer;
+                    MarkupMonad holder = ms;
+                    foreach(var attr in attrs) {
+                        ms.pointer = tag;
+                        holder = attr(holder);
+                        if (holder is MarkupFailure) return holder;
+                    }
+                    foreach(var child in children) {
+                        ms.pointer = tag;
+                        holder = child(holder);
+                        if (holder is MarkupFailure) return holder;
+                    }
+                    ms.pointer = temp;
+                    return holder;
+                }
                 return FailWith(info, $"'{info.tagName}': Tag context failure!");
             }
             else return monad;
         };
     }
 
-    public static Func<string, Functor> constructAttribute(AttrInfo info)
+    public static Attribute constructAttribute(AttrInfo info)
     {
         return (input) => (monad) => {
             if (monad is MarkupSuccess m) {
-                return m.newestOrCurrent((tag) => {
                     var c = false;
 
                     if (info.contexts.Length == 0) c = true;
                     foreach(string context in info.contexts)
-                        if(tag.tagName == context) { c = true; break; }
+                        if(m.pointer.tagName == context) { c = true; break; }
 
-                    if (c) { tag.AddAttribute(info.attrName, input); return m; }
+                    if (c) { 
+                        foreach(var val in input) {
+                            if (info.attrName == "id") {
+                                if (m.ids.Contains(val)) return FailWith(info, $"Id already in use '{val}'");
+                                else m.ids.Add(val);
+                            }
+                            m.pointer.AddAttribute(info.attrName, val); 
+                        }
+                        return m; 
+                    }
                     return FailWith(info, $"'{info.attrName}': Attribute context failure!");
-                });
             }   
             else return monad;
         };
     }
+
 }

@@ -5,8 +5,7 @@ namespace SharpTemplar.Monadic.Bundle;
 
 public static partial class Events
 {
-    public static MarkupMonad @on(this MarkupMonad m, EventInfo info, string call) { return apply(@On(info, call), m); }
-    public static Functor @On(EventInfo info, string call)
+    public static ValuedAttribute @on(EventInfo info, string call)
     {
         if (info is InclusiveEventInfo iei) {
             return (monad) => {
@@ -102,6 +101,5 @@ public static partial class Events
     public static EventInfo copy = new InclusiveEventInfo() { eventName = "copy", contexts = anyContext };
     public static EventInfo cut = new InclusiveEventInfo() { eventName = "cut", contexts = anyContext };
     public static EventInfo paste = new InclusiveEventInfo() { eventName = "paste", contexts = anyContext };
-
 
 }
