@@ -38,11 +38,9 @@ public static partial class Base
                 var html_backup = ms.pointer.RefingClone();
                 var id_backup = new HashSet<string>(ms.ids);
                 try {
-                    System.Console.WriteLine("!!!!!!!!!!!");
                     return main()(ms);
                 }
                 catch (Exception) {
-                    System.Console.WriteLine("?????????????");
                     ms = new MarkupSuccess(html_backup, id_backup);
                     return alternative()(ms);
                 }

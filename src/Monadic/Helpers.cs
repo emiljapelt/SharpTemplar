@@ -131,7 +131,7 @@ public class Helpers
                     if (c) { 
                         foreach(var val in input) {
                             if (info.attrName == "id") {
-                                if (m.ids.Contains(val)) return FailWith(info, $"Id already in use '{val}'");
+                                if (m.ids.Contains(val)) return FailWith($"Id '{val}' is already in use!");
                                 else m.ids.Add(val);
                             }
                             m.pointer.AddAttribute(info.attrName, val); 

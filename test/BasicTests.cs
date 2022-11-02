@@ -1,67 +1,82 @@
-// namespace SharpTemplar.Test;
+namespace SharpTemplar.Test;
 
-// public class BasicsTests
-// {
-//     [Fact]
-//     public void is_inside_directly()
-//     {
-//         var monad = new ExposedMonad(Markup()
-//             .body().Enter()
-//                 .a().Enter());
+public class BasicsTests
+{
+    [Fact]
+    public void is_inside_directly()
+    {
+        var b = new HTMLtag("body");
+        var a = new HTMLtag("a", b);
+        b.AddChild(a);
 
-//         Assert.True(monad.isInside("a"));
-//     }
+        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
 
-//     [Fact]
-//     public void is_inside_nested()
-//     {
-//         var monad = new ExposedMonad(Markup()
-//             .body().Enter()
-//                 .div().Enter()
-//                     .a().Enter());
+        Assert.True(exposed.isInside("a"));
+    }
 
-//         Assert.True(monad.isInside("div"));
-//     }
+    [Fact]
+    public void is_inside_nested()
+    {
+        var b = new HTMLtag("body");
+        var d = new HTMLtag("div", b);
+        var a = new HTMLtag("a", d);
+        b.AddChild(d);
+        d.AddChild(a);
+        
+        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
 
-//     [Fact]
-//     public void is_inside_directly_false()
-//     {
-//         var monad = new ExposedMonad(Markup()
-//             .body().Enter()
-//                 .a().Enter());
+        Assert.True(exposed.isInside("body"));
+    }
 
-//         Assert.False(monad.isInside("span"));
-//     }
+    [Fact]
+    public void is_inside_directly_false()
+    {
+        var b = new HTMLtag("body");
+        var a = new HTMLtag("a", b);
+        b.AddChild(a);
 
-//     [Fact]
-//     public void is_inside_nested_false()
-//     {
-//         var monad = new ExposedMonad(Markup()
-//             .body().Enter()
-//                 .div().Enter()
-//                     .a().Enter());
+        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
 
-//         Assert.False(monad.isInside("span"));
-//     }
+        Assert.False(exposed.isInside("span"));
+    }
 
-//     [Fact]
-//     public void is_inside_wrong_branch()
-//     {
-//         var monad = new ExposedMonad(Markup()
-//             .body().Enter()
-//                 .div().Enter()
-//                     .span().Exit()
-//                 .a().Enter());
+    [Fact]
+    public void is_inside_nested_false()
+    {
+        var b = new HTMLtag("body");
+        var d = new HTMLtag("div", b);
+        var a = new HTMLtag("a", d);
+        b.AddChild(d);
+        d.AddChild(a);
+        
+        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
 
-//         Assert.False(monad.isInside("span"));
-//     }
+        Assert.False(exposed.isInside("span"));
+    }
 
-//     [Fact]
-//     public void ids_are_unique()
-//     {
-//         Assert.Equal(
-//             Markup().body().@id("hello").Enter().a().@id("hello").Build(),
-//             "Id 'hello' is already in use!"
-//         );
-//     }
-// }
+    [Fact]
+    public void is_inside_wrong_branch()
+    {
+        var b = new HTMLtag("body");
+        var d = new HTMLtag("div", b);
+        var s = new HTMLtag("span", d);
+        var a = new HTMLtag("a", b);
+        
+        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
+
+        Assert.False(exposed.isInside("span"));
+    }
+
+    [Fact]
+    public void ids_are_unique()
+    {
+        Assert.Equal(
+            "Id 'hello' is already in use!",
+            Markup(
+                body(@id("hello"))(
+                    anchor(@id("hello"))()
+                )
+            ).Build()
+        );
+    }
+}
