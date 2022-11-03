@@ -44,7 +44,7 @@ Example
 var page = Markup(
   head()(),
   body()(
-    p(@class("greeting))(
+    p(@class("greeting"))(
       text("Hello world!")
     )
   )
@@ -108,13 +108,13 @@ Func<string, Element> component = (name) =>
     p()(
       text($"Hello {name}!")
     )
-  )
+  );
 
 var page = Markup(
   head()(),
   body()(
     component("Bob"),
-    component("Alice"),
+    component("Alice")
   )
 ).Build();
 ```
@@ -142,7 +142,7 @@ public Element component(string name) {
     p()(
       text($"Hello {name}!")
     )
-  )
+  );
 }
 ```
 ```
@@ -150,7 +150,7 @@ var page = Markup(
   head()(),
   body()(
     component("Bob"),
-    component("Alice"),
+    component("Alice")
   )
 ).Build();
 ```
@@ -231,13 +231,12 @@ Is used to apply the same ```Element``` or ```Func<int, Element>``` once for eac
 
 Example
 ```
-Func<int, Element> component = (number) => {
+Func<int, Element> component = (number) => 
   div(@class("container"))(
     p()(
       text($"{number}")
     )
-  )
-};
+  );
 
 var page = Markup(
   head()(),
@@ -269,7 +268,7 @@ Is used to apply a ```Func<T,Element>``` for each element of type ```T``` in an 
 
 Example
 ```
-var names = new List() {"Bob", "Alice"};
+var names = new List<string>() {"Bob", "Alice"};
 
 Func<string, Element> component = (name) =>
   div(@class("container"))(
