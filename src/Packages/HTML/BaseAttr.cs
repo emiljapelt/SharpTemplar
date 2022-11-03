@@ -5,10 +5,19 @@ namespace SharpTemplar.HyperText;
 
 public static partial class Base
 {
-    public static Attribute @id = constructAttribute(new AttrInfo() {
-        attrName = "id",
-        contexts = new InclusiveContexts(anyContext)
-    });
+    public static Attribute @id = (values) => (state) => {
+        if (state is MarkupSuccess ms) {
+            foreach(var val in values) {
+                if (ms.ids.Contains(val)) return FailWith($"Id '{val}' is already in use!");
+                else ms.ids.Add(val);
+            }
+            return constructAttribute(new AttrInfo() {
+                attrName = "id",
+                contexts = new InclusiveContexts(anyContext)
+            })(values)(state);
+        }
+        else return state;
+    };
 
     public static Attribute @class = constructAttribute(new AttrInfo() {
         attrName = "class",

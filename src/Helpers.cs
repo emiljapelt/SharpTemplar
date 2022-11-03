@@ -119,10 +119,6 @@ public class Helpers
 
                         if (c) { 
                             foreach(var val in input) {
-                                if (info.attrName == "id") {
-                                    if (ms.ids.Contains(val)) return FailWith($"Id '{val}' is already in use!");
-                                    else ms.ids.Add(val);
-                                }
                                 ms.pointer.AddAttribute(info.attrName, val); 
                             }
                             return ms; 
@@ -143,10 +139,6 @@ public class Helpers
 
                         if (c) { 
                             foreach(var val in input) {
-                                if (info.attrName == "id") {
-                                    if (ms.ids.Contains(val)) return FailWith($"Id '{val}' is already in use!");
-                                    else ms.ids.Add(val);
-                                }
                                 ms.pointer.AddAttribute(info.attrName, val); 
                             }
                             return ms; 

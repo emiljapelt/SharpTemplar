@@ -15,15 +15,15 @@ SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HT
 ___
 
 ## Basic usage
-To start working on some HTML, the static method ```MarkupHTML()``` should be called. This function represenst the ```<html>``` tag, and it takes its children as arguments.
+To start working on some HTML, the static method ```HTML()``` should be called. This function represenst the ```<html>``` tag, and it takes its children as arguments.
 
 - Elements starting with lower case are for adding html tags, or text.
-- Elements stating with '@' are for adding attributes to a tag.
 - Elements stating with upper case are utility, e.g. conditionals and loops.
+- Attributes start with '@'.
 
 Example
 ```
-var page = MarkupHTML(
+var page = HTML(
   head()(),
   body()(
     p(@class("greeting"))(
@@ -43,13 +43,13 @@ Creates the page:
 </html>
 ```
 
-SharpTemplar is split into multiple bundles, containing the functionality need for different domains of HTML, for example lists and tables. The most usual tags, attributes etc. are contained in ```SharpTemplar.Monadic.Bundle.Base```.
+```SharpTemplar.HyperText``` is split into multiple bundles, containing the functionality need for different domains of HTML, for example lists and tables. The most usual tags, attributes etc. are contained in the static class ```SharpTemplar.HyperText.Base```.
 
 SharpTemplar will enforce correct HTML, i.e. tags can only be added in places where they make sense, attributes can only be applied to tags where they make sense and ids must be unique. If any of these rules are broken, a MarkupFailure will be returned, containing information on what went wrong.
 ___
 
 ## Components
-Sometimes you might want to create similar html structures, multiple times. This can be done by nesting Elements outside of the MarkupHMTL() call. To do this you must add ```using SharpTemplar.Monadic;``` to your source code.
+Sometimes you might want to create similar html structures, multiple times. This can be done by nesting Elements outside of the MarkupHMTL() call.
 
 Example
 ```
@@ -92,7 +92,7 @@ Func<string, Element> component = (name) =>
     )
   );
 
-var page = MarkupHTML(
+var page = HTML(
   head()(),
   body()(
     component("Bob"),
@@ -128,7 +128,7 @@ public Element component(string name) {
 }
 ```
 ```
-var page = MarkupHTML(
+var page = HTML(
   head()(),
   body()(
     component("Bob"),
@@ -160,7 +160,7 @@ Is used to conditionally add an ```Element```, depending on a boolean expression
 
 Example
 ```
-var page = MarkupHTML(
+var page = HTML(
   head()(),
   body()(
     If(b, text("true"), text("false"))
@@ -185,7 +185,7 @@ Element failed =
     )
   );
 
-var page = MarkupHTML(
+var page = HTML(
   head()(),
   body()(
     Attempt(() => component(2), () => failed),
@@ -220,7 +220,7 @@ Func<int, Element> component = (number) =>
     )
   );
 
-var page = MarkupHTML(
+var page = HTML(
   head()(),
   body()(
     Range(10, 3, component)
@@ -259,7 +259,7 @@ Func<string, Element> component = (name) =>
     )
   );
 
-var page = MarkupHTML(
+var page = HTML(
   head()(),
   body()(
     OnList(names, component)
