@@ -79,16 +79,16 @@ public static partial class Text
 
     public static Tag h(int level) {
 
-        return (attrs) => (children) => (monad) => {
-            if (monad is MarkupSuccess ms) {
+        return (attrs) => (children) => (state) => {
+            if (state is MarkupSuccess ms) {
                 if (level < 0 || 6 < level) return FailWith("Header level must be between 1 and 6!");
                 return constructTag(new TagInfo() { 
                     tagName = $"h{level}", 
                     contexts = bodyOnly, 
                     directContexts = anyContext
-                })(attrs)(children)(monad);
+                })(attrs)(children)(state);
             }
-            else return monad;
+            else return state;
         };
     }
 

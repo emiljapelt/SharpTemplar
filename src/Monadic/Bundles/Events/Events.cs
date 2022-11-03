@@ -8,36 +8,33 @@ public static partial class Events
     public static ValuedAttribute @on(EventInfo info, string call)
     {
         if (info is InclusiveEventInfo iei) {
-            return (monad) => {
-                if (monad is MarkupSuccess m) {
-                    return m.newestOrCurrent((tag) => {
-                        var c = false;
+            return (state) => {
+                if (state is MarkupSuccess ms) {
+                    var c = false;
 
-                        if (iei.contexts.Length == 0) c = true;
-                        foreach(string context in iei.contexts)
-                            if(tag.tagName == context) { c = true; break; }
+                    if (iei.contexts.Length == 0) c = true;
+                    foreach(string context in iei.contexts)
+                        if(ms.pointer.tagName == context) { c = true; break; }
 
-                        if (c) { tag.AddAttribute("on" + iei.eventName, call); return m; }
-                        return FailWith($"'{iei.eventName}': Event context failure!");
-                    });
+                    if (c) { ms.pointer.AddAttribute("on" + iei.eventName, call); return ms; }
+                    return FailWith($"'{iei.eventName}': Event context failure!");
+
                 }   
-                else return monad;
+                else return state;
             };
         }
         else if (info is ExclusiveEventInfo eei) {
-            return (monad) => {
-                if (monad is MarkupSuccess m) {
-                    return m.newestOrCurrent((tag) => {
-                        var c = true;
+            return (state) => {
+                if (state is MarkupSuccess ms) {
+                    var c = true;
 
-                        foreach(string context in eei.contexts)
-                            if(tag.tagName == context) { c = false; break; }
+                    foreach(string context in eei.contexts)
+                        if(ms.pointer.tagName == context) { c = false; break; }
 
-                        if (c) { tag.AddAttribute("on" + eei.eventName, call); return m; }
-                        return FailWith(info, $"'{eei.eventName}': Event context failure!");
-                    });
+                    if (c) { ms.pointer.AddAttribute("on" + eei.eventName, call); return ms; }
+                    return FailWith(info, $"'{eei.eventName}': Event context failure!");
                 }   
-                else return monad;
+                else return state;
             };
         }
         else return (monad) => new MarkupFailure("Unknown EventInfo type!");

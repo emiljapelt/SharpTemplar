@@ -18,36 +18,36 @@ public static partial class Media
     });
 
     public static Tag source(string type, string src) {
-        return (attrs) => (children) => (monad) => {
-            if (monad is MarkupSuccess ms) {
+        return (attrs) => (children) => (state) => {
+            if (state is MarkupSuccess ms) {
                 var res =  constructTag(new TagInfo() { 
                     tagName = "source", 
                     contexts = bodyOnly, 
                     directContexts = new string[]{"audio","video"}
-                })(attrs)(children)(monad);
+                })(attrs)(children)(state);
                 ms.pointer.AddAttribute("type", type);
                 ms.pointer.AddAttribute("src", src);
                 return res;
             }
-            else return monad;
+            else return state;
         };
     }
 
     public static Tag img(string src) { return img(src, ""); }
     public static Tag img(string src, string alt) {
 
-        return (attrs) => (children) => (monad) => {
-            if (monad is MarkupSuccess ms) {
+        return (attrs) => (children) => (state) => {
+            if (state is MarkupSuccess ms) {
                 var res = constructTag(new TagInfo() { 
                     tagName = "img", 
                     contexts = bodyOnly, 
                     directContexts = anyContext
-                })(attrs)(children)(monad);
+                })(attrs)(children)(state);
                 ms.pointer.AddAttribute("src", src);
                 ms.pointer.AddAttribute("alt", alt);
                 return res;
             } 
-            else return monad;
+            else return state;
         };
     }
 }

@@ -2,11 +2,11 @@ using System.Text;
 
 namespace SharpTemplar.Monadic;
 
-public delegate MarkupMonad Element(MarkupMonad monad);
+public delegate MarkupState Element(MarkupState state);
 public delegate Element AttributedTag(params Element[] children);
 public delegate AttributedTag Tag(params ValuedAttribute[] attributes);
 
-public delegate MarkupMonad ValuedAttribute(MarkupMonad monad);
+public delegate MarkupState ValuedAttribute(MarkupState state);
 public delegate ValuedAttribute Attribute(params string[] values);
 
 public class TagInfo
@@ -48,8 +48,8 @@ internal class TagContexts
 
 public class Helpers
 {
-    public static MarkupMonad FailWith(string msg) { return new MarkupFailure(msg); }
-    public static MarkupMonad FailWith(TagInfo info, string msg) { 
+    public static MarkupState FailWith(string msg) { return new MarkupFailure(msg); }
+    public static MarkupState FailWith(TagInfo info, string msg) { 
         var sb = new StringBuilder();
         sb.Append(msg + Environment.NewLine + "Direct contexts: [ ");
         foreach(var dc in info.directContexts) sb.Append($"{dc} ");
@@ -58,14 +58,14 @@ public class Helpers
         sb.Append("]");
         return new MarkupFailure(sb.ToString()); 
     }
-    public static MarkupMonad FailWith(AttrInfo info, string msg) { 
+    public static MarkupState FailWith(AttrInfo info, string msg) { 
         var sb = new StringBuilder();
         sb.Append(msg + Environment.NewLine + "Contexts: [ ");
         foreach(var c in info.contexts) sb.Append($"{c} ");
         sb.Append("]");
         return new MarkupFailure(sb.ToString()); 
     }
-    public static MarkupMonad FailWith(EventInfo info, string msg) { 
+    public static MarkupState FailWith(EventInfo info, string msg) { 
         var sb = new StringBuilder();
         if (info is InclusiveEventInfo iei) {
             sb.Append(msg + Environment.NewLine + "Contexts: [ ");
@@ -81,8 +81,8 @@ public class Helpers
     }
 
     public static Tag constructTag(TagInfo info) {
-        return (attrs) => (children) => (monad) => {
-            if (monad is MarkupSuccess ms) {
+        return (attrs) => (children) => (state) => {
+            if (state is MarkupSuccess ms) {
                 var dc = false;
                 var c = false;
 
@@ -98,7 +98,7 @@ public class Helpers
                     var tag = new HTMLtag(info.tagName, ms.pointer);
                     ms.pointer.children.Add(tag);
                     var temp = ms.pointer;
-                    MarkupMonad holder = ms;
+                    MarkupState holder = ms;
                     foreach(var attr in attrs) {
                         ms.pointer = tag;
                         holder = attr(holder);
@@ -114,14 +114,14 @@ public class Helpers
                 }
                 return FailWith(info, $"'{info.tagName}': Tag context failure!");
             }
-            else return monad;
+            else return state;
         };
     }
 
     public static Attribute constructAttribute(AttrInfo info)
     {
-        return (input) => (monad) => {
-            if (monad is MarkupSuccess m) {
+        return (input) => (state) => {
+            if (state is MarkupSuccess m) {
                     var c = false;
 
                     if (info.contexts.Length == 0) c = true;
@@ -140,7 +140,7 @@ public class Helpers
                     }
                     return FailWith(info, $"'{info.attrName}': Attribute context failure!");
             }   
-            else return monad;
+            else return state;
         };
     }
 

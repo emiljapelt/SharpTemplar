@@ -4,8 +4,8 @@ namespace SharpTemplar.Monadic.Bundle;
 
 public static partial class Base
 {
-    public static MarkupMonad Markup(params Element[] cs) {
-        MarkupMonad m = new MarkupSuccess(new HTMLtag("html"), new HashSet<string>());
+    public static MarkupState Markup(params Element[] cs) {
+        MarkupState m = new MarkupSuccess(new HTMLtag("html"), new HashSet<string>());
         foreach(var c in cs) {
             if (m is MarkupFailure) return m;
             m = c(m);
@@ -13,15 +13,15 @@ public static partial class Base
         return m;
     }
 
-    public static Element nothing = (monad) => monad;
+    public static Element nothing = (state) => state;
 
     public static Element text(string input){ 
-        return (monad) => {
-            if (monad is MarkupSuccess m) {
+        return (state) => {
+            if (state is MarkupSuccess m) {
                 m.pointer.AddChild(new HTMLtext(input));
                 return m;
             }
-            else return monad;
+            else return state;
         };
     }
 
@@ -33,8 +33,8 @@ public static partial class Base
 
     public static Element Attempt(Func<Element> main) { return Attempt(main, () => nothing); }
     public static Element Attempt(Func<Element> main, Func<Element> alternative) {
-        return (monad) => {
-            if (monad is MarkupSuccess ms) {
+        return (state) => {
+            if (state is MarkupSuccess ms) {
                 var html_backup = ms.pointer.RefingClone();
                 var id_backup = new HashSet<string>(ms.ids);
                 try {
@@ -45,7 +45,7 @@ public static partial class Base
                     return alternative()(ms);
                 }
             }
-            else return monad;
+            else return state;
         };
     }
 
@@ -53,20 +53,20 @@ public static partial class Base
     public static Element Range(int start, int count, Element element) { return Range(start, count, (i) => element); }
     public static Element Range(int count, Func<int, Element> element) { return Range(0, count, element); }
     public static Element Range(int start, int count, Func<int, Element> elemet){
-        return (monad) => {
+        return (state) => {
             for(int i = start; i < start + count; i++) {
-                elemet(i)(monad);
+                elemet(i)(state);
             }
-            return monad;
+            return state;
         };
     }
 
     public static Element OnList<T>(IEnumerable<T> list, Func<T, Element> element) {
-        return (monad) => {
+        return (state) => {
             foreach(var e in list) {
-                element(e)(monad);
+                element(e)(state);
             }
-            return monad;
+            return state;
         };
     }
 }
