@@ -1,5 +1,5 @@
 # SharpTemplar
-SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HTML is currently implemented, and this document will demostrate how to work with that specifically.
+SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HTML is currently implemented, therefor this document demostrates how to use SharpTemplar using HTML as the basis.
 
 ## Central types
 | Type | Description |
@@ -7,11 +7,11 @@ SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HT
 | MarkupState | The abstract representation of the markup. |
 | MarkupSuccess | Markup that is correct. | 
 | MarkupFailure | Information on what broke the markup. | 
-| Attribute | Represents some HTML attribute such as 'class' or 'id' | 
-| ValuedAttribute | Represents some HTML attribute which has been given a value, such as 'class="container"' | 
-| Tag | Represents some HTML tag, such as 'div' or 'head' | 
-| AttributedTag | Represents som HTML tag, which has been given valued attributes | 
-| Element | Represents some HTML tag, which has both been given valued attrubutes and children (i.e. other Elements)  | 
+| Attribute | Represents some XML attribute such as 'class' or 'id' | 
+| ValuedAttribute | Represents some XML attribute which has been given a value, such as 'class="container"' | 
+| Tag | Represents some XML tag, such as 'div' or 'head' | 
+| AttributedTag | Represents som XML tag, which has been given valued attributes | 
+| Element | Represents some XML tag, which has both been given valued attrubutes and children (i.e. other Elements)  | 
 ___
 
 ## Basic usage
@@ -49,7 +49,7 @@ SharpTemplar will enforce correct HTML, i.e. tags can only be added in places wh
 ___
 
 ## Components
-Sometimes you might want to create similar html structures, multiple times. This can be done by nesting Elements outside of the MarkupHMTL() call.
+Sometimes you might want to create similar structures, multiple times. This can be done by nesting Elements outside of the HTML() call.
 
 Example
 ```
@@ -83,7 +83,6 @@ Creates the page:
 
 Static components might not be that interesting, but parameters can be added to them using the ```Func<>``` delegate, like in the following example.
 
-Example
 ```
 Func<string, Element> component = (name) => 
   div(@class("container"))(
@@ -153,13 +152,14 @@ Creates the page:
 
 ___
 
-## Utility Functors
+## Utility Elements
 
 ### If( )
-Is used to conditionally add an ```Element```, depending on a boolean expression. If there is only provided one ```Element``` to ```If()``` nothing is applied the the boolean is false.
+Is used to conditionally add an ```Element``` or ```Attribute```, depending on a boolean expression. If there is only provided one ```Element``` to ```If()``` nothing is applied if the boolean is false.
 
 Example
 ```
+var b = false;
 var page = HTML(
   head()(),
   body()(
@@ -167,9 +167,18 @@ var page = HTML(
   )
 ).Build();
 ```
+Creates the page:
+```
+<html>
+  <head/>
+  <body>
+    false
+  </body>
+</html>
+```
 
 ### Attempt( )
-Is used to apply an ```Element``` that might throw an exception, and handle it without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Element``` is provided, nothing is applied on an exception. Elements must be provided as ````Func<Element>``` i.e. unit functions, to delay their evaluation.
+Is used to apply an ```Element``` that might throw an exception, and handle those cases without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Element``` is provided, nothing is applied on an exception. Elements must be provided as ```Func<Element>``` i.e. unit functions, to delay their evaluation.
 
 Example
 ```
@@ -181,7 +190,7 @@ Func<int, Element> component = (divident) =>
 Element failed = 
   div(@class("container"))(
     p()(
-      text("Oh no!)
+      text("Oh no!")
     )
   );
 
