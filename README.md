@@ -1,346 +1,301 @@
+# NOTES FOR THIS MARKDOWN
+- Bundles seperate different areas of HTML, as to not load unused methods
+- Should the user want to create "Component"/Custom Functors, SharpTemplar.Monadic should be imported
+- Markup() starts a document.
+- _() is the generic Functor application method
+- Functors are delegates, but most have associated extension methods
+  - extensions starting with lower case represent html tags
+  - extensions starting with '@' represent mutations of html tags (fx. attributes)
+  - extensions starting with upper case, represent other functions (Navigation ect.)
+- Enter moves the html pointer to the newest added element
+- Exit moves the html pointer to the parent of the current element
+- If applies a Functor, if it boolean argument is true, otherwise it might apply another Functor, or nothing
+- Attempt applies a Functor, but if this application throws an exception, changes are reverted and an alternative Functor might be applied
+- Range applies a Functor a number of times. The Functor might make the current iteration number as an argument
+- OnList applies a Functor, taking some type T as an argument, for each element of a List of this type T
+- @id is a special case of mutation attribute, as it keeps track of which ids are already in use
+
+
 # SharpTemplar
-SharpTemplar is a library for making HTML webpages in C#. SharpTemplar allows any tag to be placed nearly anywhere, and it is therefor up to the developer to ensure that tags are placed in a context that makes sense. A table row does, for example, not make sense outside of a table, but SharpTemplar woundn't mind.
+SharpTemplar is a library for making HTML webpages in C#, using delegate nesting.
 
-## Terminology
-| Term | Description |
+## Central types
+| Type | Description |
 |--|--|
-|tag | a HTML tag |
-|element | an object representing a HTML tag | 
+| MarkupState | The abstract representation of the markup. |
+| MarkupSuccess | Markup that is correct. | 
+| MarkupFailure | Information on what broke the markup. | 
+| Attribute | Represents some HTML attribute such as 'class' or 'id' | 
+| ValuedAttribute | Represents some HTML attribute which has been given a value, such as 'class="container"' | 
+| Tag | Represents some HTML tag, such as 'div' or 'head' | 
+| AttributedTag | Represents som HTML tag, which has been given valued attributes | 
+| Element | Represents some HTML tag, which has both been given valued attrubutes and children (i.e. other Elements)  | 
 ___
 
-## How to use
-To use SharpTemplar instantiate a TemplarDocument. This object contains two elements, namely a Head and a Body. 
+## Basic usage
+To start working on some HTML, the static method ```Markup()``` should be called. This function represenst the ```<html>``` tag, and it takes its children as arguments.
 
-These elements contain methods to add other elements into them (Methods beginning with "Add") or apply attributes (Methods beginning with "With"). 
+- Elements starting with lower case are for adding html tags, or text.
+- Elements stating with '@' are for adding attributes to a tag.
+- Elements stating with upper case are utility, e.g. conditionals and loops.
 
-
-For example
+Example
 ```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-doc.Body.AddDiv().AddParagraph("bar");
-
-string page = doc.GeneratePage();
+var page = Markup(
+  head()(),
+  body()(
+    p(@class("greeting))(
+      text("Hello world!")
+    )
+  )
+).Build();
 ```
 
-Results in this page: 
+Creates the page:
 ```
-<!DOCTYPE html>
 <html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body>
-        <div></div>
-        <p>bar</p>
-    </body>
+  <head/>
+  <body>
+    <p class="greeting">Hello world!</p>
+  </body>
 </html>
 ```
 
-### Applying attributes
-Attributes are applied to the just added element, or the element the method is called on in case there was not just added an element.
+SharpTemplar is split into multiple bundles, containing the functionality need for different domains of HTML, for example lists and tables. The most usual tags, attributes etc. are contained in ```SharpTemplar.Monadic.Bundle.Base```.
 
-Note that applying the same attribute multiple times, will append the new value with a whitespace in front. The exception is the "id" attribute, which will simply override the previous value.
-
-### Nesting tags
-Notice that in the first example, the two added elements have the same parent. This happens because the methods were both called on the Body element. To change what element is being called methods upon, use Enter or Exit. Enter will change to the just added element, or, if no element was just added, it does nothing. Exit will change to the parent of the current element, or do nothing when the element has no parent, i.e. the body element.
-
-For example
-```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-doc.Body.AddDiv().Enter
-            .AddParagraph("1")
-            .AddParagraph("2")
-        .Exit
-        .AddParagraph("3");
-
-
-string page = doc.GeneratePage();
-```
-
-Results in:
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body>
-        <div>
-            <p>1</p>
-            <p>2</p>
-        </div>
-        <p>3</p>
-    </body>
-</html>
-```
-
-Switching between elements might result in elements being added, and attributes applied, to elements that was not intended. This happens when an element has not been reset, i.e. there is still some element, that has just been added to it.
-
-For example:
-```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-doc.Body.AddDiv();
-
-doc.Body.WithAttr(("class","container"));
-
-string page = doc.GeneratePage();
-```
-In this case the Div that was added to Body, has still just been added, when the class attribute is applied. Therefor the resulting page is:
-
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body>
-        <div class="container"></div>
-    </body>
-</html>
-```
-This can be fixes by resetting the body, with End.
-```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-doc.Body.AddDiv().End();
-
-doc.Body.WithAttr(("class","container"));
-
-string page = doc.GeneratePage();
-```
-Which will give:
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body class="container">
-        <div></div>
-    </body>
-</html>
-```
-Note that calling Enter, Exit or End on any element, will reset it. Although Enter and Exit cannot be the end of a call chain.
-
-### Outing
-Most methods for adding elements are overloaded with an out. If used, the added element is saved in the supplied variable. This could for example be used if some elements need to be added to the outed element in a loop or conditionally.
-
-For example
-```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-HTMLBodyElement div;
-doc.Body.AddDiv(out div).AddParagraph("3");
-for (int i = 1; i <= 2; i++) div.AddParagraph($"{i}");
-
-string page = doc.GeneratePage();
-```
-
-Results in:
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body>
-        <div>
-            <p>1</p>
-            <p>2</p>
-        </div>
-        <p>3</p>
-    </body>
-</html>
-```
-
-### Conditional/Loop
-As an alternative to using the C# loops and conditionals, SharpTemplar offers the Conditional- and Loop-element. 
-
-The Conditional element is used with the If method, and takes a condition. To get out of the conditional, Exit is used. For example:
-
-```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-doc.Body.If(() => 1 == 2)
-            .AddParagraph("1")
-        .Exit
-        .AddParagraph("2");
-
-string page = doc.GeneratePage();
-```
-Would result in this page:
-
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body>
-        <p>2</p>
-    </body>
-</html>
-```
-While this:
-```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-doc.Body.If(() => 1 == 1)
-            .AddParagraph("1")
-        .Exit
-        .AddParagraph("2");
-
-string page = doc.GeneratePage();
-```
-Would result in this page:
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body>
-        <p>1</p>
-        <p>2</p>
-    </body>
-</html>
-```
-
-The Loop element is used via the While method, which takes a condition and a change. Just like the Conditional, Exit is used to get out of the loop. Elements added to the loop, will be rendered as many times as the loop runs.
-
-For example:
-```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-int i = 0;
-doc.Body.While(() => i < 2, () => i++)
-            .AddParagraph("1")
-        .Exit
-        .AddParagraph("2");
-
-string page = doc.GeneratePage();
-```
-Results in:
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body>
-        <p>1</p>
-        <p>1</p>
-        <p>2</p>
-    </body>
-</html>
-```
-
-### Templates
-If you have some reaccuring HTML structure, then using a template might be a good solution. 
-
-Templates are written in .sthtml files, which essentially just contains standart HTML. The only difference being the addition of replacement tags. Replacement tags have the following form: ```<x!>```. Where ```x > 0```. 
-
-Example of a template, template.sthtml:
-```
-<div class="messagecontainer">
-    <p>This is a message</p>
-    <p><1!></p>
-</div>
-```
-
-When placeing a template in a TemplarDocument, any number of string parameters can be given, after the path to the template file. These will be used as replacements. All ```<1!>``` tags would for instance be replaced with the first parameter given. If the integer in the replacement tag is larger than the amount of given parameters, the replacement tag is replaced with the empty string.
-
-Example:
-```
-var doc = new TemplarDocument("test");
-            
-doc.Head.AddMeta().WithAttr(("charset","utf-8"));
-
-doc.Body.PlaceTemplate("path-to-template\template.sthtml", "foobar");
-
-string page = doc.GeneratePage();
-```
-
-The resulting page in this example would be:
-```
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>test</title>
-        <meta charset="utf-8"></meta>
-    </head>
-    <body>
-        <div class="messagecontainer">
-            <p>This is a message</p>
-            <p>foobar</p>
-        </div>
-    </body>
-</html>
-```
-
-## Supported tags
-
-### Head
-- Link \<link\>
-- Meta \<meta\>
-- Script \<script\>
-- Style \<style\>
-- Title \<title\>
-
-### Body
-- Anchor \<a\>
-- Break \<br\>
-- Button \<button\>
-- DescriptionList \<dl\>
-- Div \<div\>
-- Form \<form\>
-- Header \<h1\> .. \<h6\>
-- Idiomatic \<i\>
-- Image \<img\>
-- Input \<input\>
-- Label \<label\>
-- ListItem \<li\>
-- Option \<option\>
-- OrderedList \<ol\>
-- Paragraph \<p\>
-- Select \<select\>
-- Small \<small\>
-- Span \<span\>
-- Strong \<strong\>
-- Table \<table\>
-- TableData \<td\>
-- TableHead \<th\>
-- TableRow \<tr\>
-- Term \<dt\>
-- TermDescription \<dd\>
-- TextArea \<textarea\>
-- UnorderedList \<ul\>
+SharpTemplar will enforce correct HTML, i.e. tags can only be added in places where they make sense, attributes can only be applied to tags where they make sense and ids must be unique. If any of these rules are broken, a MarkupFailure will be returned, containing information on what went wrong.
 ___
 
+## Components
+Sometimes you might want to create similar html structures, multiple times. This can be done by nesting Elements outside of the Markup() call. To do this you must add ```using SharpTemplar.Monadic;``` to your source code.
+
+Example
+```
+Element component = 
+  div(@class("container"))(
+    p()(text("Im a contained paragraph!"))
+  );
+
+var page = Markup(
+  head()(),
+  body()(
+    component,
+    component
+  )
+).Build();
+```
+Creates the page:
+```
+<html>
+  <head/>
+  <body>
+    <div class="container">
+      <p>Im a contained paragraph!</p>
+    </div>
+    <div class="container">
+      <p>Im a contained paragraph!</p>
+    </div>
+  </body>
+</html>
+```
+
+Static components might not be that interesting, but parameters can be added to them using the ```Func<>``` delegate, like in the following example.
+
+Example
+```
+Func<string, Element> component = (name) => 
+  div(@class("container"))(
+    p()(
+      text($"Hello {name}!")
+    )
+  )
+
+var page = Markup(
+  head()(),
+  body()(
+    component("Bob"),
+    component("Alice"),
+  )
+).Build();
+```
+Creates the page:
+```
+<html>
+  <head/>
+  <body>
+    <div class="container">
+      <p>Hello Bob!</p>
+    </div>
+    <div class="container">
+      <p>Hello Alice!</p>
+    </div>
+  </body>
+</html>
+```
+
+Alternativly to using a ```Func<>``` for adding parameters to a component, a method could be used. 
+
+Example
+```
+public Element component(string name) {
+  return div(@class("container"))(
+    p()(
+      text($"Hello {name}!")
+    )
+  )
+}
+```
+```
+var page = Markup(
+  head()(),
+  body()(
+    component("Bob"),
+    component("Alice"),
+  )
+).Build();
+```
+Creates the page:
+```
+<html>
+  <head/>
+  <body>
+    <div class="container">
+      <p>Hello Bob!</p>
+    </div>
+    <div class="container">
+      <p>Hello Alice!</p>
+    </div>
+  </body>
+</html>
+```
+
+___
+
+## Utility Functors
+
+### If( )
+Is used to conditionally add an ```Element```, depending on a boolean expression. If there is only provided one ```Element``` to ```If()``` nothing is applied the the boolean is false.
+
+Example
+```
+var page = Markup(
+  head()(),
+  body()(
+    If(b, text("true"), text("false"))
+  )
+).Build();
+```
+
+### Attempt( )
+Is used to apply an ```Element``` that might throw an exception, and handle it without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Element``` is provided, nothing is applied on an exception.
+
+Example
+```
+Func<int, Element> component = (divident) => 
+  div(@class("container"))(
+    p().text($"{100/divident}")
+  );
+
+Element failed = 
+  div(@class("container"))(
+    p()(
+      text("Oh no!)
+    )
+  );
+
+var page = Markup(
+  head()(),
+  body()(
+    Attempt(component(2), failed),
+    Attempt(component(0), failed)
+  )
+).Build();
+```
+Creates the page:
+```
+<html>
+  <head/>
+  <body>
+    <div class="container">
+      <p>50</p>
+    </div>
+    <div class="container">
+      <p>Oh no!</p>
+    </div>
+  </body>
+</html>
+```
+
+### Range( )
+Is used to apply the same ```Element``` or ````Func<int, Element>``` once for each number in the selected range.
+
+Example
+```
+Func<int, Element> component = (number) => {
+  div(@class("container"))(
+    p()(
+      text($"{number}")
+    )
+  )
+};
+
+var page = Markup(
+  head()(),
+  body()(
+    Range(10, 3, component)
+  )
+).Build();
+```
+Creates the page:
+```
+<html>
+  <head/>
+  <body>
+    <div class="container">
+      <p>10</p>
+    </div>
+    <div class="container">
+      <p>11</p>
+    </div>
+    <div class="container">
+      <p>12</p>
+    </div>
+  </body>
+</html>
+```
+
+### OnList\<T\>( )
+Is used to apply a ```Func<T,Element>``` for each element of type ```T``` in an ```IEnumerable<T>```.
+
+Example
+```
+var names = new List() {"Bob", "Alice"};
+
+Func<string, Element> component = (name) =>
+  div(@class("container"))(
+    p()(
+      text($"Hello {name}!")
+    )
+  );
+
+var page = Markup(
+  head()(),
+  body()(
+    OnList(names, component)
+  )
+).Build();
+```
+Creates the page:
+```
+<html>
+  <head/>
+  <body>
+    <div class="container">
+      <p>Hello Bob!</p>
+    </div>
+    <div class="container">
+      <p>Hello Alice!</p>
+    </div>
+  </body>
+</html>
+```
