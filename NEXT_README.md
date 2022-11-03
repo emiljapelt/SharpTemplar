@@ -17,35 +17,38 @@
 
 
 # SharpTemplar
-SharpTemplar is a library for making HTML webpages in C#, using function calls. Wheter or not SharpTemplar uses actual monads, i am unsure of, but the inspiration for the version 2 overhaul came to me while reading up on monads and their usage, and so quite a bit of monad terminologi is used.
+SharpTemplar is a library for making HTML webpages in C#, using delegate nesting.
 
 ## Central types
 | Type | Description |
 |--|--|
-| MarkupMonad | The abstract representation of the markup. |
+| MarkupState | The abstract representation of the markup. |
 | MarkupSuccess | Markup that is correct. | 
 | MarkupFailure | Information on what broke the markup. | 
-| Functor | A delegate of the form ```Func<MarkupSuccess, MarkupMonad>```, used to mainpulate the markup. | 
+| Attribute | Represents some HTML attribute such as 'class' or 'id' | 
+| ValuedAttribute | Represents some HTML attribute which has been given a value, such as 'class="container"' | 
+| Tag | Represents some HTML tag, such as 'div' or 'head' | 
+| AttributedTag | Represents som HTML tag, which has been given valued attributes | 
+| Element | Represents some HTML tag, which has both been given valued attrubutes and children (i.e. other Elements)  | 
 ___
 
 ## Basic usage
-To start working on some HTML, the static method ```Markup()``` should be called. Then applying Functors on the resulting object, to modify the contents. Any Functor can be applyed using ```._()```, but all Functors in the library have assosiated extension methods, that can be used instead. 
+To start working on some HTML, the static method ```Markup()``` should be called. This function represenst the ```<html>``` tag, and it takes its children as arguments.
 
-- Extensions starting with lower case are for adding html tags, or text.
-- Extensions stating with '@' are for adding attributes to a tag.
-- Extensions stating with upper case are other this, e.g. navigation.
-
-When ```Markup()``` is called, it points to the ```<html>``` tag. 
-
-Some ```Functor```s add HTML tags into the tag currently being pointed to, some modify existing tags and others are used for navigations in the markup. For navigation ```Enter()``` and ```Exit()``` are used, but be careful a ```MarkupFailure``` will be generated if the navigation did not make sense, e.g. when calling ```Enter()``` on a tag with no children. Modification is usually just adding attributes to a tag. Modifying Functors are applied to the most recently added tag, or if no such tag exists, the tag currently pointed to.
+- Elements starting with lower case are for adding html tags, or text.
+- Elements stating with '@' are for adding attributes to a tag.
+- Elements stating with upper case are utility, e.g. conditionals and loops.
 
 Example
 ```
-var page = Markup()
-  ._(Head)
-  ._(Body).Enter()
-    .p().@class("greeting").text("Hello world!")
-.Build();
+var page = Markup(
+  head()(),
+  body()(
+    p(@class("greeting))(
+      text("Hello world!")
+    )
+  )
+).Build();
 ```
 
 Creates the page:
@@ -58,26 +61,28 @@ Creates the page:
 </html>
 ```
 
-SharpTemplar is split into multiple bundles, containing the functionality need for different domains, for example lists and tables. The most usual tags, attributes etc. are contained in ```SharpTemplar.Monadic.Bundle.Base```.
+SharpTemplar is split into multiple bundles, containing the functionality need for different domains of HTML, for example lists and tables. The most usual tags, attributes etc. are contained in ```SharpTemplar.Monadic.Bundle.Base```.
 
 SharpTemplar will enforce correct HTML, i.e. tags can only be added in places where they make sense, attributes can only be applied to tags where they make sense and ids must be unique. If any of these rules are broken, a MarkupFailure will be returned, containing information on what went wrong.
 ___
 
 ## Components
-Sometimes you might want to create similar html structures, multiple times. This can be done by composing ```Functor```s, into new ```Functor```s, saving them as a variable and applying them. To do this you must add ```using SharpTemplar.Monadic;``` to your source code.
+Sometimes you might want to create similar html structures, multiple times. This can be done by nesting Elements outside of the Markup() call. To do this you must add ```using SharpTemplar.Monadic;``` to your source code.
 
 Example
 ```
-Functor component = (monad) => monad
-  .div().@class("container").Enter()
-    .p().Enter().text("Im a contained paragraph!");
+Element component = 
+  div(@class("container"))(
+    p()(text("Im a contained paragraph!"))
+  );
 
-var page = Markup()
-  .head()
-  .body().Enter()
-    ._(component).Exit().Exit()
-    ._(component)
-.Build();
+var page = Markup(
+  head()(),
+  body()(
+    component,
+    component
+  )
+).Build();
 ```
 Creates the page:
 ```
@@ -94,52 +99,24 @@ Creates the page:
 </html>
 ```
 
-This works, but it might be desireable to not have to write ```Exit()``` so many times. One solutions is to simply write it in the component instead. That is better, but still a bit tedious. Instead ```Anchor()``` can be used. This returns the pointer to where it was, after the application of the ```Functor```. It is available both as an extension method, and as a standalone method.
+Static components might not be that interesting, but parameters can be added to them using the ```Func<>``` delegate, like in the following example.
 
 Example
 ```
-Functor component = (monad) => monad
-  .div().@class("container").Enter()
-    .p().Enter().text("Im a contained paragraph!");
+Func<string, Element> component = (name) => 
+  div(@class("container"))(
+    p()(
+      text($"Hello {name}!")
+    )
+  )
 
-Functor anchored = Anchor(component);
-
-var page = Markup()
-  .head()
-  .body().Enter()
-    .Anchor(component)
-    ._(anchored)
-.Build();
-```
-Creates the page:
-```
-<html>
-  <head/>
-  <body>
-    <div class="container">
-      <p>Im a contained paragraph!</p>
-    </div>
-    <div class="container">
-      <p>Im a contained paragraph!</p>
-    </div>
-  </body>
-</html>
-```
-
-Static components are not that interesting, but parameters can be added to them. This does however change where the standalone ```Anchor()``` has to be applied.
-
-Example
-```
-Func<string, Functor> component = (name) => Anchor((monad) => monad
-  .div().@class("container").Enter()
-    .p().Enter().text($"Hello {name}!"));
-
-var page = Markup()
-  .head()
-  .body().Enter()
-    ._(component("Bob"))
-    ._(component("Alice"))
-.Build();
+var page = Markup(
+  head()(),
+  body()(
+    component("Bob"),
+    component("Alice"),
+  )
+).Build();
 ```
 Creates the page:
 ```
@@ -160,19 +137,22 @@ Alternativly to using a ```Func<>``` for adding parameters to a component, a met
 
 Example
 ```
-public Functor component(string name) {
-  return Anchor((monad) => monad
-    .div().@class("container").Enter()
-      .p().Enter().text($"Hello {name}!"));
+public Element component(string name) {
+  return div(@class("container"))(
+    p()(
+      text($"Hello {name}!")
+    )
+  )
 }
 ```
 ```
-var page = Markup()
-  .head()
-  .body().Enter()
-    ._(component("Bob"))
-    ._(component("Alice"))
-.Build();
+var page = Markup(
+  head()(),
+  body()(
+    component("Bob"),
+    component("Alice"),
+  )
+).Build();
 ```
 Creates the page:
 ```
@@ -189,98 +169,47 @@ Creates the page:
 </html>
 ```
 
-
-As a final note on components, you can create your own extension methods on ```MarkupMonad```s, using ```apply()```. This makes for nicer looking code, so it is recommended, especially for components that are used often.
-
-Example
-```
-public static MarkupMonad greeting(this MarkupMonad m, string name) { return apply(component(name)), m); }
-```
-```
-Func<string, Functor> component = (name) => Anchor((monad) => monad
-  .div().@class("container").Enter()
-    .p().Enter().text($"Hello {name}!"));
-
-var page = Markup()
-  .head()
-  .body().Enter()
-    .greeting("Bob")
-    .greeting("Alice")
-.Build();
-```
-Creates the page:
-```
-<html>
-  <head/>
-  <body>
-    <div class="container">
-      <p>Hello Bob!</p>
-    </div>
-    <div class="container">
-      <p>Hello Alice!</p>
-    </div>
-  </body>
-</html>
-```
 ___
 
 ## Utility Functors
 
-
-### Out( )
-Is used to create a new pointer to the markup. This is useful for situations where you might want to delay some ```Functor``` applications.
-
-Example
-```
-MarkupMonad user;
-
-var user_task = Database.getUserAsync(42);
-
-var page = Markup()
-  .head()
-  .body().Enter()
-    .div().@class("user_info").Enter().Out(out user).Exit()
-    .div().@class("something_else");
-
-var user_data = await user_task;
-
-user.p().text(user_data.name);
-
-return page.Build();
-
-```
-
 ### If( )
-Is used to conditionally apply ```Functor```s, depending on a boolean expression. If there is only provided one ```Functor``` to ```If()``` nothing is applied the the boolean is false.
+Is used to conditionally add an ```Element```, depending on a boolean expression. If there is only provided one ```Element``` to ```If()``` nothing is applied the the boolean is false.
 
 Example
 ```
-var page = Markup()
-  .head()
-  .body().If(nightmode, @Class("dark"), @Class("light")).Enter()
-    .p("Hello world!")
-.Build();
+var page = Markup(
+  head()(),
+  body()(
+    If(b, text("true"), text("false"))
+  )
+).Build();
 ```
 
 ### Attempt( )
-Is used to apply a ```Functor``` that might throw an exception, and handle it without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Functor``` is provided, nothing is applied on an exception.
+Is used to apply an ```Element``` that might throw an exception, and handle it without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Element``` is provided, nothing is applied on an exception.
 
 Example
 ```
-Func<int, Functor> component = (divident) => Anchor((monad) => monad
-  .div().@class("container").Enter()
-    .p().text($"{100/divident}"));
+Func<int, Element> component = (divident) => 
+  div(@class("container"))(
+    p().text($"{100/divident}")
+  );
 
-Functor failed = Anchor((monad) => monad
-  .div().@class("container").Enter()
-    .p().text("Oh no!");
+Element failed = 
+  div(@class("container"))(
+    p()(
+      text("Oh no!)
+    )
+  );
 
-var page = Markup()
-  .head()
-  .body().Enter()
-    .Attempt(component(2), failed)
-    .Attempt(component(0), failed)
-.Build();
+var page = Markup(
+  head()(),
+  body()(
+    Attempt(component(2), failed),
+    Attempt(component(0), failed)
+  )
+).Build();
 ```
 Creates the page:
 ```
@@ -298,19 +227,24 @@ Creates the page:
 ```
 
 ### Range( )
-Is used to apply the same ```Functor``` or ````Func<int, Functor>``` once for each number in the selected range.
+Is used to apply the same ```Element``` or ````Func<int, Element>``` once for each number in the selected range.
 
 Example
 ```
-Func<int, Functor> component = (number) => Anchor((monad) => monad
-  .div().@class("container").Enter()
-    .p().text($"{number}"));
+Func<int, Element> component = (number) => {
+  div(@class("container"))(
+    p()(
+      text($"{number}")
+    )
+  )
+};
 
-var page = Markup()
-  .head()
-  .body().Enter()
-    .Range(10, 3, component)
-.Build();
+var page = Markup(
+  head()(),
+  body()(
+    Range(10, 3, component)
+  )
+).Build();
 ```
 Creates the page:
 ```
@@ -331,21 +265,25 @@ Creates the page:
 ```
 
 ### OnList\<T\>( )
-Is used to apply a ```Func<T,Functor>``` for each element of type ```T``` in an ```IEnumerable<T>```.
+Is used to apply a ```Func<T,Element>``` for each element of type ```T``` in an ```IEnumerable<T>```.
 
 Example
 ```
 var names = new List() {"Bob", "Alice"};
 
-Func<string, Functor> component = (name) => Anchor((monad) => monad
-  .div().@class("container").Enter()
-    .p().Enter().text($"Hello {name}!"));
+Func<string, Element> component = (name) =>
+  div(@class("container"))(
+    p()(
+      text($"Hello {name}!")
+    )
+  );
 
-var page = Markup()
-  .head()
-  .body().Enter()
-    .OnList(names, component)
-.Build();
+var page = Markup(
+  head()(),
+  body()(
+    OnList(names, component)
+  )
+).Build();
 ```
 Creates the page:
 ```

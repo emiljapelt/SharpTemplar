@@ -1,3 +1,0 @@
-- Do some testing :)
-- Refactor naming in most files
-- Refactor access modifiers in most files
