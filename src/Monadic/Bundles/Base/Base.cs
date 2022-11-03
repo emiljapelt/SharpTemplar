@@ -14,6 +14,7 @@ public static partial class Base
     }
 
     public static Element nothing = (state) => state;
+    public static ValuedAttribute none = (state) => state;
 
     public static Element text(string input){ 
         return (state) => {
@@ -27,6 +28,12 @@ public static partial class Base
 
     public static Element If(bool b, Element e) { return If(b, e, nothing); }
     public static Element If(bool condition, Element either, Element or) {
+        if (condition) return either;
+        else return or;
+    }
+
+    public static ValuedAttribute If(bool b, ValuedAttribute e) { return If(b, e, none); }
+    public static ValuedAttribute If(bool condition, ValuedAttribute either, ValuedAttribute or) {
         if (condition) return either;
         else return or;
     }

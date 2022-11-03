@@ -187,7 +187,7 @@ var page = Markup(
 ```
 
 ### Attempt( )
-Is used to apply an ```Element``` that might throw an exception, and handle it without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Element``` is provided, nothing is applied on an exception.
+Is used to apply an ```Element``` that might throw an exception, and handle it without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Element``` is provided, nothing is applied on an exception. Elements must be provided as ````Func<Element>``` i.e. unit functions, to delay their evaluation.
 
 Example
 ```
@@ -206,8 +206,8 @@ Element failed =
 var page = Markup(
   head()(),
   body()(
-    Attempt(component(2), failed),
-    Attempt(component(0), failed)
+    Attempt(() => component(2), () => failed),
+    Attempt(() => component(0), () => failed)
   )
 ).Build();
 ```
@@ -227,7 +227,7 @@ Creates the page:
 ```
 
 ### Range( )
-Is used to apply the same ```Element``` or ````Func<int, Element>``` once for each number in the selected range.
+Is used to apply the same ```Element``` or ```Func<int, Element>``` once for each number in the selected range.
 
 Example
 ```
