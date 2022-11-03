@@ -1,9 +1,10 @@
-﻿using static SharpTemplar.Monadic.Bundle.Base;
-using static SharpTemplar.Monadic.Bundle.Text;
-using static SharpTemplar.Monadic.Bundle.Media;
-using static SharpTemplar.Monadic.Bundle.Events;
-using SharpTemplar.Monadic;
+﻿using static SharpTemplar.HyperText.Base;
+using static SharpTemplar.HyperText.Text;
+using static SharpTemplar.HyperText.Media;
+using static SharpTemplar.HyperText.Events;
+using static SharpTemplar.Utility;
 
+namespace SharpTemplar.Sandbox;
 public class Program 
 {
     public static void Main()
@@ -33,7 +34,7 @@ public class Program
         var navs = new string[] {"www.google.com", "www.bing.com", "www.github.com/emiljapelt/SharpTemplar"};
         var users = new (string,string)[] {("Bob", "@bob_boob"), ("Alice", "@x86_gamer"), ("John", "@johnny_boi"), ("Mike", "@m_dog")};
 
-        var s = Markup(
+        var s = HTML(
             head()(),
             body(@on(pageshow, "confetti"))(
                 img(src: "logo.jpg", alt: "NO_IMAGE")()(),

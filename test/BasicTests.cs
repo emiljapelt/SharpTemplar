@@ -5,11 +5,11 @@ public class BasicsTests
     [Fact]
     public void is_inside_directly()
     {
-        var b = new HTMLtag("body");
-        var a = new HTMLtag("a", b);
+        var b = new XMLtag("body");
+        var a = new XMLtag("a", b);
         b.AddChild(a);
 
-        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
+        var exposed = new ExposedState(new MarkupSuccess(a, new HashSet<string>()));
 
         Assert.True(exposed.isInside("a"));
     }
@@ -17,13 +17,13 @@ public class BasicsTests
     [Fact]
     public void is_inside_nested()
     {
-        var b = new HTMLtag("body");
-        var d = new HTMLtag("div", b);
-        var a = new HTMLtag("a", d);
+        var b = new XMLtag("body");
+        var d = new XMLtag("div", b);
+        var a = new XMLtag("a", d);
         b.AddChild(d);
         d.AddChild(a);
         
-        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
+        var exposed = new ExposedState(new MarkupSuccess(a, new HashSet<string>()));
 
         Assert.True(exposed.isInside("body"));
     }
@@ -31,11 +31,11 @@ public class BasicsTests
     [Fact]
     public void is_inside_directly_false()
     {
-        var b = new HTMLtag("body");
-        var a = new HTMLtag("a", b);
+        var b = new XMLtag("body");
+        var a = new XMLtag("a", b);
         b.AddChild(a);
 
-        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
+        var exposed = new ExposedState(new MarkupSuccess(a, new HashSet<string>()));
 
         Assert.False(exposed.isInside("span"));
     }
@@ -43,13 +43,13 @@ public class BasicsTests
     [Fact]
     public void is_inside_nested_false()
     {
-        var b = new HTMLtag("body");
-        var d = new HTMLtag("div", b);
-        var a = new HTMLtag("a", d);
+        var b = new XMLtag("body");
+        var d = new XMLtag("div", b);
+        var a = new XMLtag("a", d);
         b.AddChild(d);
         d.AddChild(a);
         
-        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
+        var exposed = new ExposedState(new MarkupSuccess(a, new HashSet<string>()));
 
         Assert.False(exposed.isInside("span"));
     }
@@ -57,12 +57,12 @@ public class BasicsTests
     [Fact]
     public void is_inside_wrong_branch()
     {
-        var b = new HTMLtag("body");
-        var d = new HTMLtag("div", b);
-        var s = new HTMLtag("span", d);
-        var a = new HTMLtag("a", b);
+        var b = new XMLtag("body");
+        var d = new XMLtag("div", b);
+        var s = new XMLtag("span", d);
+        var a = new XMLtag("a", b);
         
-        var exposed = new ExposedMonad(new MarkupSuccess(a, new HashSet<string>()));
+        var exposed = new ExposedState(new MarkupSuccess(a, new HashSet<string>()));
 
         Assert.False(exposed.isInside("span"));
     }
@@ -72,7 +72,7 @@ public class BasicsTests
     {
         Assert.Equal(
             "Id 'hello' is already in use!",
-            Markup(
+            HTML(
                 body(@id("hello"))(
                     anchor(@id("hello"))()
                 )

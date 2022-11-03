@@ -9,9 +9,9 @@
     <Author>Emil Jäpelt</Author>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>
-      A library for making HTML webpages in C#.
+      A library for making XML in C#.
     </Description>
-    <PackageTags>HTML;website;webpage</PackageTags>
+    <PackageTags>XML;HTML;website;webpage</PackageTags>
   </PropertyGroup>
 
 </Project>

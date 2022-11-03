@@ -6,11 +6,11 @@ public class UtilityTests
     public void nothing_does_nothing()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(nothing)
             ).Build(),
 
-            Markup(
+            HTML(
                 body()()
             ).Build()
         );
@@ -20,13 +20,13 @@ public class UtilityTests
     public void IfElse_true_test()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     If(true, div()(), span()())
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     div()()
                 )
@@ -38,13 +38,13 @@ public class UtilityTests
     public void IfElse_false_test()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     If(false, div()(), span()())
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     span()()
                 )
@@ -56,13 +56,13 @@ public class UtilityTests
     public void If_true_test()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     If(true, div()())
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     div()()
                 )
@@ -74,13 +74,13 @@ public class UtilityTests
     public void If_false_test()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     If(false, div()())
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     nothing
                 )
@@ -92,13 +92,13 @@ public class UtilityTests
     public void AttemptAlternative_success_test()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     Attempt(() => div()(), () => span()())
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     div()()
                 )
@@ -112,13 +112,13 @@ public class UtilityTests
         Func<int, Element> component = (i) => text($"{100/i}");
 
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     Attempt(() => component(0), () => span()())
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     span()()
                 )
@@ -130,13 +130,13 @@ public class UtilityTests
     public void Attempt_success_test()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     Attempt(() => div()())
                 )
             ).Build(),
             
-            Markup(
+            HTML(
                 body()(
                     div()()
                 )
@@ -150,13 +150,13 @@ public class UtilityTests
         Func<int, Element> component = (i) => text($"{100/i}");
 
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     Attempt(() => component(0))
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     nothing
                 )
@@ -170,13 +170,13 @@ public class UtilityTests
         Func<int, Element> component = (i) => text($"{i}");
 
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     Range(4, component)
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     component(0),
                     component(1),
@@ -191,13 +191,13 @@ public class UtilityTests
     public void RangeWithoutIndex_0_to_count_test()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     Range(4, text("test"))
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     text("test"),
                     text("test"),
@@ -214,13 +214,13 @@ public class UtilityTests
         Func<int, Element> component = (i) => text($"{i}");
 
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     Range(10, 4, component)
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     component(10),
                     component(11),
@@ -235,13 +235,13 @@ public class UtilityTests
     public void RangeWithoutIndex_start_to_count_test()
     {
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     Range(10, 4, text("test"))
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     text("test"),
                     text("test"),
@@ -258,13 +258,13 @@ public class UtilityTests
         var words = new string[] {"hi", "hello", "hey", "bye"};
 
         Assert.Equal(
-            Markup(
+            HTML(
                 body()(
                     OnList(words, text)
                 )
             ).Build(),
 
-            Markup(
+            HTML(
                 body()(
                     text(words[0]),
                     text(words[1]),

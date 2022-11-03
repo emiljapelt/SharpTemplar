@@ -1,4 +1,4 @@
-namespace SharpTemplar.Monadic;
+namespace SharpTemplar;
 
 public class ExposedState
 {
@@ -13,7 +13,7 @@ public class ExposedState
         return state.isInside(tagName);
     }
 
-    public HTMLtag pointer() {
+    public XMLtag pointer() {
         return state.pointer;
     }
 

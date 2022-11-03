@@ -1,3 +1,4 @@
 global using Xunit;
-global using SharpTemplar.Monadic;
-global using static SharpTemplar.Monadic.Bundle.Base;
+global using SharpTemplar;
+global using static SharpTemplar.Utility;
+global using static SharpTemplar.HyperText.Base;

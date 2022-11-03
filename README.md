@@ -1,23 +1,5 @@
-# NOTES FOR THIS MARKDOWN
-- Bundles seperate different areas of HTML, as to not load unused methods
-- Should the user want to create "Component"/Custom Functors, SharpTemplar.Monadic should be imported
-- Markup() starts a document.
-- _() is the generic Functor application method
-- Functors are delegates, but most have associated extension methods
-  - extensions starting with lower case represent html tags
-  - extensions starting with '@' represent mutations of html tags (fx. attributes)
-  - extensions starting with upper case, represent other functions (Navigation ect.)
-- Enter moves the html pointer to the newest added element
-- Exit moves the html pointer to the parent of the current element
-- If applies a Functor, if it boolean argument is true, otherwise it might apply another Functor, or nothing
-- Attempt applies a Functor, but if this application throws an exception, changes are reverted and an alternative Functor might be applied
-- Range applies a Functor a number of times. The Functor might make the current iteration number as an argument
-- OnList applies a Functor, taking some type T as an argument, for each element of a List of this type T
-- @id is a special case of mutation attribute, as it keeps track of which ids are already in use
-
-
 # SharpTemplar
-SharpTemplar is a library for making HTML webpages in C#, using delegate nesting.
+SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HTML is currently implemented, and this document will demostrate how to work with that specifically.
 
 ## Central types
 | Type | Description |
@@ -33,7 +15,7 @@ SharpTemplar is a library for making HTML webpages in C#, using delegate nesting
 ___
 
 ## Basic usage
-To start working on some HTML, the static method ```Markup()``` should be called. This function represenst the ```<html>``` tag, and it takes its children as arguments.
+To start working on some HTML, the static method ```MarkupHTML()``` should be called. This function represenst the ```<html>``` tag, and it takes its children as arguments.
 
 - Elements starting with lower case are for adding html tags, or text.
 - Elements stating with '@' are for adding attributes to a tag.
@@ -41,7 +23,7 @@ To start working on some HTML, the static method ```Markup()``` should be called
 
 Example
 ```
-var page = Markup(
+var page = MarkupHTML(
   head()(),
   body()(
     p(@class("greeting"))(
@@ -67,7 +49,7 @@ SharpTemplar will enforce correct HTML, i.e. tags can only be added in places wh
 ___
 
 ## Components
-Sometimes you might want to create similar html structures, multiple times. This can be done by nesting Elements outside of the Markup() call. To do this you must add ```using SharpTemplar.Monadic;``` to your source code.
+Sometimes you might want to create similar html structures, multiple times. This can be done by nesting Elements outside of the MarkupHMTL() call. To do this you must add ```using SharpTemplar.Monadic;``` to your source code.
 
 Example
 ```
@@ -76,7 +58,7 @@ Element component =
     p()(text("Im a contained paragraph!"))
   );
 
-var page = Markup(
+var page = MarkupHMTL(
   head()(),
   body()(
     component,
@@ -110,7 +92,7 @@ Func<string, Element> component = (name) =>
     )
   );
 
-var page = Markup(
+var page = MarkupHTML(
   head()(),
   body()(
     component("Bob"),
@@ -146,7 +128,7 @@ public Element component(string name) {
 }
 ```
 ```
-var page = Markup(
+var page = MarkupHTML(
   head()(),
   body()(
     component("Bob"),
@@ -178,7 +160,7 @@ Is used to conditionally add an ```Element```, depending on a boolean expression
 
 Example
 ```
-var page = Markup(
+var page = MarkupHTML(
   head()(),
   body()(
     If(b, text("true"), text("false"))
@@ -203,7 +185,7 @@ Element failed =
     )
   );
 
-var page = Markup(
+var page = MarkupHTML(
   head()(),
   body()(
     Attempt(() => component(2), () => failed),
@@ -238,7 +220,7 @@ Func<int, Element> component = (number) =>
     )
   );
 
-var page = Markup(
+var page = MarkupHTML(
   head()(),
   body()(
     Range(10, 3, component)
@@ -277,7 +259,7 @@ Func<string, Element> component = (name) =>
     )
   );
 
-var page = Markup(
+var page = MarkupHTML(
   head()(),
   body()(
     OnList(names, component)
