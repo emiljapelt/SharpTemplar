@@ -1,7 +1,7 @@
 using static SharpTemplar.Helpers;
 using static SharpTemplar.HyperText.TagContexts;
 
-namespace SharpTemplar.Monadic.Bundle;
+namespace SharpTemplar.HyperText;
 
 public static partial class Head
 {
