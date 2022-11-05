@@ -20,13 +20,12 @@ public static partial class Media
     public static Tag source(string type, string src) {
         return (attrs) => (children) => (state) => {
             if (state is MarkupSuccess ms) {
+                var new_attrs = attrs.Append(constructAttribute("type", type)).Append(constructAttribute("src", src)).ToArray();
                 var res =  constructTag(new TagInfo() { 
                     tagName = "source", 
                     contexts = bodyOnly, 
                     directContexts = new string[]{"audio","video"}
-                })(attrs)(children)(state);
-                ms.pointer.AddAttribute("type", type);
-                ms.pointer.AddAttribute("src", src);
+                })(new_attrs)(children)(state);
                 return res;
             }
             else return state;
@@ -38,13 +37,12 @@ public static partial class Media
 
         return (attrs) => (children) => (state) => {
             if (state is MarkupSuccess ms) {
+                var new_attrs = attrs.Append(constructAttribute("src", src)).Append(constructAttribute("alt", alt)).ToArray();
                 var res = constructTag(new TagInfo() { 
                     tagName = "img", 
                     contexts = bodyOnly, 
                     directContexts = anyContext
                 })(attrs)(children)(state);
-                ms.pointer.AddAttribute("src", src);
-                ms.pointer.AddAttribute("alt", alt);
                 return res;
             } 
             else return state;

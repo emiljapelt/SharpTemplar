@@ -106,6 +106,17 @@ public class Helpers
         };
     }
 
+    internal static ValuedAttribute constructAttribute(string name, string value) 
+    {
+        return (state) => {
+            if (state is MarkupSuccess ms) {
+                ms.pointer.AddAttribute(name, value);
+                return ms;
+            }   
+            else return state;
+        };
+    }
+
     public static Attribute constructAttribute(AttrInfo info)
     {
         if (info.contexts is InclusiveContexts inc) {

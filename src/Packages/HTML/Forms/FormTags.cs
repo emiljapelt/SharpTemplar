@@ -8,14 +8,12 @@ public static partial class Forms
     public static Tag form(string method, string action) {
         return (attrs) => (children) => (state) => {
             if (state is MarkupSuccess ms) {
+                var new_attrs = attrs.Append(constructAttribute("method", method)).Append(constructAttribute("action", action)).ToArray();
                 var res = constructTag(new TagInfo() { 
                     tagName = "form", 
                     contexts = bodyOnly, 
                     directContexts = anyContext
-                })(attrs)(children)(state);
-                
-                ms.pointer.AddAttribute("method", method);
-                ms.pointer.AddAttribute("action", action);
+                })(new_attrs)(children)(state);
                 return res;
             }
             else return state;
@@ -25,12 +23,12 @@ public static partial class Forms
     public static Tag input(string type) {
         return (attrs) => (children) => (state) => {
             if (state is MarkupSuccess ms) {
+                var new_attrs = attrs.Append(constructAttribute("type", type)).ToArray();
                 var res = constructTag(new TagInfo() {
                     tagName = "input",
                     contexts = formOnly,
                     directContexts = anyContext
-                })(attrs)(children)(state);
-                ms.pointer.AddAttribute("type", type);
+                })(new_attrs)(children)(state);
                 return res;
             }
             else return state;
@@ -40,12 +38,12 @@ public static partial class Forms
     public static Tag label(string fo) {
         return (attrs) => (children) => (state) => {
             if (state is MarkupSuccess ms) {
+                var new_attrs = attrs.Append(constructAttribute("for", fo)).ToArray();
                 var res = constructTag(new TagInfo() {
                     tagName = "label",
                     contexts = formOnly,
                     directContexts = anyContext
-                })(attrs)(children)(state);
-                ms.pointer.AddAttribute("for", fo);
+                })(new_attrs)(children)(state);
                 return res;
             }
             else return state;
@@ -56,13 +54,12 @@ public static partial class Forms
     public static Tag textarea(string rows, string cols) {
         return (attrs) => (children) => (state) => {
             if (state is MarkupSuccess ms) {
+                var new_attrs = attrs.Append(constructAttribute("rows", rows)).Append(constructAttribute("cols", cols)).ToArray();
                 var res = constructTag(new TagInfo() {
                     tagName = "textarea",
                     contexts = formOnly,
                     directContexts = anyContext
-                })(attrs)(children)(state);
-                ms.pointer.AddAttribute("rows", rows);
-                ms.pointer.AddAttribute("cols", cols);
+                })(new_attrs)(children)(state);
                 return res;
             }
             else return state;
@@ -78,12 +75,12 @@ public static partial class Forms
     public static Tag option(string value) {
         return (attrs) => (children) => (state) => {
             if (state is MarkupSuccess ms) {
+                var new_attrs = attrs.Append(constructAttribute("value", value)).ToArray();
                 var res = constructTag(new TagInfo() {
                     tagName = "option",
                     contexts = formOnly,
                     directContexts = new string[]{"select","optgroup","datalist"}
-                })(attrs)(children)(state);
-                ms.pointer.AddAttribute("value", value);
+                })(new_attrs)(children)(state);
                 return res;
             }
             else return state;
@@ -93,12 +90,12 @@ public static partial class Forms
     public static Tag optgroup(string label) {
         return (attrs) => (children) => (state) => {
             if (state is MarkupSuccess ms) {
+                var new_attrs = attrs.Append(constructAttribute("label", label)).ToArray();
                 var res = constructTag(new TagInfo() {
                     tagName = "optgroup",
                     contexts = formOnly,
                     directContexts = new string[]{"select"}
-                })(attrs)(children)(state);
-                ms.pointer.AddAttribute("label", label);
+                })(new_attrs)(children)(state);
                 return res;
             }
             else return state;
