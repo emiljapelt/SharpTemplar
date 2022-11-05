@@ -38,4 +38,9 @@ public static partial class Base
         attrName = "name",
         contexts = new InclusiveContexts(new string[]{"button", "form", "input", "meta", "select", "textarea"})
     });
+
+    public static Attribute @value = constructAttribute(new AttrInfo() {
+        attrName = "value",
+        contexts = new InclusiveContexts(new string[] {"button", "input", "meter", "li", "option", "progress", "param"})
+    });
 }
