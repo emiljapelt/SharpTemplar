@@ -85,7 +85,7 @@ public class Helpers
                 if (dc && c) { 
                     var tag = new XMLtag(info.tagName, ms.pointer);
                     ms.pointer.children.Add(tag);
-                    var temp = ms.pointer;
+                    var parent = ms.pointer;
                     MarkupState holder = ms;
                     foreach(var attr in attrs) {
                         ms.pointer = tag;
@@ -97,7 +97,7 @@ public class Helpers
                         holder = child(holder);
                         if (holder is MarkupFailure) return holder;
                     }
-                    ms.pointer = temp;
+                    ms.pointer = parent;
                     return holder;
                 }
                 return FailWith(info, $"'{info.tagName}': Tag context failure!");

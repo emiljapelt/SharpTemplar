@@ -101,15 +101,13 @@ public class XMLtag : XMLElement
         if (attributes.Count > 0) {
             foreach((var attr, var val) in attributes) sb.Append($" {attr}=\"{val}\"");
         }
-        if (children.Count > 0) {
-            sb.Append(">\n");
+        if(children.Count > 0) {
+            sb.Append(">\n"); 
             foreach(var child in children) child.Build(level+1, sb);
             for(int i = 0; i < level; i++) sb.Append("   ");
             sb.Append($"</{tagName}>\n");
         }
-        else {
-            sb.Append("/>\n");
-        }
+        else sb.Append($"></{tagName}>\n");
     }
 
     internal override XMLElement Clone()
