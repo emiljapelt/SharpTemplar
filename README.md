@@ -1,5 +1,5 @@
 # SharpTemplar
-SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HTML is currently implemented, therefor this document demostrates how to use SharpTemplar using HTML as the basis.
+SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HTML is currently implemented, therefor this document demostrates how to use SharpTemplar for writing HTML.
 
 ## Central types
 | Type | Description |
