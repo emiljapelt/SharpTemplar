@@ -1,5 +1,5 @@
 # SharpTemplar
-SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HTML is currently implemented, therefor this document demostrates how to use SharpTemplar for writing HTML.
+SharpTemplar is a library for writing SGML in C#, using delegate nesting. Only HTML is currently implemented, therefor this document demostrates how to use SharpTemplar for writing HTML.
 
 ## Central types
 | Type | Description |
@@ -7,11 +7,11 @@ SharpTemplar is a library for writing XML in C#, using delegate nesting. Only HT
 | MarkupState | The abstract representation of the markup. |
 | MarkupSuccess | Markup that is correct. | 
 | MarkupFailure | Information on what broke the markup. | 
-| Attribute | Represents some XML attribute such as 'class' or 'id' | 
-| ValuedAttribute | Represents some XML attribute which has been given a value, such as 'class="container"' | 
-| Tag | Represents some XML tag, such as 'div' or 'head' | 
-| AttributedTag | Represents som XML tag, which has been given valued attributes | 
-| Element | Represents some XML tag, which has both been given valued attrubutes and children (i.e. other Elements)  | 
+| Attribute | Represents some SGML attribute such as 'class' or 'id' | 
+| ValuedAttribute | Represents some SGML attribute which has been given a value, such as 'class="container"' | 
+| Tag | Represents some SGML tag, such as 'div' or 'head' | 
+| AttributedTag | Represents som SGML tag, which has been given valued attributes | 
+| Element | Represents some SGML tag, which has both been given valued attrubutes and children (i.e. other Elements)  | 
 ___
 
 ## Basic usage
