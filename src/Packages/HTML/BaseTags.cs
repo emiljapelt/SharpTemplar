@@ -5,6 +5,20 @@ namespace SharpTemplar.HyperText;
 
 public static partial class Base
 {
+    public static AttributedTag _ =  (children) => (state) => {
+            if (state is MarkupSuccess ms) {
+                var parent = ms.pointer;
+                MarkupState holder = ms;
+                foreach(var child in children) {
+                    
+                    holder = child(holder);
+                    if (holder is MarkupFailure) return holder;
+                }
+                ms.pointer = parent;
+                return holder;
+            }
+            else return state;
+        };
     public static Tag head = constructTag(new TagInfo() { 
         tagName = "head", 
         contexts = anyContext, 

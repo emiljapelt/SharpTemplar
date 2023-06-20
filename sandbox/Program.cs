@@ -37,6 +37,7 @@ public class Program
         var s = HTML(
             head()(),
             body(@on(pageshow, "confetti"))(
+                If(true, _(p()(text("meme1")), p()(text("meme2")))),
                 img(src: "logo.jpg", alt: "NO_IMAGE")()(),
                 h(2)(@id("title"))(
                     text("BookFace")

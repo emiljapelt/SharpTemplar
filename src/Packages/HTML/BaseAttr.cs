@@ -24,6 +24,11 @@ public static partial class Base
         contexts = new InclusiveContexts(anyContext)
     });
 
+    public static Attribute @style = constructAttribute(new AttrInfo() {
+        attrName = "style",
+        contexts = new InclusiveContexts(anyContext)
+    });
+
     public static Attribute @defer = constructAttribute(new AttrInfo() {
         attrName = "defer",
         contexts = new InclusiveContexts(new string[]{"script"})

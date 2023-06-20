@@ -56,4 +56,14 @@ public static class Utility
             return state;
         };
     }
+    public static Element OnList<T>(IEnumerable<T> list, Func<int, T, Element> element) {
+        return (state) => {
+            int i = 0;
+            foreach(var e in list) {
+                element(i,e)(state);
+                i++;
+            }
+            return state;
+        };
+    }
 }
