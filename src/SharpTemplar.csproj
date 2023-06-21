@@ -5,13 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
     <PackageId>SharpTemplar</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Author>Emil Jäpelt</Author>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>
-      A library for writing XML in C#.
+      A library for writing SGML in C#.
     </Description>
-    <PackageTags>XML;HTML;website;webpage</PackageTags>
+    <PackageTags>SGML;XML;HTML;website;webpage</PackageTags>
   </PropertyGroup>
 
 </Project>

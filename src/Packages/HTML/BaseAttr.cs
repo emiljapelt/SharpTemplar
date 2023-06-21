@@ -53,4 +53,19 @@ public static partial class Base
         attrName = "rel",
         contexts = new InclusiveContexts(new string[]{"link", "a", "area", "form"})
     });
+
+    public static Attribute @src = constructAttribute(new AttrInfo() {
+        attrName = "src",
+        contexts = new InclusiveContexts(new string[]{"audio", "embed", "iframe", "img", "input", "script", "source", "track", "video"})
+    });
+
+    public static ValuedAttribute @disabled = constructAttribute(new AttrInfo() {
+        attrName = "disabled",
+        contexts = new InclusiveContexts(anyContext)
+    })("disabled");
+
+    public static ValuedAttribute @hidden = constructAttribute(new AttrInfo() {
+        attrName = "hidden",
+        contexts = new InclusiveContexts(anyContext)
+    })("hidden");
 }

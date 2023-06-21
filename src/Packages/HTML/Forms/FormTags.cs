@@ -26,7 +26,7 @@ public static partial class Forms
                 var new_attrs = attrs.Append(constructAttribute("type", type)).ToArray();
                 var res = constructTag(new TagInfo() {
                     tagName = "input",
-                    contexts = formOnly,
+                    contexts = bodyOnly,
                     directContexts = anyContext
                 })(new_attrs)(children)(state);
                 return res;
