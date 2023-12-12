@@ -167,7 +167,7 @@ public class UtilityTests
     [Fact]
     public void RangeWithIndex_0_to_count_test()
     {
-        Func<int, Element> component = (i) => text($"{i}");
+        Component<int> component = (i) => text($"{i}");
 
         Assert.Equal(
             HTML(
@@ -211,7 +211,7 @@ public class UtilityTests
     [Fact]
     public void RangeWithIndex_start_to_count_test()
     {
-        Func<int, Element> component = (i) => text($"{i}");
+        Component<int> component = (i) => text($"{i}");
 
         Assert.Equal(
             HTML(

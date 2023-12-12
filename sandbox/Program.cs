@@ -1,4 +1,5 @@
-﻿using static SharpTemplar.HyperText.Base;
+﻿using SharpTemplar.HyperText;
+using static SharpTemplar.HyperText.Base;
 using static SharpTemplar.HyperText.Text;
 using static SharpTemplar.HyperText.Media;
 using static SharpTemplar.HyperText.Events;
@@ -9,7 +10,7 @@ public class Program
 {
     public static void Main()
     {
-        Func<string, Element> link = (l) => 
+        Component<string> link = (l) => 
             small(@class("link"))(
                 anchor(@href(l))(
                     text(l)
@@ -17,15 +18,15 @@ public class Program
                 br
             );
 
-        Func<(string, string), Element> userbox = (user) => 
+        Component<(string name, string url)> userbox = (user) => 
             span(@class("userbox"))(
                 p()(
-                    text(user.Item1),
-                    link($"/{user.Item2}")
+                    text(user.name),
+                    link($"/{user.url}")
                 )
             );
 
-        Func<int, Element> canFail = (number) =>
+        Component<int> canFail = (number) =>
             div()(
                 p()(text("Some number should be here:")),
                 p()(text($"{100/number}"))

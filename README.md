@@ -12,6 +12,7 @@ SharpTemplar is a library for writing SGML in C#, using delegate nesting. Only H
 | Tag | Represents some SGML tag, such as 'div' or 'head' | 
 | AttributedTag | Represents som SGML tag, which has been given valued attributes | 
 | Element | Represents some SGML tag, which has both been given valued attrubutes and children (i.e. other Elements)  | 
+| Component | A delegate, optionally taking some argument, returning an Element |
 ___
 
 ## Basic usage
@@ -53,7 +54,7 @@ Sometimes you might want to create similar structures, multiple times. This can 
 
 Example
 ```
-Element component = 
+Element element = 
   div(@class("container"))(
     p()(text("Im a contained paragraph!"))
   );
@@ -61,8 +62,8 @@ Element component =
 var page = MarkupHMTL(
   head()(),
   body()(
-    component,
-    component
+    element,
+    element
   )
 ).Build();
 ```
@@ -81,10 +82,10 @@ Creates the page:
 </html>
 ```
 
-Static components might not be that interesting, but parameters can be added to them using the ```Func<>``` delegate, like in the following example.
+Static elements might not be that interesting, but parameters can be added to them using the ```Component<>``` delegate, from SharpTemplar.Utility, like in the following example.
 
 ```
-Func<string, Element> component = (name) => 
+Component<string> component = (name) => 
   div(@class("container"))(
     p()(
       text($"Hello {name}!")
@@ -114,7 +115,7 @@ Creates the page:
 </html>
 ```
 
-Alternativly to using a ```Func<>``` for adding parameters to a component, a method could be used. 
+Alternativly to using a ```Component<>``` for adding parameters to a component, a method could be used. 
 
 Example
 ```
@@ -178,7 +179,7 @@ Creates the page:
 ```
 
 ### Attempt( )
-Is used to apply an ```Element``` that might throw an exception, and handle those cases without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Element``` is provided, nothing is applied on an exception. Elements must be provided as ```Func<Element>``` i.e. unit functions, to delay their evaluation.
+Is used to apply an ```Element``` that might throw an exception, and handle those cases without crashing. This can be quite slow, as a clone of the entire markup structure is created, so that all changes made can be rolled back. If only one ```Element``` is provided, nothing is applied on an exception. Elements must be provided as ```Component<>``` i.e. unit functions, to delay their evaluation.
 
 Example
 ```
@@ -218,11 +219,11 @@ Creates the page:
 ```
 
 ### Range( )
-Is used to apply the same ```Element``` or ```Func<int, Element>``` once for each number in the selected range.
+Is used to apply the same ```Element``` or ```Component<int>``` once for each number in the selected range.
 
 Example
 ```
-Func<int, Element> component = (number) => 
+Component<int> component = (number) => 
   div(@class("container"))(
     p()(
       text($"{number}")
@@ -255,13 +256,13 @@ Creates the page:
 ```
 
 ### OnList\<T\>( )
-Is used to apply a ```Func<T,Element>``` for each element of type ```T``` in an ```IEnumerable<T>```.
+Is used to apply a ```Component<T>``` for each element of type ```T``` in an ```IEnumerable<T>```.
 
 Example
 ```
 var names = new List<string>() {"Bob", "Alice"};
 
-Func<string, Element> component = (name) =>
+Component<string> component = (name) =>
   div(@class("container"))(
     p()(
       text($"Hello {name}!")

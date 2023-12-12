@@ -1,6 +1,14 @@
 
 namespace SharpTemplar;
 
+public delegate Element Component();
+public delegate Element Component<T0>(T0 t0);
+public delegate Element Component<T0,T1>(T0 t, T1 t1);
+public delegate Element Component<T0,T1,T2>(T0 t, T1 t1, T2 t2);
+public delegate Element Component<T0,T1,T2,T3>(T0 t, T1 t1, T2 t2, T3 t3);
+public delegate Element Component<T0,T1,T2,T3,T4>(T0 t, T1 t1, T2 t2, T3 t3, T4 t4);
+public delegate Element Component<T0,T1,T2,T3,T4, T5>(T0 t, T1 t1, T2 t2, T3 t3, T4 t4, T5 t5);
+
 public static class Utility
 {
     public static Element nothing = (state) => state;
@@ -18,8 +26,8 @@ public static class Utility
         else return or;
     }
 
-    public static Element Attempt(Func<Element> attempt) { return Attempt(attempt, () => nothing); }
-    public static Element Attempt(Func<Element> attempt, Func<Element> alternative) {
+    public static Element Attempt(Component attempt) { return Attempt(attempt, () => nothing); }
+    public static Element Attempt(Component attempt, Component alternative) {
         return (state) => {
             if (state is MarkupSuccess ms) {
                 var backup = ms.pointer.RefingClone();
@@ -38,8 +46,8 @@ public static class Utility
 
     public static Element Range(int count, Element element) { return Range(0, count, (i) => element); }
     public static Element Range(int start, int count, Element element) { return Range(start, count, (i) => element); }
-    public static Element Range(int count, Func<int, Element> element) { return Range(0, count, element); }
-    public static Element Range(int start, int count, Func<int, Element> elemet){
+    public static Element Range(int count, Component<int> element) { return Range(0, count, element); }
+    public static Element Range(int start, int count, Component<int> elemet){
         return (state) => {
             for(int i = start; i < start + count; i++) {
                 elemet(i)(state);
@@ -48,7 +56,7 @@ public static class Utility
         };
     }
 
-    public static Element OnList<T>(IEnumerable<T> list, Func<T, Element> element) {
+    public static Element OnList<T>(IEnumerable<T> list, Component<T> element) {
         return (state) => {
             foreach(var e in list) {
                 element(e)(state);
@@ -56,11 +64,11 @@ public static class Utility
             return state;
         };
     }
-    public static Element OnList<T>(IEnumerable<T> list, Func<int, T, Element> element) {
+    public static Element OnList<T>(IEnumerable<T> list, Component<(int idx, T elem)> element) {
         return (state) => {
             int i = 0;
             foreach(var e in list) {
-                element(i,e)(state);
+                element((i,e))(state);
                 i++;
             }
             return state;
